@@ -1,8 +1,8 @@
 import numpy as Np
 import matplotlib.pyplot as Plt
-echiquierarray = ([200, 200]) for X in range(200):
+Array = ([200, 200]) for X in range(200):
 for Y in range(200):
 if (X % 50) // 25 == (y % 50) // 25:
-echiquierarray[X, Y] = 0
+Array[X, Y] = 0
 else:
-echiquierarray[X, Y] = 255
+Array[X, Y] = 255

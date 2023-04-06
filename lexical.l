@@ -7,10 +7,10 @@ lettre [a-z]
 chiffre [0-9]
 IDF [A-Z]({lettre}|{chiffre})*
 COMMENT "#"([^"\n"])*"!"
-INT	"-?[0-9]+"
-FLOAT "-?[0-9]+\\.[0-9]+"
-CHAR "'[a-zA-Z]'"
-BOOL "true|false"
+INT	[+-]{chiffre}+|{chiffre}+
+FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
+CHAR ['][^'][']
+BOOL "true"|"false"
 %%
 import {printf("\n MotCle_import reconnu \n"); nb_colonne += yyleng; 
 //return (token_MotCle_import);
@@ -57,6 +57,7 @@ not			{ printf("Operateur logique: not\n"); nb_colonne += yyleng;}
 "<"			{ printf("Operateur de comparaison: <\n"); nb_colonne += yyleng;}
 "=="			{ printf("Operateur de comparaison: ==\n"); nb_colonne += yyleng;}
 "!="			{ printf("Operateur de comparaison: !=\n"); nb_colonne += yyleng;}
+"="			{ printf("Operateur d'affectation: =\n"); nb_colonne += yyleng;}
 {IDF}		{ //Un IDF ne doit pas contenir plus de 8 caractères
 if(strlen(yytext)>8) {
 printf("Erreur: Identificateur trop long\n");
