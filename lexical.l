@@ -3,12 +3,14 @@
 #include <stdlib.h>
 int nb_colonne= 1,nb_ligne=1;
 %}
-IDF		"[A-Z][a-z0-9]{0,7}"
-COMMENT		"\\#.*"
+lettre [a-z]
+chiffre [0-9]
+IDF [A-Z]({lettre}|{chiffre})*
+COMMENT "#"([^"\n"])*"!"
 INT	"-?[0-9]+"
-FLOAT	"-?[0-9]+\\.[0-9]+"
-CHAR	"'[a-zA-Z]'"
-BOOL	"true|false"
+FLOAT "-?[0-9]+\\.[0-9]+"
+CHAR "'[a-zA-Z]'"
+BOOL "true|false"
 %%
 import {printf("\n MotCle_import reconnu \n"); nb_colonne += yyleng; 
 //return (token_MotCle_import);
@@ -61,7 +63,7 @@ printf("Erreur: Identificateur trop long\n");
 //exit(1);
 }
 else
-printf("Identificateur reconnu"); }
+printf("l entite lexical idf est reconnue %s \n",yytext); }
 {COMMENT} {nb_colonne+=strlen(yytext); 	    printf("commentaire\n"); nb_ligne++;}
 [ \t]                        {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
