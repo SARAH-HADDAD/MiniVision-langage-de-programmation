@@ -861,7 +861,7 @@ case 7:
 YY_RULE_SETUP
 #line 51 "lexical.l"
 {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
   /* return (token_for); */
@@ -871,7 +871,7 @@ case 8:
 YY_RULE_SETUP
 #line 57 "lexical.l"
 {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
   /* return (token_in); */
@@ -881,7 +881,7 @@ case 9:
 YY_RULE_SETUP
 #line 63 "lexical.l"
 {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
   /* return (token_range); */
@@ -891,7 +891,7 @@ case 10:
 YY_RULE_SETUP
 #line 69 "lexical.l"
 {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
   /* return (token_int); */
@@ -932,187 +932,314 @@ YY_RULE_SETUP
 #line 93 "lexical.l"
 {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
-  printf("\n MotCle_as reconnu \n");
+  printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
+  /* return (token_as); */
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 98 "lexical.l"
+#line 99 "lexical.l"
 {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
+  /* return (token_and); */
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 103 "lexical.l"
+#line 105 "lexical.l"
 {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
+  /* return (token_or); */
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 108 "lexical.l"
+#line 111 "lexical.l"
 {
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
+  /* return (token_not); */
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 113 "lexical.l"
-{ printf("Constante entiere: %s\n", yytext); nb_colonne += yyleng;}
+#line 117 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Constante entiere: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constEntiere); */
+}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 114 "lexical.l"
-{ printf("Constante flottante: %s\n", yytext); nb_colonne += yyleng;}
+#line 123 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Constante flottante: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constFlottante); */
+}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 115 "lexical.l"
-{ printf("Constante char: %s\n", yytext); nb_colonne += yyleng;}
+#line 129 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Constante char: %s\n", yytext);
+    nb_colonne += yyleng;
+    /* return (token_constChar); */
+}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 116 "lexical.l"
-{ printf("Constante bool: %s\n", yytext); nb_colonne += yyleng;}
+#line 135 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Constante bool: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constBool); */
+}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 117 "lexical.l"
-{printf("\n Sep_ParOuvrante reconnu \n"); nb_colonne += yyleng;   /*return (token_ParOuvrante);*/}
+#line 141 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_ParOuvrante reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_ParOuvrante);*/
+}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 118 "lexical.l"
-{printf("\n Sep_ParFermante reconnu \n"); nb_colonne += yyleng;   /*return (token_ParFermante);*/}
+#line 147 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_ParFermante reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_ParFermante);*/
+}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 119 "lexical.l"
-{printf("\n Sep_CrochOuvrante reconnu \n"); nb_colonne += yyleng; /*return (token_CrochOuvrante);*/}
+#line 153 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_CrochOuvrante reconnu \n"); 
+    nb_colonne += yyleng; 
+    /*return (token_CrochOuvrante);*/
+}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 120 "lexical.l"
-{printf("\n Sep_CrochFermante reconnu \n"); nb_colonne += yyleng; /*return (token_CrochFermante);*/}
+#line 159 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_CrochFermante reconnu \n"); 
+    nb_colonne += yyleng; 
+    /*return (token_CrochFermante);*/
+    }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 121 "lexical.l"
-{printf("\n Sep_virgule reconnu \n"); nb_colonne += yyleng;       /*return (token_virgule);*/}
+#line 165 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_virgule reconnu \n"); 
+    nb_colonne += yyleng;       
+    /*return (token_virgule);*/
+    }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 122 "lexical.l"
-{printf("\n Sep_Deux_Points reconnu \n"); nb_colonne += yyleng;   /*return (token_Deux_Points);*/}
+#line 171 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Sep_Deux_Points reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_Deux_Points);*/
+    }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 123 "lexical.l"
-{printf("\n Sep_Pourcentage reconnu \n"); nb_colonne += yyleng;   /*return (token_Pourcentage);*/}
+#line 177 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_Pourcentage reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_Pourcentage);*/
+    }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 124 "lexical.l"
-{ printf("Operateur arithmetique: +\n"); nb_colonne += yyleng; }
+#line 183 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: +\n"); 
+    nb_colonne += yyleng; 
+    /*return (token_plus);*/
+    }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 125 "lexical.l"
-{ printf("Operateur arithmetique: -\n"); nb_colonne += yyleng;}
+#line 189 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur arithmetique: -\n"); 
+    nb_colonne += yyleng;
+    /*return (token_moins);*/
+    }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 126 "lexical.l"
-{ printf("Operateur arithmetique: *\n"); nb_colonne += yyleng;}
+#line 195 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: *\n"); 
+    nb_colonne += yyleng;
+    /*return (token_fois);*/
+    }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 127 "lexical.l"
-{ printf("Operateur arithmetique: /\n"); nb_colonne += yyleng;}
+#line 201 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: /\n"); 
+    nb_colonne += yyleng;
+    /*return (token_divise);*/
+    }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 128 "lexical.l"
-{ printf("Operateur de comparaison: >=\n"); nb_colonne += yyleng;}
+#line 207 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: >=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_superieurEgal);*/
+    }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 129 "lexical.l"
-{ printf("Operateur de comparaison: >\n"); nb_colonne += yyleng;}
+#line 213 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: >\n"); 
+    nb_colonne += yyleng;
+    /*return (token_superieur);*/
+    }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 130 "lexical.l"
-{ printf("Operateur de comparaison: <=\n"); nb_colonne += yyleng;}
+#line 219 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: <=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_inferieurEgal);*/
+    }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 131 "lexical.l"
-{ printf("Operateur de comparaison: <\n"); nb_colonne += yyleng;}
+#line 225 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: <\n"); 
+    nb_colonne += yyleng;
+    /*return (token_inferieur);*/
+    }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 132 "lexical.l"
-{ printf("Operateur de comparaison: ==\n"); nb_colonne += yyleng;}
+#line 231 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: ==\n"); 
+    nb_colonne += yyleng;
+    /*return (token_egal);*/
+    }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 133 "lexical.l"
-{ printf("Operateur de comparaison: !=\n"); nb_colonne += yyleng;}
+#line 237 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: !=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_different);*/
+    }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 134 "lexical.l"
-{ printf("Operateur d'affectation: =\n"); nb_colonne += yyleng;}
+#line 243 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur d'affectation: =\n"); 
+    nb_colonne += yyleng;
+    /*return (token_affectation);*/
+    }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 135 "lexical.l"
-{ //Un IDF ne doit pas contenir plus de 8 caractères
-if(strlen(yytext)>8) {
-printf("Erreur: Identificateur trop long\n");
-//exit(1);
+#line 249 "lexical.l"
+{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    if(strlen(yytext)>8){
+        printf("Erreur: Identificateur trop long\n");
+        //exit(1);
+        }
+        else{
+            printf("Idf reconnue : %s \n",yytext);
+            nb_colonne += yyleng;
+            /*return (token_idf);*/
+            } 
 }
-else
-printf("l entite lexical idf est reconnue %s \n",yytext); }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
 YY_RULE_SETUP
-#line 142 "lexical.l"
-{nb_colonne+=strlen(yytext); 	    printf("commentaire\n"); nb_ligne++;}
+#line 261 "lexical.l"
+{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Commentaire: %s\n", yytext);
+    nb_colonne+=strlen(yytext);
+}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 143 "lexical.l"
+#line 266 "lexical.l"
 {nb_colonne=nb_colonne+ strlen(yytext);}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 144 "lexical.l"
+#line 267 "lexical.l"
 {nb_ligne++; nb_colonne=1;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 145 "lexical.l"
-{printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne); nb_colonne=nb_colonne+ strlen(yytext);}
+#line 268 "lexical.l"
+{
+    printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
+    nb_colonne=nb_colonne+ strlen(yytext);
+    //exit(1);
+}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 146 "lexical.l"
+#line 273 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1116 "lex.yy.c"
+#line 1243 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2112,7 +2239,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 146 "lexical.l"
+#line 273 "lexical.l"
 
 
 int main() {

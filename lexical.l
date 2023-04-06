@@ -49,25 +49,25 @@ while {
   /* return (token_while); */
 }
 for {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
   /* return (token_for); */
 }
 in {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
   /* return (token_in); */
 }
 range {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
   /* return (token_range); */
 }
 int {
-  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
   /* return (token_int); */
@@ -94,55 +94,182 @@ as {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
+  /* return (token_as); */
 }
 and {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
+  /* return (token_and); */
 }
 or {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
+  /* return (token_or); */
 }
 not {
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
+  /* return (token_not); */
 }
-{INT}		{ printf("Constante entiere: %s\n", yytext); nb_colonne += yyleng;}
-{FLOAT}		{ printf("Constante flottante: %s\n", yytext); nb_colonne += yyleng;}
-{CHAR}		{ printf("Constante char: %s\n", yytext); nb_colonne += yyleng;}
-{BOOL}		{ printf("Constante bool: %s\n", yytext); nb_colonne += yyleng;}
-"("                          {printf("\n Sep_ParOuvrante reconnu \n"); nb_colonne += yyleng;   /*return (token_ParOuvrante);*/}
-")"                          {printf("\n Sep_ParFermante reconnu \n"); nb_colonne += yyleng;   /*return (token_ParFermante);*/}
-"["                          {printf("\n Sep_CrochOuvrante reconnu \n"); nb_colonne += yyleng; /*return (token_CrochOuvrante);*/}
-"]"                          {printf("\n Sep_CrochFermante reconnu \n"); nb_colonne += yyleng; /*return (token_CrochFermante);*/}
-","                          {printf("\n Sep_virgule reconnu \n"); nb_colonne += yyleng;       /*return (token_virgule);*/}
-":"                          {printf("\n Sep_Deux_Points reconnu \n"); nb_colonne += yyleng;   /*return (token_Deux_Points);*/}
-"%"                          {printf("\n Sep_Pourcentage reconnu \n"); nb_colonne += yyleng;   /*return (token_Pourcentage);*/}
-"+"			{ printf("Operateur arithmetique: +\n"); nb_colonne += yyleng; }
-"-"			{ printf("Operateur arithmetique: -\n"); nb_colonne += yyleng;}
-"*"			{ printf("Operateur arithmetique: *\n"); nb_colonne += yyleng;}
-"/"			{ printf("Operateur arithmetique: /\n"); nb_colonne += yyleng;}
-">="			{ printf("Operateur de comparaison: >=\n"); nb_colonne += yyleng;}
-">"			{ printf("Operateur de comparaison: >\n"); nb_colonne += yyleng;}
-"<="			{ printf("Operateur de comparaison: <=\n"); nb_colonne += yyleng;}
-"<"			{ printf("Operateur de comparaison: <\n"); nb_colonne += yyleng;}
-"=="			{ printf("Operateur de comparaison: ==\n"); nb_colonne += yyleng;}
-"!="			{ printf("Operateur de comparaison: !=\n"); nb_colonne += yyleng;}
-"="			{ printf("Operateur d'affectation: =\n"); nb_colonne += yyleng;}
-{IDF}		{ //Un IDF ne doit pas contenir plus de 8 caractères
-if(strlen(yytext)>8) {
-printf("Erreur: Identificateur trop long\n");
-//exit(1);
+{INT} {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Constante entiere: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constEntiere); */
 }
-else
-printf("l entite lexical idf est reconnue %s \n",yytext); }
-{COMMENT} {nb_colonne+=strlen(yytext); 	    printf("commentaire\n"); nb_ligne++;}
-[ \t]                        {nb_colonne=nb_colonne+ strlen(yytext);}
+{FLOAT} { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Constante flottante: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constFlottante); */
+}
+{CHAR} {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Constante char: %s\n", yytext);
+    nb_colonne += yyleng;
+    /* return (token_constChar); */
+}
+{BOOL} {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Constante bool: %s\n", yytext); 
+    nb_colonne += yyleng;
+    /* return (token_constBool); */
+}
+"(" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_ParOuvrante reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_ParOuvrante);*/
+}
+")" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_ParFermante reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_ParFermante);*/
+}
+"[" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_CrochOuvrante reconnu \n"); 
+    nb_colonne += yyleng; 
+    /*return (token_CrochOuvrante);*/
+}
+"]" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_CrochFermante reconnu \n"); 
+    nb_colonne += yyleng; 
+    /*return (token_CrochFermante);*/
+    }
+"," {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_virgule reconnu \n"); 
+    nb_colonne += yyleng;       
+    /*return (token_virgule);*/
+    }
+":" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Sep_Deux_Points reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_Deux_Points);*/
+    }
+"%" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Sep_Pourcentage reconnu \n"); 
+    nb_colonne += yyleng;   
+    /*return (token_Pourcentage);*/
+    }
+"+" { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: +\n"); 
+    nb_colonne += yyleng; 
+    /*return (token_plus);*/
+    }
+"-"	{
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur arithmetique: -\n"); 
+    nb_colonne += yyleng;
+    /*return (token_moins);*/
+    }
+"*" { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: *\n"); 
+    nb_colonne += yyleng;
+    /*return (token_fois);*/
+    }
+"/" { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur arithmetique: /\n"); 
+    nb_colonne += yyleng;
+    /*return (token_divise);*/
+    }
+">=" { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: >=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_superieurEgal);*/
+    }
+">"	{ 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: >\n"); 
+    nb_colonne += yyleng;
+    /*return (token_superieur);*/
+    }
+"<=" { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur de comparaison: <=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_inferieurEgal);*/
+    }
+"<" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: <\n"); 
+    nb_colonne += yyleng;
+    /*return (token_inferieur);*/
+    }
+"==" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: ==\n"); 
+    nb_colonne += yyleng;
+    /*return (token_egal);*/
+    }
+"!=" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Operateur de comparaison: !=\n"); 
+    nb_colonne += yyleng;
+    /*return (token_different);*/
+    }
+"=" {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Operateur d'affectation: =\n"); 
+    nb_colonne += yyleng;
+    /*return (token_affectation);*/
+    }
+{IDF} { 
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    if(strlen(yytext)>8){
+        printf("Erreur: Identificateur trop long\n");
+        //exit(1);
+        }
+        else{
+            printf("Idf reconnue : %s \n",yytext);
+            nb_colonne += yyleng;
+            /*return (token_idf);*/
+            } 
+}
+{COMMENT} {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Commentaire: %s\n", yytext);
+    nb_colonne+=strlen(yytext);
+}
+[ \t] {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
-. {printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne); nb_colonne=nb_colonne+ strlen(yytext);}
+. {
+    printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
+    nb_colonne=nb_colonne+ strlen(yytext);
+    //exit(1);
+}
 %%
 int main() {
     yylex();
