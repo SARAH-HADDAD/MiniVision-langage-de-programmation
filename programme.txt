@@ -6,3 +6,4 @@ if (X % 50) // 25 == (y % 50) // 25:
 Array[X, Y] = 0
 else:
 Array[X, Y] = 255
+# ceci est un commentaire

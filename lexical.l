@@ -6,7 +6,7 @@ int nb_colonne= 1,nb_ligne=1;
 lettre [a-z]
 chiffre [0-9]
 IDF [A-Z]({lettre}|{chiffre})*
-COMMENT "#"([^"\n"])*"!"
+COMMENT ^#[^\n]*\n
 INT	[+-]{chiffre}+|{chiffre}+
 FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
