@@ -13,83 +13,100 @@ CHAR ['][^'][']
 BOOL "true"|"false"
 %%
 import {
-  printf("\n MotCle_import reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
+  printf("MotCle_import reconnu \n");
   nb_colonne += yyleng;
-  // return (token_MotCle_import);
+  // return (token_import);
 }
 numpy {
-  printf("\n Identificateur reconnu : %s \n", yytext);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);     
+  printf("Mc_numpy reconnu : %s \n", yytext);
   nb_colonne += yyleng;
-  // return (token_Identificateur);
+  // return (token_numpy);
 }
 "matplotlib.pyplot" {
-  printf("\n Identificateur reconnu : %s \n", yytext);
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_matplotlib.pyplot reconnu : %s \n", yytext);
   nb_colonne += yyleng;
-  // return (token_Identificateur);
+  // return (token_matplotlib.pyplot;
 }
 if {
-  printf("\n MotCle_if reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
+  printf("MotCle_if reconnu \n");
   nb_colonne += yyleng;
-  // return (token_MotCle_if);
+  // return (token_if);
 }
 else {
-  printf("\n MotCle_else reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
+  printf("MotCle_else reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_else); */
+  /* return (token_else); */
 }
 while {
-  printf("\n MotCle_while reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+  printf("MotCle_while reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_while); */
+  /* return (token_while); */
 }
 for {
-  printf("\n MotCle_for reconnu \n");
+  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_for); */
+  /* return (token_for); */
 }
 in {
-  printf("\n MotCle_in reconnu \n");
+  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_in); */
+  /* return (token_in); */
 }
 range {
-  printf("\n MotCle_range reconnu \n");
+  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_range); */
+  /* return (token_range); */
 }
 int {
-  printf("\n MotCle_int reconnu \n");
+  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
+  printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_int); */
+  /* return (token_int); */
 }
 float {
-  printf("\n MotCle_float reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+  printf("MotCle_float reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_float); */
+  /* return (token_float); */
 }
 char {
-  printf("\n MotCle_char reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
+  printf("MotCle_char reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_char); */
+  /* return (token_char); */
 }
 bool {
-  printf("\n MotCle_bool reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+  printf("MotCle_bool reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_MotCle_bool); */
+  /* return (token_bool); */
 }
 as {
-  printf("\n MotCle_as reconnu \n");
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+  printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
 }
 and {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
 }
 or {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
 }
 not {
+  printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
 }
@@ -127,7 +144,6 @@ printf("l entite lexical idf est reconnue %s \n",yytext); }
 "\n" {nb_ligne++; nb_colonne=1;}
 . {printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne); nb_colonne=nb_colonne+ strlen(yytext);}
 %%
-
 int main() {
     yylex();
     return 0;
