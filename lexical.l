@@ -11,12 +11,13 @@ INT [-+]?{chiffre}+
 FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
+Space ["    "|\t]
 %%
-("    "|[\t]) { 
+{Space} { 
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   nb_colonne += yyleng; 	
   printf ("indentation \n");
-  return token_indentation;
+  //return token_indentation;
 }
 import {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
@@ -269,7 +270,7 @@ not {
     printf("Commentaire: %s\n", yytext);
     nb_colonne+=strlen(yytext);
 }
-[ \t] {nb_colonne=nb_colonne+ strlen(yytext);}
+[ ] {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
 . {
     printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
