@@ -12,6 +12,12 @@ FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
 %%
+("    "|[\t]) { 
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
+  nb_colonne += yyleng; 	
+  printf ("indentation \n");
+  return token_indentation;
+}
 import {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
   printf("MotCle_import reconnu \n");
