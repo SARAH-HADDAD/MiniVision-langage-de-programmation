@@ -1,13 +1,13 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-int nb_colonne = 1, nb_ligne = 1;
+extern int nb_colonne = 1, nb_ligne = 1;
 %}
-lettre [a-z]
+lettre [a-zA-Z]
 chiffre [0-9]
 IDF [A-Z]({lettre}|{chiffre})*
 COMMENT ^#[^\n]*\n
-INT [+-]{chiffre}+|{chiffre}+
+INT [-+]?{chiffre}+
 FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
@@ -16,235 +16,235 @@ import {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
   printf("MotCle_import reconnu \n");
   nb_colonne += yyleng;
-  // return (token_import);
+  return (token_import);
 }
 numpy {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);     
   printf("Mc_numpy reconnu : %s \n", yytext);
   nb_colonne += yyleng;
-  // return (token_numpy);
+  return (token_numpy);
 }
 "matplotlib.pyplot" {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_matplotlib.pyplot reconnu : %s \n", yytext);
   nb_colonne += yyleng;
-  // return (token_matplotlib.pyplot;
+  return (token_matplotlib.pyplot);
 }
 if {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_if reconnu \n");
   nb_colonne += yyleng;
-  // return (token_if);
+  return (token_if);
 }
 else {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_else reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_else); */
+   return (token_else); 
 }
 while {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_while reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_while); */
+   return (token_while); 
 }
 for {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_for); */
+   return (token_for); 
 }
 in {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_in); */
+   return (token_in); 
 }
 range {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_range); */
+   return (token_range); 
 }
 int {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_int); */
+   return (token_int); 
 }
 float {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_float reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_float); */
+   return (token_float); 
 }
 char {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_char reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_char); */
+   return (token_char); 
 }
 bool {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_bool reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_bool); */
+   return (token_bool); 
 }
 as {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_as); */
+   return (token_as); 
 }
 and {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
-  /* return (token_and); */
+   return (token_and); 
 }
 or {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
-  /* return (token_or); */
+   return (token_or); 
 }
 not {
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
-  /* return (token_not); */
+   return (token_not); 
 }
 {INT} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constEntiere); */
+     return (token_constEntiere); 
 }
 {FLOAT} { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constFlottante); */
+     return (token_constFlottante); 
 }
 {CHAR} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante char: %s\n", yytext);
     nb_colonne += yyleng;
-    /* return (token_constChar); */
+     return (token_constChar); 
 }
 {BOOL} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante bool: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constBool); */
+     return (token_constBool); 
 }
 "(" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParOuvrante reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_ParOuvrante);*/
+    return (token_ParOuvrante);
 }
 ")" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParFermante reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_ParFermante);*/
+    return (token_ParFermante);
 }
 "[" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochOuvrante reconnu \n"); 
     nb_colonne += yyleng; 
-    /*return (token_CrochOuvrante);*/
+    return (token_CrochOuvrante);
 }
 "]" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochFermante reconnu \n"); 
     nb_colonne += yyleng; 
-    /*return (token_CrochFermante);*/
+    return (token_CrochFermante);
     }
 "," {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_virgule reconnu \n"); 
     nb_colonne += yyleng;       
-    /*return (token_virgule);*/
+    return (token_virgule);
     }
 ":" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Sep_Deux_Points reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_Deux_Points);*/
+    return (token_Deux_Points);
     }
 "%" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_Pourcentage reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_Pourcentage);*/
+    return (token_Pourcentage);
     }
 "+" { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: +\n"); 
     nb_colonne += yyleng; 
-    /*return (token_plus);*/
+    return (token_plus);
     }
 "-"	{
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur arithmetique: -\n"); 
     nb_colonne += yyleng;
-    /*return (token_moins);*/
+    return (token_moins);
     }
 "*" { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: *\n"); 
     nb_colonne += yyleng;
-    /*return (token_fois);*/
+    return (token_fois);
     }
 "/" { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: /\n"); 
     nb_colonne += yyleng;
-    /*return (token_divise);*/
+    return (token_divise);
     }
 ">=" { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >=\n"); 
     nb_colonne += yyleng;
-    /*return (token_superieurEgal);*/
+    return (token_superieurEgal);
     }
 ">"	{ 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >\n"); 
     nb_colonne += yyleng;
-    /*return (token_superieur);*/
+    return (token_superieur);
     }
 "<=" { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: <=\n"); 
     nb_colonne += yyleng;
-    /*return (token_inferieurEgal);*/
+    return (token_inferieurEgal);
     }
 "<" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: <\n"); 
     nb_colonne += yyleng;
-    /*return (token_inferieur);*/
+    return (token_inferieur);
     }
 "==" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: ==\n"); 
     nb_colonne += yyleng;
-    /*return (token_egal);*/
+    return (token_egal);
     }
 "!=" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: !=\n"); 
     nb_colonne += yyleng;
-    /*return (token_different);*/
+    return (token_different);
     }
 "=" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur d'affectation: =\n"); 
     nb_colonne += yyleng;
-    /*return (token_affectation);*/
+    return (token_affectation);
     }
 {IDF} { 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
@@ -255,7 +255,7 @@ not {
         else{
             printf("Idf reconnue : %s \n",yytext);
             nb_colonne += yyleng;
-            /*return (token_idf);*/
+            return (token_idf);
             } 
 }
 {COMMENT} {
@@ -269,9 +269,4 @@ not {
     printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
     nb_colonne=nb_colonne+ strlen(yytext);
     //exit(1);
-}
-%%
-int main() {
-    yylex();
-    return 0;
 }

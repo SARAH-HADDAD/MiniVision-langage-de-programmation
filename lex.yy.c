@@ -330,8 +330,6 @@ void yyfree (void *  );
 
 #define YY_AT_BOL() (YY_CURRENT_BUFFER_LVALUE->yy_at_bol)
 
-/* Begin user sect3 */
-
 typedef unsigned char YY_CHAR;
 
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
@@ -422,7 +420,7 @@ static yyconst flex_int32_t yy_meta[45] =
     {   0,
         1,    1,    1,    1,    1,    1,    2,    1,    1,    1,
         1,    1,    1,    1,    1,    3,    1,    1,    1,    1,
-        1,    1,    1,    3,    3,    3,    3,    3,    3,    3,
+        3,    1,    1,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3
     } ;
@@ -525,8 +523,8 @@ char *yytext;
 #line 2 "lexical.l"
 #include <stdio.h>
 #include <stdlib.h>
-int nb_colonne = 1, nb_ligne = 1;
-#line 530 "lex.yy.c"
+extern int nb_colonne = 1, nb_ligne = 1;
+#line 528 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -713,7 +711,7 @@ YY_DECL
     
 #line 14 "lexical.l"
 
-#line 717 "lex.yy.c"
+#line 715 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -844,7 +842,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_else reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_else); */
+   return (token_else); 
 }
 	YY_BREAK
 case 6:
@@ -854,7 +852,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_while reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_while); */
+   return (token_while); 
 }
 	YY_BREAK
 case 7:
@@ -864,7 +862,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_for); */
+   return (token_for); 
 }
 	YY_BREAK
 case 8:
@@ -874,7 +872,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_in); */
+   return (token_in); 
 }
 	YY_BREAK
 case 9:
@@ -884,7 +882,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_range); */
+   return (token_range); 
 }
 	YY_BREAK
 case 10:
@@ -894,7 +892,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_int); */
+   return (token_int); 
 }
 	YY_BREAK
 case 11:
@@ -904,7 +902,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_float reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_float); */
+   return (token_float); 
 }
 	YY_BREAK
 case 12:
@@ -914,7 +912,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_char reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_char); */
+   return (token_char); 
 }
 	YY_BREAK
 case 13:
@@ -924,7 +922,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_bool reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_bool); */
+   return (token_bool); 
 }
 	YY_BREAK
 case 14:
@@ -934,7 +932,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
-  /* return (token_as); */
+   return (token_as); 
 }
 	YY_BREAK
 case 15:
@@ -944,7 +942,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
-  /* return (token_and); */
+   return (token_and); 
 }
 	YY_BREAK
 case 16:
@@ -954,7 +952,7 @@ YY_RULE_SETUP
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
-  /* return (token_or); */
+   return (token_or); 
 }
 	YY_BREAK
 case 17:
@@ -964,7 +962,7 @@ YY_RULE_SETUP
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
-  /* return (token_not); */
+   return (token_not); 
 }
 	YY_BREAK
 case 18:
@@ -974,7 +972,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constEntiere); */
+     return (token_constEntiere); 
 }
 	YY_BREAK
 case 19:
@@ -984,7 +982,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constFlottante); */
+     return (token_constFlottante); 
 }
 	YY_BREAK
 case 20:
@@ -995,7 +993,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante char: %s\n", yytext);
     nb_colonne += yyleng;
-    /* return (token_constChar); */
+     return (token_constChar); 
 }
 	YY_BREAK
 case 21:
@@ -1005,7 +1003,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante bool: %s\n", yytext); 
     nb_colonne += yyleng;
-    /* return (token_constBool); */
+     return (token_constBool); 
 }
 	YY_BREAK
 case 22:
@@ -1015,7 +1013,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParOuvrante reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_ParOuvrante);*/
+    return (token_ParOuvrante);
 }
 	YY_BREAK
 case 23:
@@ -1025,7 +1023,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParFermante reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_ParFermante);*/
+    return (token_ParFermante);
 }
 	YY_BREAK
 case 24:
@@ -1035,7 +1033,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochOuvrante reconnu \n"); 
     nb_colonne += yyleng; 
-    /*return (token_CrochOuvrante);*/
+    return (token_CrochOuvrante);
 }
 	YY_BREAK
 case 25:
@@ -1045,7 +1043,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochFermante reconnu \n"); 
     nb_colonne += yyleng; 
-    /*return (token_CrochFermante);*/
+    return (token_CrochFermante);
     }
 	YY_BREAK
 case 26:
@@ -1055,7 +1053,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_virgule reconnu \n"); 
     nb_colonne += yyleng;       
-    /*return (token_virgule);*/
+    return (token_virgule);
     }
 	YY_BREAK
 case 27:
@@ -1065,7 +1063,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Sep_Deux_Points reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_Deux_Points);*/
+    return (token_Deux_Points);
     }
 	YY_BREAK
 case 28:
@@ -1075,7 +1073,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_Pourcentage reconnu \n"); 
     nb_colonne += yyleng;   
-    /*return (token_Pourcentage);*/
+    return (token_Pourcentage);
     }
 	YY_BREAK
 case 29:
@@ -1085,7 +1083,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: +\n"); 
     nb_colonne += yyleng; 
-    /*return (token_plus);*/
+    return (token_plus);
     }
 	YY_BREAK
 case 30:
@@ -1095,7 +1093,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur arithmetique: -\n"); 
     nb_colonne += yyleng;
-    /*return (token_moins);*/
+    return (token_moins);
     }
 	YY_BREAK
 case 31:
@@ -1105,7 +1103,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: *\n"); 
     nb_colonne += yyleng;
-    /*return (token_fois);*/
+    return (token_fois);
     }
 	YY_BREAK
 case 32:
@@ -1115,7 +1113,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: /\n"); 
     nb_colonne += yyleng;
-    /*return (token_divise);*/
+    return (token_divise);
     }
 	YY_BREAK
 case 33:
@@ -1125,7 +1123,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >=\n"); 
     nb_colonne += yyleng;
-    /*return (token_superieurEgal);*/
+    return (token_superieurEgal);
     }
 	YY_BREAK
 case 34:
@@ -1135,7 +1133,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >\n"); 
     nb_colonne += yyleng;
-    /*return (token_superieur);*/
+    return (token_superieur);
     }
 	YY_BREAK
 case 35:
@@ -1145,7 +1143,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: <=\n"); 
     nb_colonne += yyleng;
-    /*return (token_inferieurEgal);*/
+    return (token_inferieurEgal);
     }
 	YY_BREAK
 case 36:
@@ -1155,7 +1153,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: <\n"); 
     nb_colonne += yyleng;
-    /*return (token_inferieur);*/
+    return (token_inferieur);
     }
 	YY_BREAK
 case 37:
@@ -1165,7 +1163,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: ==\n"); 
     nb_colonne += yyleng;
-    /*return (token_egal);*/
+    return (token_egal);
     }
 	YY_BREAK
 case 38:
@@ -1175,7 +1173,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: !=\n"); 
     nb_colonne += yyleng;
-    /*return (token_different);*/
+    return (token_different);
     }
 	YY_BREAK
 case 39:
@@ -1185,7 +1183,7 @@ YY_RULE_SETUP
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur d'affectation: =\n"); 
     nb_colonne += yyleng;
-    /*return (token_affectation);*/
+    return (token_affectation);
     }
 	YY_BREAK
 case 40:
@@ -1200,7 +1198,7 @@ YY_RULE_SETUP
         else{
             printf("Idf reconnue : %s \n",yytext);
             nb_colonne += yyleng;
-            /*return (token_idf);*/
+            return (token_idf);
             } 
 }
 	YY_BREAK
@@ -1239,7 +1237,7 @@ YY_RULE_SETUP
 #line 273 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1243 "lex.yy.c"
+#line 1241 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2240,10 +2238,3 @@ void yyfree (void * ptr )
 #define YYTABLES_NAME "yytables"
 
 #line 273 "lexical.l"
-
-
-int main() {
-    yylex();
-    return 0;
-}
-
