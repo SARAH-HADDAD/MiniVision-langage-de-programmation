@@ -5,23 +5,15 @@
 extern int nb_colonne, nb_ligne;
 extern YYSTYPE yylval ;
 %}
-lettre [a-zA-Z]
 chiffre [0-9]
-IDF [A-Z]({lettre}|{chiffre})*
-COMMENT ^#[^\n]*\nb
+IDF [a-zA-Z_][a-zA-Z0-9_]*
+COMMENT ^#[^\n]*\n
 INT [-+]?{chiffre}+
 FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
-Space [\t]
-minSpace  " "
+Tab [\t]
 %%
-{Space} { 
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
-  nb_colonne += yyleng; 	
-  printf ("indentation \n");
-  //return token_indentation;
-}
 import {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
   printf("MotCle_import reconnu \n");
@@ -266,17 +258,22 @@ not {
             printf("Idf reconnue : %s \n",yytext);
             nb_colonne += yyleng;
             return (token_idf);
-            } 
-}
+            } }
 {COMMENT} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Commentaire: %s\n", yytext);
     nb_colonne+=strlen(yytext);
 }
-{minSpace} {nb_colonne=nb_colonne+ strlen(yytext);}
+{Tab} { 
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
+  nb_colonne += yyleng; 	
+  printf ("indentation \n");
+  //return token_indentation;
+}
+" " {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
 . {
-    printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
+    printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);
     nb_colonne=nb_colonne+ strlen(yytext);
     //exit(1);
 }

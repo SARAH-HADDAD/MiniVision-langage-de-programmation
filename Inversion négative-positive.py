@@ -11,4 +11,3 @@ for i in range(img.shape[0]):
         img[i, j] = 255 - img[i, j]
 
 print(img)
-
