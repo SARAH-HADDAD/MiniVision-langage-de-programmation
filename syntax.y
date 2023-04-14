@@ -24,20 +24,21 @@ int nb_ligne=1,nb_colonne=1;
 %token token_plus token_moins token_fois token_divise token_Pourcentage
 %token token_superieurEgal token_superieur token_inferieurEgal token_inferieur token_egal token_different
 %token token_affectation
-//%token token_indentation
+%token token_Point
+%token token_indentation
 %start S
 
 %%
-S:   PROGRAM {printf("prog syntaxiquement correct");YYACCEPT;}
+S:   PROGRAM {printf("prog syntaxiquement correct/n");YYACCEPT;}
 
 PROGRAM : LISTE_IMPORT LISTE_DECLARATION LISTE_INSTRUCTION ;
 LISTE_IMPORT: IMPORT LISTE_IMPORT | /*vide*/;
 LISTE_DECLARATION : DECLARATION LISTE_DECLARATION | /*vide*/;
 LISTE_INSTRUCTION : INSTRUCTION LISTE_INSTRUCTION | /*vide*/;
-IMPORT : token_import module_name | token_import module_name token_as token_idf  {printf("import syntaxiquement correct");};
+IMPORT : token_import module_name | token_import module_name token_as token_idf  {printf("import syntaxiquement correct/n");};
 module_name: token_numpy | token_matplotlib 
-DECLARATION : DECLARATION_SIMPLE | DECLARATION_TABLEAU;
-DECLARATION_SIMPLE : token_idf token_affectation EXPRESSION |TYPE token_idf token_affectation EXPRESSION | TYPE token_idf;
+DECLARATION : DECLARATION_VAR | DECLARATION_TABLEAU;
+DECLARATION_VAR : token_idf token_affectation EXPRESSION ;
 DECLARATION_TABLEAU : TYPE token_idf token_CrochOuvrante token_constEntiere token_CrochFermante 
 //| TYPE token_idf token_CrochOuvrante token_constEntiere token_CrochFermante token_affectation token_CrochOuvrante LISTE_EXPRESSION token_CrochFermante
 ;

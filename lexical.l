@@ -140,6 +140,12 @@ not {
     nb_colonne += yyleng;
      return (token_constBool); 
 }
+"." {
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
+    printf("Point reconnu \n"); 
+    nb_colonne += yyleng;   
+    return (token_Point);
+}
 "(" {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParOuvrante reconnu \n"); 
@@ -268,12 +274,14 @@ not {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   nb_colonne += yyleng; 	
   printf ("indentation \n");
-  //return token_indentation;
+  return token_indentation;
 }
 " " {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
 . {
+    print("----------------------------------------------------------------------------------\n");
     printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);
+    print("----------------------------------------------------------------------------------\n");
     nb_colonne=nb_colonne+ strlen(yytext);
     //exit(1);
 }

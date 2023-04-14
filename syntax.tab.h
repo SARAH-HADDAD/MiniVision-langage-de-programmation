@@ -78,7 +78,9 @@
      token_inferieur = 294,
      token_egal = 295,
      token_different = 296,
-     token_affectation = 297
+     token_affectation = 297,
+     token_Point = 298,
+     token_indentation = 299
    };
 #endif
 /* Tokens.  */
@@ -122,6 +124,8 @@
 #define token_egal 295
 #define token_different 296
 #define token_affectation 297
+#define token_Point 298
+#define token_indentation 299
 
 
 
@@ -136,7 +140,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 1529 of yacc.c.  */
-#line 140 "syntax.tab.h"
+#line 144 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
