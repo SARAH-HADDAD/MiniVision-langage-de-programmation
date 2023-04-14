@@ -41,6 +41,7 @@
    enum yytokentype {
      token_import = 258,
      token_numpy = 259,
+     token_matplotlib = 260,
      token_if = 261,
      token_else = 262,
      token_while = 263,
@@ -59,7 +60,7 @@
      token_constFlottante = 276,
      token_constChar = 277,
      token_constBool = 278,
-     token_IDF = 279,
+     token_idf = 279,
      token_ParOuvrante = 280,
      token_ParFermante = 281,
      token_CrochOuvrante = 282,
@@ -83,6 +84,7 @@
 /* Tokens.  */
 #define token_import 258
 #define token_numpy 259
+#define token_matplotlib 260
 #define token_if 261
 #define token_else 262
 #define token_while 263
@@ -101,7 +103,7 @@
 #define token_constFlottante 276
 #define token_constChar 277
 #define token_constBool 278
-#define token_IDF 279
+#define token_idf 279
 #define token_ParOuvrante 280
 #define token_ParFermante 281
 #define token_CrochOuvrante 282
@@ -126,7 +128,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "syntax.y"
+#line 7 "syntax.y"
 {
   int integer; 
   char*  charactere;
@@ -134,7 +136,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 1529 of yacc.c.  */
-#line 138 "syntax.tab.h"
+#line 140 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

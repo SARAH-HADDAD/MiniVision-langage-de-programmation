@@ -68,6 +68,7 @@
    enum yytokentype {
      token_import = 258,
      token_numpy = 259,
+     token_matplotlib = 260,
      token_if = 261,
      token_else = 262,
      token_while = 263,
@@ -86,7 +87,7 @@
      token_constFlottante = 276,
      token_constChar = 277,
      token_constBool = 278,
-     token_IDF = 279,
+     token_idf = 279,
      token_ParOuvrante = 280,
      token_ParFermante = 281,
      token_CrochOuvrante = 282,
@@ -110,6 +111,7 @@
 /* Tokens.  */
 #define token_import 258
 #define token_numpy 259
+#define token_matplotlib 260
 #define token_if 261
 #define token_else 262
 #define token_while 263
@@ -128,7 +130,7 @@
 #define token_constFlottante 276
 #define token_constChar 277
 #define token_constBool 278
-#define token_IDF 279
+#define token_idf 279
 #define token_ParOuvrante 280
 #define token_ParFermante 281
 #define token_CrochOuvrante 282
@@ -158,11 +160,6 @@
 #include <stdio.h>
 #include <string.h>
 int nb_ligne=1,nb_colonne=1;
-int yyerror(char* msg)
-{printf("-----------------------------------------------------\n");
-printf("Erreur syntaxique dans la ligne : %d colonne : %d\n",nb_ligne,nb_colonne);
-return 0;
-}
 
 
 /* Enabling traces.  */
@@ -185,7 +182,7 @@ return 0;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 12 "syntax.y"
+#line 7 "syntax.y"
 {
   int integer; 
   char*  charactere;
@@ -193,7 +190,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 193 of yacc.c.  */
-#line 197 "syntax.tab.c"
+#line 194 "syntax.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -206,7 +203,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 210 "syntax.tab.c"
+#line 207 "syntax.tab.c"
 
 #ifdef short
 # undef short
@@ -521,14 +518,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    36,    36,    38,    39,    39,    40,    40,    41,    41,
-      42,    42,    43,    43,    44,    44,    45,    45,    45,    46,
-      49,    49,    49,    49,    50,    50,    50,    50,    51,    52,
-      53,    53,    54,    55,    56,    58,    58,    59,    59,    59,
-      59,    59,    59,    59,    59,    60,    61,    62,    63,    63,
-      63,    63,    63,    63,    63,    63,    63,    63,    64,    65,
-      66,    67,    68,    69,    69,    69,    69,    70,    70,    71,
-      71,    71,    72,    72,    72,    72,    72,    72
+       0,    31,    31,    33,    34,    34,    35,    35,    36,    36,
+      37,    37,    38,    38,    39,    39,    40,    40,    40,    41,
+      44,    44,    44,    44,    45,    45,    45,    45,    46,    47,
+      48,    48,    49,    50,    51,    53,    53,    54,    54,    54,
+      54,    54,    54,    54,    54,    55,    56,    57,    58,    58,
+      58,    58,    58,    58,    58,    58,    58,    58,    59,    60,
+      61,    62,    63,    64,    64,    64,    64,    65,    65,    66,
+      66,    66,    67,    67,    67,    67,    67,    67
 };
 #endif
 
@@ -538,14 +535,14 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "token_import", "token_numpy",
-  "token_matplotlib.pyplot", "token_if", "token_else", "token_while",
-  "token_for", "token_in", "token_range", "token_int", "token_float",
-  "token_char", "token_bool", "token_as", "token_and", "token_or",
-  "token_not", "token_constEntiere", "token_constFlottante",
-  "token_constChar", "token_constBool", "token_IDF", "token_ParOuvrante",
-  "token_ParFermante", "token_CrochOuvrante", "token_CrochFermante",
-  "token_virgule", "token_Deux_Points", "token_plus", "token_moins",
-  "token_fois", "token_divise", "token_Pourcentage", "token_superieurEgal",
+  "token_matplotlib", "token_if", "token_else", "token_while", "token_for",
+  "token_in", "token_range", "token_int", "token_float", "token_char",
+  "token_bool", "token_as", "token_and", "token_or", "token_not",
+  "token_constEntiere", "token_constFlottante", "token_constChar",
+  "token_constBool", "token_idf", "token_ParOuvrante", "token_ParFermante",
+  "token_CrochOuvrante", "token_CrochFermante", "token_virgule",
+  "token_Deux_Points", "token_plus", "token_moins", "token_fois",
+  "token_divise", "token_Pourcentage", "token_superieurEgal",
   "token_superieur", "token_inferieurEgal", "token_inferieur",
   "token_egal", "token_different", "token_affectation", "$accept", "S",
   "PROGRAM", "LISTE_IMPORT", "LISTE_DECLARATION", "LISTE_INSTRUCTION",
@@ -1537,18 +1534,18 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 36 "syntax.y"
+#line 31 "syntax.y"
     {printf("prog syntaxiquement correct");YYACCEPT;;}
     break;
 
   case 11:
-#line 42 "syntax.y"
+#line 37 "syntax.y"
     {printf("import syntaxiquement correct");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1552 "syntax.tab.c"
+#line 1549 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1762,28 +1759,13 @@ yyreturn:
 }
 
 
-#line 73 "syntax.y"
+#line 69 "syntax.y"
 
-int main(int argc, char** argv)
-{
-  if(argc>1)
-  {
-    yyin=fopen(argv[1],"r");
-    if(yyin==NULL)
-    {
-      printf("Erreur d'ouverture du fichier %s",argv[1]);
-        return 1;
-    }
-    }
-    else
-    {
-      printf("Erreur d'ouverture du fichier %s",argv[1]);
-      return 1;
-    }
-    yyparse();
-    fclose(yyin);
-    return 0;
-}
+
+int main(){
+    yyparse(); // analyseur lexical
+    yywrap(); // analyseur syntaxique
+    return 0;}
 
 
 

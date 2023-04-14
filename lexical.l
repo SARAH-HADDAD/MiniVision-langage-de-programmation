@@ -1,17 +1,20 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-extern int nb_colonne = 1, nb_ligne = 1;
+#include "syntax.tab.h"
+extern int nb_colonne, nb_ligne;
+extern YYSTYPE yylval ;
 %}
 lettre [a-zA-Z]
 chiffre [0-9]
 IDF [A-Z]({lettre}|{chiffre})*
-COMMENT ^#[^\n]*\n
+COMMENT ^#[^\n]*\nb
 INT [-+]?{chiffre}+
 FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
-Space ["    "|\t]
+Space [\t]
+minSpace  " "
 %%
 {Space} { 
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
@@ -35,7 +38,7 @@ numpy {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_matplotlib.pyplot reconnu : %s \n", yytext);
   nb_colonne += yyleng;
-  return (token_matplotlib.pyplot);
+  return (token_matplotlib);
 }
 if {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
@@ -270,10 +273,11 @@ not {
     printf("Commentaire: %s\n", yytext);
     nb_colonne+=strlen(yytext);
 }
-[ ] {nb_colonne=nb_colonne+ strlen(yytext);}
+{minSpace} {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {nb_ligne++; nb_colonne=1;}
 . {
     printf("erreur lexical dans la ligne : %d colonne :%d  \n",nb_ligne,nb_colonne);
     nb_colonne=nb_colonne+ strlen(yytext);
     //exit(1);
 }
+%%
