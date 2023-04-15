@@ -1,7 +1,7 @@
 import numpy as np
 # Charger l'image en tant que liste de listes
-# ma_liste = []
-# ma_liste = [1, 2, 3, 4, 5]
+ma_liste = []
+ma_liste = [1, 2, 3, 4, 5]
 img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
 
 # Parcourir chaque pixel de l'image et inverser négativement-positivement

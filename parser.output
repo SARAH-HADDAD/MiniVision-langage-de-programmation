@@ -1,0 +1,984 @@
+Terminals which are not used
+
+   token_int
+   token_float
+   token_char
+   token_bool
+   token_and
+   token_or
+   token_not
+   token_plus
+   token_moins
+   token_fois
+   token_divise
+   token_Pourcentage
+   token_superieurEgal
+   token_superieur
+   token_inferieurEgal
+   token_inferieur
+   token_egal
+   token_different
+   token_Point
+   token_indentation
+
+
+State 4 conflicts: 1 shift/reduce
+State 12 conflicts: 1 shift/reduce
+State 13 conflicts: 1 shift/reduce
+State 23 conflicts: 4 shift/reduce
+State 62 conflicts: 4 shift/reduce
+State 63 conflicts: 4 shift/reduce
+State 65 conflicts: 4 shift/reduce
+State 67 conflicts: 1 shift/reduce
+State 75 conflicts: 4 shift/reduce
+State 79 conflicts: 4 shift/reduce
+
+
+Grammar
+
+    0 $accept: S $end
+
+    1 S: PROGRAM
+
+    2 PROGRAM: LISTE_IMPORT LIST_DECLARATION LISTE_INSTRUCTION
+
+    3 LISTE_IMPORT: IMPORT LISTE_IMPORT
+    4             | /* empty */
+
+    5 IMPORT: token_import module_name
+    6       | token_import module_name token_as token_idf
+
+    7 module_name: token_numpy
+    8            | token_matplotlib
+
+    9 LIST_DECLARATION: DECLARATION_VAR LIST_DECLARATION
+   10                 | DECLARATION_TABLEAU LIST_DECLARATION
+   11                 | /* empty */
+
+   12 DECLARATION_VAR: AFFECTATION
+
+   13 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+   14                    | token_idf token_affectation token_CrochOuvrante token_CrochFermante
+   15                    | token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante
+
+   16 LIST_EXPRESSION: EXPRESSION
+   17                | EXPRESSION token_virgule LIST_EXPRESSION
+
+   18 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU
+   19             | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+
+   20 LISTE_INSTRUCTION: INSTRUCTION LISTE_INSTRUCTION
+   21                  | /* empty */
+
+   22 INSTRUCTION: AFFECTATION
+   23            | IF
+   24            | WHILE
+   25            | FOR
+
+   26 AFFECTATION: token_idf token_affectation EXPRESSION
+
+   27 EXPRESSION: token_idf
+   28           | token_constBool
+   29           | token_constChar
+   30           | token_constEntiere
+   31           | token_constFlottante
+
+   32 IF: token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION ELSE
+
+   33 ELSE: token_else token_Deux_Points LISTE_INSTRUCTION
+   34     | /* empty */
+
+   35 WHILE: token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+   37    | token_for token_idf token_in token_idf token_Deux_Points LISTE_INSTRUCTION
+
+   38 CONDITION: EXPRESSION
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+token_import (258) 5 6
+token_numpy (259) 7
+token_matplotlib (260) 8
+token_if (261) 32
+token_else (262) 33
+token_while (263) 35
+token_for (264) 36 37
+token_in (265) 36 37
+token_range (266) 36
+token_int (267)
+token_float (268)
+token_char (269)
+token_bool (270)
+token_as (271) 6
+token_and (272)
+token_or (273)
+token_not (274)
+token_constEntiere (275) 30 36
+token_constFlottante (276) 31
+token_constChar (277) 29
+token_constBool (278) 28
+token_idf (279) 6 13 14 15 26 27 36 37
+token_ParOuvrante (280) 32 35 36
+token_ParFermante (281) 32 35 36
+token_CrochOuvrante (282) 13 14 15 18 19
+token_CrochFermante (283) 13 14 15 18 19
+token_virgule (284) 17 18 36
+token_Deux_Points (285) 32 33 35 36 37
+token_plus (286)
+token_moins (287)
+token_fois (288)
+token_divise (289)
+token_Pourcentage (290)
+token_superieurEgal (291)
+token_superieur (292)
+token_inferieurEgal (293)
+token_inferieur (294)
+token_egal (295)
+token_different (296)
+token_affectation (297) 13 14 15 26
+token_Point (298)
+token_indentation (299)
+
+
+Nonterminals, with rules where they appear
+
+$accept (45)
+    on left: 0
+S (46)
+    on left: 1, on right: 0
+PROGRAM (47)
+    on left: 2, on right: 1
+LISTE_IMPORT (48)
+    on left: 3 4, on right: 2 3
+IMPORT (49)
+    on left: 5 6, on right: 3
+module_name (50)
+    on left: 7 8, on right: 5 6
+LIST_DECLARATION (51)
+    on left: 9 10 11, on right: 2 9 10
+DECLARATION_VAR (52)
+    on left: 12, on right: 9
+DECLARATION_TABLEAU (53)
+    on left: 13 14 15, on right: 10
+LIST_EXPRESSION (54)
+    on left: 16 17, on right: 13 17 18 19
+LIST_TABLEAU (55)
+    on left: 18 19, on right: 15 18
+LISTE_INSTRUCTION (56)
+    on left: 20 21, on right: 2 20 32 33 35 36 37
+INSTRUCTION (57)
+    on left: 22 23 24 25, on right: 20
+AFFECTATION (58)
+    on left: 26, on right: 12 22
+EXPRESSION (59)
+    on left: 27 28 29 30 31, on right: 16 17 26 38
+IF (60)
+    on left: 32, on right: 23
+ELSE (61)
+    on left: 33 34, on right: 32
+WHILE (62)
+    on left: 35, on right: 24
+FOR (63)
+    on left: 36 37, on right: 25
+CONDITION (64)
+    on left: 38, on right: 32 35
+
+
+state 0
+
+    0 $accept: . S $end
+
+    token_import  shift, and go to state 1
+
+    $default  reduce using rule 4 (LISTE_IMPORT)
+
+    S             go to state 2
+    PROGRAM       go to state 3
+    LISTE_IMPORT  go to state 4
+    IMPORT        go to state 5
+
+
+state 1
+
+    5 IMPORT: token_import . module_name
+    6       | token_import . module_name token_as token_idf
+
+    token_numpy       shift, and go to state 6
+    token_matplotlib  shift, and go to state 7
+
+    module_name  go to state 8
+
+
+state 2
+
+    0 $accept: S . $end
+
+    $end  shift, and go to state 9
+
+
+state 3
+
+    1 S: PROGRAM .
+
+    $default  reduce using rule 1 (S)
+
+
+state 4
+
+    2 PROGRAM: LISTE_IMPORT . LIST_DECLARATION LISTE_INSTRUCTION
+
+    token_idf  shift, and go to state 10
+
+    token_idf  [reduce using rule 11 (LIST_DECLARATION)]
+    $default   reduce using rule 11 (LIST_DECLARATION)
+
+    LIST_DECLARATION     go to state 11
+    DECLARATION_VAR      go to state 12
+    DECLARATION_TABLEAU  go to state 13
+    AFFECTATION          go to state 14
+
+
+state 5
+
+    3 LISTE_IMPORT: IMPORT . LISTE_IMPORT
+
+    token_import  shift, and go to state 1
+
+    $default  reduce using rule 4 (LISTE_IMPORT)
+
+    LISTE_IMPORT  go to state 15
+    IMPORT        go to state 5
+
+
+state 6
+
+    7 module_name: token_numpy .
+
+    $default  reduce using rule 7 (module_name)
+
+
+state 7
+
+    8 module_name: token_matplotlib .
+
+    $default  reduce using rule 8 (module_name)
+
+
+state 8
+
+    5 IMPORT: token_import module_name .
+    6       | token_import module_name . token_as token_idf
+
+    token_as  shift, and go to state 16
+
+    $default  reduce using rule 5 (IMPORT)
+
+
+state 9
+
+    0 $accept: S $end .
+
+    $default  accept
+
+
+state 10
+
+   13 DECLARATION_TABLEAU: token_idf . token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+   14                    | token_idf . token_affectation token_CrochOuvrante token_CrochFermante
+   15                    | token_idf . token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante
+   26 AFFECTATION: token_idf . token_affectation EXPRESSION
+
+    token_affectation  shift, and go to state 17
+
+
+state 11
+
+    2 PROGRAM: LISTE_IMPORT LIST_DECLARATION . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    $default  reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 22
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 12
+
+    9 LIST_DECLARATION: DECLARATION_VAR . LIST_DECLARATION
+
+    token_idf  shift, and go to state 10
+
+    token_idf  [reduce using rule 11 (LIST_DECLARATION)]
+    $default   reduce using rule 11 (LIST_DECLARATION)
+
+    LIST_DECLARATION     go to state 28
+    DECLARATION_VAR      go to state 12
+    DECLARATION_TABLEAU  go to state 13
+    AFFECTATION          go to state 14
+
+
+state 13
+
+   10 LIST_DECLARATION: DECLARATION_TABLEAU . LIST_DECLARATION
+
+    token_idf  shift, and go to state 10
+
+    token_idf  [reduce using rule 11 (LIST_DECLARATION)]
+    $default   reduce using rule 11 (LIST_DECLARATION)
+
+    LIST_DECLARATION     go to state 29
+    DECLARATION_VAR      go to state 12
+    DECLARATION_TABLEAU  go to state 13
+    AFFECTATION          go to state 14
+
+
+state 14
+
+   12 DECLARATION_VAR: AFFECTATION .
+
+    $default  reduce using rule 12 (DECLARATION_VAR)
+
+
+state 15
+
+    3 LISTE_IMPORT: IMPORT LISTE_IMPORT .
+
+    $default  reduce using rule 3 (LISTE_IMPORT)
+
+
+state 16
+
+    6 IMPORT: token_import module_name token_as . token_idf
+
+    token_idf  shift, and go to state 30
+
+
+state 17
+
+   13 DECLARATION_TABLEAU: token_idf token_affectation . token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+   14                    | token_idf token_affectation . token_CrochOuvrante token_CrochFermante
+   15                    | token_idf token_affectation . token_CrochOuvrante LIST_TABLEAU token_CrochFermante
+   26 AFFECTATION: token_idf token_affectation . EXPRESSION
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+    token_CrochOuvrante   shift, and go to state 36
+
+    EXPRESSION  go to state 37
+
+
+state 18
+
+   32 IF: token_if . token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION ELSE
+
+    token_ParOuvrante  shift, and go to state 38
+
+
+state 19
+
+   35 WHILE: token_while . token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_ParOuvrante  shift, and go to state 39
+
+
+state 20
+
+   36 FOR: token_for . token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+   37    | token_for . token_idf token_in token_idf token_Deux_Points LISTE_INSTRUCTION
+
+    token_idf  shift, and go to state 40
+
+
+state 21
+
+   26 AFFECTATION: token_idf . token_affectation EXPRESSION
+
+    token_affectation  shift, and go to state 41
+
+
+state 22
+
+    2 PROGRAM: LISTE_IMPORT LIST_DECLARATION LISTE_INSTRUCTION .
+
+    $default  reduce using rule 2 (PROGRAM)
+
+
+state 23
+
+   20 LISTE_INSTRUCTION: INSTRUCTION . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 42
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 24
+
+   22 INSTRUCTION: AFFECTATION .
+
+    $default  reduce using rule 22 (INSTRUCTION)
+
+
+state 25
+
+   23 INSTRUCTION: IF .
+
+    $default  reduce using rule 23 (INSTRUCTION)
+
+
+state 26
+
+   24 INSTRUCTION: WHILE .
+
+    $default  reduce using rule 24 (INSTRUCTION)
+
+
+state 27
+
+   25 INSTRUCTION: FOR .
+
+    $default  reduce using rule 25 (INSTRUCTION)
+
+
+state 28
+
+    9 LIST_DECLARATION: DECLARATION_VAR LIST_DECLARATION .
+
+    $default  reduce using rule 9 (LIST_DECLARATION)
+
+
+state 29
+
+   10 LIST_DECLARATION: DECLARATION_TABLEAU LIST_DECLARATION .
+
+    $default  reduce using rule 10 (LIST_DECLARATION)
+
+
+state 30
+
+    6 IMPORT: token_import module_name token_as token_idf .
+
+    $default  reduce using rule 6 (IMPORT)
+
+
+state 31
+
+   30 EXPRESSION: token_constEntiere .
+
+    $default  reduce using rule 30 (EXPRESSION)
+
+
+state 32
+
+   31 EXPRESSION: token_constFlottante .
+
+    $default  reduce using rule 31 (EXPRESSION)
+
+
+state 33
+
+   29 EXPRESSION: token_constChar .
+
+    $default  reduce using rule 29 (EXPRESSION)
+
+
+state 34
+
+   28 EXPRESSION: token_constBool .
+
+    $default  reduce using rule 28 (EXPRESSION)
+
+
+state 35
+
+   27 EXPRESSION: token_idf .
+
+    $default  reduce using rule 27 (EXPRESSION)
+
+
+state 36
+
+   13 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante . LIST_EXPRESSION token_CrochFermante
+   14                    | token_idf token_affectation token_CrochOuvrante . token_CrochFermante
+   15                    | token_idf token_affectation token_CrochOuvrante . LIST_TABLEAU token_CrochFermante
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+    token_CrochOuvrante   shift, and go to state 43
+    token_CrochFermante   shift, and go to state 44
+
+    LIST_EXPRESSION  go to state 45
+    LIST_TABLEAU     go to state 46
+    EXPRESSION       go to state 47
+
+
+state 37
+
+   26 AFFECTATION: token_idf token_affectation EXPRESSION .
+
+    $default  reduce using rule 26 (AFFECTATION)
+
+
+state 38
+
+   32 IF: token_if token_ParOuvrante . CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION ELSE
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+
+    EXPRESSION  go to state 48
+    CONDITION   go to state 49
+
+
+state 39
+
+   35 WHILE: token_while token_ParOuvrante . CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+
+    EXPRESSION  go to state 48
+    CONDITION   go to state 50
+
+
+state 40
+
+   36 FOR: token_for token_idf . token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+   37    | token_for token_idf . token_in token_idf token_Deux_Points LISTE_INSTRUCTION
+
+    token_in  shift, and go to state 51
+
+
+state 41
+
+   26 AFFECTATION: token_idf token_affectation . EXPRESSION
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+
+    EXPRESSION  go to state 37
+
+
+state 42
+
+   20 LISTE_INSTRUCTION: INSTRUCTION LISTE_INSTRUCTION .
+
+    $default  reduce using rule 20 (LISTE_INSTRUCTION)
+
+
+state 43
+
+   18 LIST_TABLEAU: token_CrochOuvrante . LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU
+   19             | token_CrochOuvrante . LIST_EXPRESSION token_CrochFermante
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+
+    LIST_EXPRESSION  go to state 52
+    EXPRESSION       go to state 47
+
+
+state 44
+
+   14 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante token_CrochFermante .
+
+    $default  reduce using rule 14 (DECLARATION_TABLEAU)
+
+
+state 45
+
+   13 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION . token_CrochFermante
+
+    token_CrochFermante  shift, and go to state 53
+
+
+state 46
+
+   15 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante LIST_TABLEAU . token_CrochFermante
+
+    token_CrochFermante  shift, and go to state 54
+
+
+state 47
+
+   16 LIST_EXPRESSION: EXPRESSION .
+   17                | EXPRESSION . token_virgule LIST_EXPRESSION
+
+    token_virgule  shift, and go to state 55
+
+    $default  reduce using rule 16 (LIST_EXPRESSION)
+
+
+state 48
+
+   38 CONDITION: EXPRESSION .
+
+    $default  reduce using rule 38 (CONDITION)
+
+
+state 49
+
+   32 IF: token_if token_ParOuvrante CONDITION . token_ParFermante token_Deux_Points LISTE_INSTRUCTION ELSE
+
+    token_ParFermante  shift, and go to state 56
+
+
+state 50
+
+   35 WHILE: token_while token_ParOuvrante CONDITION . token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_ParFermante  shift, and go to state 57
+
+
+state 51
+
+   36 FOR: token_for token_idf token_in . token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+   37    | token_for token_idf token_in . token_idf token_Deux_Points LISTE_INSTRUCTION
+
+    token_range  shift, and go to state 58
+    token_idf    shift, and go to state 59
+
+
+state 52
+
+   18 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION . token_CrochFermante token_virgule LIST_TABLEAU
+   19             | token_CrochOuvrante LIST_EXPRESSION . token_CrochFermante
+
+    token_CrochFermante  shift, and go to state 60
+
+
+state 53
+
+   13 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante .
+
+    $default  reduce using rule 13 (DECLARATION_TABLEAU)
+
+
+state 54
+
+   15 DECLARATION_TABLEAU: token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante .
+
+    $default  reduce using rule 15 (DECLARATION_TABLEAU)
+
+
+state 55
+
+   17 LIST_EXPRESSION: EXPRESSION token_virgule . LIST_EXPRESSION
+
+    token_constEntiere    shift, and go to state 31
+    token_constFlottante  shift, and go to state 32
+    token_constChar       shift, and go to state 33
+    token_constBool       shift, and go to state 34
+    token_idf             shift, and go to state 35
+
+    LIST_EXPRESSION  go to state 61
+    EXPRESSION       go to state 47
+
+
+state 56
+
+   32 IF: token_if token_ParOuvrante CONDITION token_ParFermante . token_Deux_Points LISTE_INSTRUCTION ELSE
+
+    token_Deux_Points  shift, and go to state 62
+
+
+state 57
+
+   35 WHILE: token_while token_ParOuvrante CONDITION token_ParFermante . token_Deux_Points LISTE_INSTRUCTION
+
+    token_Deux_Points  shift, and go to state 63
+
+
+state 58
+
+   36 FOR: token_for token_idf token_in token_range . token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_ParOuvrante  shift, and go to state 64
+
+
+state 59
+
+   37 FOR: token_for token_idf token_in token_idf . token_Deux_Points LISTE_INSTRUCTION
+
+    token_Deux_Points  shift, and go to state 65
+
+
+state 60
+
+   18 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante . token_virgule LIST_TABLEAU
+   19             | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante .
+
+    token_virgule  shift, and go to state 66
+
+    $default  reduce using rule 19 (LIST_TABLEAU)
+
+
+state 61
+
+   17 LIST_EXPRESSION: EXPRESSION token_virgule LIST_EXPRESSION .
+
+    $default  reduce using rule 17 (LIST_EXPRESSION)
+
+
+state 62
+
+   32 IF: token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points . LISTE_INSTRUCTION ELSE
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 67
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 63
+
+   35 WHILE: token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 68
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 64
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante . token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_constEntiere  shift, and go to state 69
+
+
+state 65
+
+   37 FOR: token_for token_idf token_in token_idf token_Deux_Points . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 70
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 66
+
+   18 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule . LIST_TABLEAU
+
+    token_CrochOuvrante  shift, and go to state 43
+
+    LIST_TABLEAU  go to state 71
+
+
+state 67
+
+   32 IF: token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION . ELSE
+
+    token_else  shift, and go to state 72
+
+    token_else  [reduce using rule 34 (ELSE)]
+    $default    reduce using rule 34 (ELSE)
+
+    ELSE  go to state 73
+
+
+state 68
+
+   35 WHILE: token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION .
+
+    $default  reduce using rule 35 (WHILE)
+
+
+state 69
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere . token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_virgule  shift, and go to state 74
+
+
+state 70
+
+   37 FOR: token_for token_idf token_in token_idf token_Deux_Points LISTE_INSTRUCTION .
+
+    $default  reduce using rule 37 (FOR)
+
+
+state 71
+
+   18 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU .
+
+    $default  reduce using rule 18 (LIST_TABLEAU)
+
+
+state 72
+
+   33 ELSE: token_else . token_Deux_Points LISTE_INSTRUCTION
+
+    token_Deux_Points  shift, and go to state 75
+
+
+state 73
+
+   32 IF: token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points LISTE_INSTRUCTION ELSE .
+
+    $default  reduce using rule 32 (IF)
+
+
+state 74
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule . token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_constEntiere  shift, and go to state 76
+
+
+state 75
+
+   33 ELSE: token_else token_Deux_Points . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 77
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 76
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere . token_ParFermante token_Deux_Points LISTE_INSTRUCTION
+
+    token_ParFermante  shift, and go to state 78
+
+
+state 77
+
+   33 ELSE: token_else token_Deux_Points LISTE_INSTRUCTION .
+
+    $default  reduce using rule 33 (ELSE)
+
+
+state 78
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante . token_Deux_Points LISTE_INSTRUCTION
+
+    token_Deux_Points  shift, and go to state 79
+
+
+state 79
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points . LISTE_INSTRUCTION
+
+    token_if     shift, and go to state 18
+    token_while  shift, and go to state 19
+    token_for    shift, and go to state 20
+    token_idf    shift, and go to state 21
+
+    token_if     [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_while  [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_for    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    token_idf    [reduce using rule 21 (LISTE_INSTRUCTION)]
+    $default     reduce using rule 21 (LISTE_INSTRUCTION)
+
+    LISTE_INSTRUCTION  go to state 80
+    INSTRUCTION        go to state 23
+    AFFECTATION        go to state 24
+    IF                 go to state 25
+    WHILE              go to state 26
+    FOR                go to state 27
+
+
+state 80
+
+   36 FOR: token_for token_idf token_in token_range token_ParOuvrante token_constEntiere token_virgule token_constEntiere token_ParFermante token_Deux_Points LISTE_INSTRUCTION .
+
+    $default  reduce using rule 36 (FOR)
