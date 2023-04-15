@@ -3,6 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 int nb_ligne=1,nb_colonne=1;
+
+int yylex(void);
+void yyerror (const char *str) {
+    fprintf (stderr, "error: %s\n", str);
+}
+int yywrap(void);
 %}
 %union{
   int integer; 
@@ -30,11 +36,14 @@ int nb_ligne=1,nb_colonne=1;
 
 %%
 S:   PROGRAM {printf("prog syntaxiquement correct\n");YYACCEPT;}
-PROGRAM : LISTE_IMPORT {printf("prog syntaxiquement correct\n");};
+PROGRAM : LISTE_IMPORT LIST_DECLARATION {printf("prog syntaxiquement correct\n");};
 LISTE_IMPORT: IMPORT LISTE_IMPORT | /*vide*/;
 IMPORT : token_import module_name | token_import module_name token_as token_idf  {printf("import syntaxiquement correct\n");};
 module_name: token_numpy | token_matplotlib 
-
+LIST_DECLARATION : DECLARATION_VAR | DECLARATION_TABLEAU | /*vide*/;
+DECLARATION_VAR : token_idf token_affectation EXPRESSION  {printf("declaration var syntaxiquement correct\n");};
+DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante EXPRESSION token_CrochFermante|token_idf token_affectation token_CrochOuvrante  token_CrochFermante   {printf("declaration tab syntaxiquement correct\n");};
+EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 %%
 
 int main(){
