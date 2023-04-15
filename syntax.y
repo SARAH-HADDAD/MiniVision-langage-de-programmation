@@ -42,7 +42,22 @@ IMPORT : token_import module_name | token_import module_name token_as token_idf 
 module_name: token_numpy | token_matplotlib 
 LIST_DECLARATION : DECLARATION_VAR | DECLARATION_TABLEAU | /*vide*/;
 DECLARATION_VAR : token_idf token_affectation EXPRESSION  {printf("declaration var syntaxiquement correct\n");};
-DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante EXPRESSION token_CrochFermante|token_idf token_affectation token_CrochOuvrante  token_CrochFermante   {printf("declaration tab syntaxiquement correct\n");};
+// ma_liste = [1, 2, 3, 4, 5]
+// img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
+DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+{printf("declaration tab syntaxiquement correct rule 1\n");};
+|token_idf token_affectation token_CrochOuvrante  token_CrochFermante 
+{printf("declaration tab syntaxiquement correct rule 2\n");};
+|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante      
+{printf("declaration tab syntaxiquement correct rule 3\n");};
+LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION 
+{printf("test\n");}
+;
+LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU 
+{printf("liste tableau");} 
+| token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
+{printf("liste tableau");}
+;
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 %%
 
