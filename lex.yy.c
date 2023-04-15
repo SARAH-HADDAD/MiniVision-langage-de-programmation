@@ -1252,17 +1252,19 @@ case 46:
 YY_RULE_SETUP
 #line 281 "lexical.l"
 {
+    printf("----------------------------------------------------------------------------------\n");
     printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);
+    printf("----------------------------------------------------------------------------------\n");
     nb_colonne=nb_colonne+ strlen(yytext);
     //exit(1);
 }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 286 "lexical.l"
+#line 288 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1266 "lex.yy.c"
+#line 1268 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2262,6 +2264,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 286 "lexical.l"
+#line 288 "lexical.l"
 
 
