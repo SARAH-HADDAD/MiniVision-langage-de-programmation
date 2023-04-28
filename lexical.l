@@ -277,7 +277,11 @@ not {
   return token_indentation;
 }
 " " {nb_colonne=nb_colonne+ strlen(yytext);}
-"\n" {nb_ligne++; nb_colonne=1;}
+"\n" {
+    nb_ligne++; nb_colonne=1;
+    printf("newline");
+    return token_newline;
+    }
 . {
     printf("----------------------------------------------------------------------------------\n");
     printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);

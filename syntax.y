@@ -31,7 +31,7 @@ int yywrap(void);
 %token token_superieurEgal token_superieur token_inferieurEgal token_inferieur token_egal token_different
 %token token_affectation
 %token token_Point
-%token token_indentation
+%token token_indentation token_newline
 %start S
 %left token_not
 %left token_and
@@ -44,27 +44,30 @@ int yywrap(void);
 %%
 S: PROGRAM {printf("prog syntaxiquement correct\n");YYACCEPT;}
 
-PROGRAM : LISTE_IMPORT LIST_DECLARATION INSTRUCTION;
+PROGRAM : LISTE_IMPORT LIST_DECLARATION LIST_INST;
 
 LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
-IMPORT : token_import module_name 
-| token_import module_name token_as token_idf;
+IMPORT : token_import module_name token_newline
+| token_import module_name token_as token_idf token_newline;
 
 module_name: token_numpy | token_matplotlib; 
 
 LIST_DECLARATION :  LIST_DECLARATION DECLARATION_TABLEAU| /*vide*/;
-DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante
-|token_idf token_affectation token_CrochOuvrante  token_CrochFermante 
-|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante      
+DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_newline
+|token_idf token_affectation token_CrochOuvrante  token_CrochFermante token_newline
+|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_newline;      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU 
 | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante;
 // INSTRUCTION :BOUCLE INSTRUCTION |AFFECTATION INSTRUCTION |ENTREES INSTRUCTION | Sortie INSTRUCTION |IF_STATEMENT INSTRUCTION| ;
-INSTRUCTION : AFFECTATION INSTRUCTION| /*vide*/;
-AFFECTATION : token_idf token_affectation EXPRESSION;
-
+LIST_INST: INSTRUCTION | INSTRUCTION LIST_INST;
+// | BOUCLE_FOR2| BOUCLE_WHILE
+INSTRUCTION : AFFECTATION | BOUCLE_FOR1  ;
+AFFECTATION : token_idf token_affectation EXPRESSION token_newline;
+BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+LISTE_INSTRUCTION_BOUCLE: LISTE_INSTRUCTION_BOUCLE token_indentation INSTRUCTION token_newline | /*vide*/; 
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 
 %%

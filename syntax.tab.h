@@ -80,7 +80,8 @@
      token_different = 296,
      token_affectation = 297,
      token_Point = 298,
-     token_indentation = 299
+     token_indentation = 299,
+     token_newline = 300
    };
 #endif
 /* Tokens.  */
@@ -126,6 +127,7 @@
 #define token_affectation 297
 #define token_Point 298
 #define token_indentation 299
+#define token_newline 300
 
 
 
@@ -140,7 +142,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 1529 of yacc.c.  */
-#line 144 "syntax.tab.h"
+#line 146 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
