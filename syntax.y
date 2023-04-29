@@ -63,10 +63,12 @@ LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virg
 | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante;
 // INSTRUCTION :BOUCLE INSTRUCTION |AFFECTATION INSTRUCTION |ENTREES INSTRUCTION | Sortie INSTRUCTION |IF_STATEMENT INSTRUCTION| ;
 LIST_INST: INSTRUCTION | INSTRUCTION LIST_INST;
-// | BOUCLE_FOR2| BOUCLE_WHILE
-INSTRUCTION : AFFECTATION | BOUCLE_FOR1  ;
+INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE ;
 AFFECTATION : token_idf token_affectation EXPRESSION token_newline;
-BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
+|token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+BOUCLE_FOR2:token_for token_idf token_in token_idf token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+BOUCLE_WHILE:token_while token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 LISTE_INSTRUCTION_BOUCLE: LISTE_INSTRUCTION_BOUCLE token_indentation INSTRUCTION token_newline | /*vide*/; 
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 

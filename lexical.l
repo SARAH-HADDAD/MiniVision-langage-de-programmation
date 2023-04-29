@@ -267,7 +267,7 @@ not {
             } }
 {COMMENT} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
-    printf("Commentaire: %s\n", yytext);
+    printf("Commentaire: %s", yytext);
     nb_ligne++; nb_colonne=1;
     printf("newline \n");
 }
