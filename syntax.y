@@ -61,20 +61,33 @@ LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU 
 | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante;
-// INSTRUCTION :BOUCLE INSTRUCTION |AFFECTATION INSTRUCTION |ENTREES INSTRUCTION | Sortie INSTRUCTION |IF_STATEMENT INSTRUCTION| ;
+
 LIST_INST: INSTRUCTION | INSTRUCTION LIST_INST;
 // | ENTREES | Sortie
-INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_STATEMENT;
-AFFECTATION : token_idf token_affectation EXPRESSION token_newline;
+INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT;
+
+AFFECTATION : token_idf token_affectation EXPRESSION token_newline| token_idf token_affectation EXPRESSIONARITHMETIQUE token_newline;
+
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
 |token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+
 BOUCLE_FOR2:token_for token_idf token_in token_idf token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+
 BOUCLE_WHILE:token_while token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
-IF_STATEMENT: token_if token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
-//LISTE_ELSE: token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE | /*vide*/;
-LISTE_INSTRUCTION_BOUCLE: LISTE_INSTRUCTION_BOUCLE token_indentation INSTRUCTION token_newline | /*vide*/; 
+
+IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
+
+IF_CONDITION:token_if token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+
+ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+
+LISTE_INSTRUCTION_BOUCLE: LISTE_INSTRUCTION_BOUCLE token_indentation INSTRUCTION token_newline | INSTRUCTION token_newline; 
+
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 
+OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
+
+EXPRESSIONARITHMETIQUE:  |EXPRESSION OPERATEURSARITHMETIQUE EXPRESSIONARITHMETIQUE|EXPRESSION OPERATEURSARITHMETIQUE EXPRESSION;
 %%
 
 int main(){
