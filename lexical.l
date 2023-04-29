@@ -268,6 +268,7 @@ not {
 {COMMENT} {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Commentaire: %s\n", yytext);
+    nb_ligne++; nb_colonne=1;
     nb_colonne+=strlen(yytext);
 }
 {Tab} { 
@@ -279,7 +280,7 @@ not {
 " " {nb_colonne=nb_colonne+ strlen(yytext);}
 "\n" {
     nb_ligne++; nb_colonne=1;
-    printf("newline");
+    printf("\nnewline \n");
     return token_newline;
     }
 . {

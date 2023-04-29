@@ -7,7 +7,6 @@ img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
 # Parcourir chaque pixel de l'image et inverser négativement-positivement
 for i in range(200,4):
     img=34
-
 # print(img)
 # len
 # img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]

@@ -1248,7 +1248,7 @@ YY_RULE_SETUP
 #line 280 "lexical.l"
 {
     nb_ligne++; nb_colonne=1;
-    printf("newline");
+    printf("\n newline \n");
     return token_newline;
     }
 	YY_BREAK
