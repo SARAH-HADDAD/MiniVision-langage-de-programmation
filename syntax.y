@@ -73,11 +73,11 @@ BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSIO
 
 BOUCLE_FOR2:token_for token_idf token_in token_idf token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
-BOUCLE_WHILE:token_while token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
 IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
 
-IF_CONDITION:token_if token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
 ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
@@ -88,6 +88,13 @@ EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | tok
 OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
 
 EXPRESSIONARITHMETIQUE:  |EXPRESSION OPERATEURSARITHMETIQUE EXPRESSIONARITHMETIQUE|EXPRESSION OPERATEURSARITHMETIQUE EXPRESSION;
+
+EXPRESSIONLOGIQUE: EXPRESSION OPERATEURLOGIQUE EXPRESSION| token_not EXPRESSION;
+OPERATEURLOGIQUE: token_and|token_or;
+
+EXPRESSIONCOMPARAISON: EXPRESSION OPERATEURCOMPARAISON EXPRESSION| EXPRESSION OPERATEURCOMPARAISON EXPRESSIONCOMPARAISON;
+OPERATEURCOMPARAISON: token_inferieur| token_inferieurEgal| token_superieur| token_superieurEgal| token_egal| token_different;
+CONDITION: EXPRESSIONCOMPARAISON| EXPRESSIONLOGIQUE;
 %%
 
 int main(){
