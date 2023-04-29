@@ -1224,12 +1224,13 @@ YY_RULE_SETUP
 {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Commentaire: %s\n", yytext);
-    nb_colonne+=strlen(yytext);
+    nb_ligne++; nb_colonne=1;
+    printf("newline \n");
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 273 "lexical.l"
+#line 274 "lexical.l"
 { 
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   nb_colonne += yyleng; 	
@@ -1239,22 +1240,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 279 "lexical.l"
+#line 280 "lexical.l"
 {nb_colonne=nb_colonne+ strlen(yytext);}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 280 "lexical.l"
+#line 281 "lexical.l"
 {
     nb_ligne++; nb_colonne=1;
-    printf("\n newline \n");
+    printf("newline \n");
     return token_newline;
     }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 285 "lexical.l"
+#line 286 "lexical.l"
 {
     printf("----------------------------------------------------------------------------------\n");
     printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);
@@ -1265,10 +1266,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 292 "lexical.l"
+#line 293 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1272 "lex.yy.c"
+#line 1273 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2268,6 +2269,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 292 "lexical.l"
+#line 293 "lexical.l"
 
 
