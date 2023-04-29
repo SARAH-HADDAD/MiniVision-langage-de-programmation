@@ -8,8 +8,8 @@ extern YYSTYPE yylval ;
 chiffre [0-9]
 IDF [a-zA-Z_][a-zA-Z0-9_]*
 COMMENT ^#[^\n]*\n
-INT [-+]?{chiffre}+
-FLOAT [+-]({chiffre}+"."{chiffre}+)|({chiffre}+"."{chiffre}+)
+INT "("[+-]{chiffre}+")"|{chiffre}+
+FLOAT \([+-]({chiffre}+"."{chiffre}+)\)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
 Tab [\t]
