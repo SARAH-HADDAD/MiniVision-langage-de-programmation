@@ -62,7 +62,7 @@ LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virgule LIST_TABLEAU 
 | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante;
 
-LIST_INST: INSTRUCTION | INSTRUCTION LIST_INST;
+LIST_INST:INSTRUCTION LIST_INST | INSTRUCTION NEWLINES LIST_INST | /*vide*/;
 // | ENTREES | Sortie
 INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT;
 
@@ -77,12 +77,12 @@ BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deu
 
 IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
 
-IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline token_indentation LISTE_INSTRUCTION_BOUCLE;
+IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
 ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE {printf("else\n");};
 
-LISTE_INSTRUCTION_BOUCLE: INSTRUCTION token_newline  ; 
-
+LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;; 
+// | LISTE_INSTRUCTION_BOUCLE token_newline token_indentation INSTRUCTION token_newline;
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 
 OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;

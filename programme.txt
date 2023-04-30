@@ -3,13 +3,17 @@ import numpy as np
 import numpy as np
 # Charger l'image en tant que liste de listes
 ma_liste = []
+
 ma_liste = [1, 2, 3, 4, 5]
 img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
+x=2
+x=3+0+ma
+
 # Parcourir chaque pixel de l'image et inverser négativement-positivement
 m=(3+3+2*(0+x))
 if ((A-3) and (2<1)) :
     img=34+2
-    x=2+2
+    x=2+2 
 else:
     x=4/x
 # print(img)
