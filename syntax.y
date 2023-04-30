@@ -77,11 +77,11 @@ BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deu
 
 IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
 
-IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE|token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points INSTRUCTION token_newline;
 
 ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE {printf("else\n");};
 
-LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;; 
+LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;
 // | LISTE_INSTRUCTION_BOUCLE token_newline token_indentation INSTRUCTION token_newline;
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 

@@ -12,7 +12,7 @@ INT "("[+-]{chiffre}+")"|{chiffre}+
 FLOAT \([+-]({chiffre}+"."{chiffre}+)\)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
-Tab [\t]
+Tab [\t]+
 %%
 import {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  

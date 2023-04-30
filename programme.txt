@@ -10,12 +10,12 @@ x=2
 x=3+0+ma
 
 # Parcourir chaque pixel de l'image et inverser négativement-positivement
+
 m=(3+3+2*(0+x))
 if ((A-3) and (2<1)) :
     img=34+2
-    x=2+2 
-else:
-    x=4/x
+    i=3
+if ((A-3) and (2<1)) :img=34+2
 # print(img)
 # len
 
