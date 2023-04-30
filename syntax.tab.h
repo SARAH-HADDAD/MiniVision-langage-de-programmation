@@ -48,11 +48,11 @@
      token_for = 264,
      token_in = 265,
      token_range = 266,
-     token_int = 267,
-     token_float = 268,
-     token_char = 269,
-     token_bool = 270,
-     token_as = 271,
+     token_as = 267,
+     token_int = 268,
+     token_float = 269,
+     token_char = 270,
+     token_bool = 271,
      token_and = 272,
      token_or = 273,
      token_not = 274,
@@ -94,11 +94,11 @@
 #define token_for 264
 #define token_in 265
 #define token_range 266
-#define token_int 267
-#define token_float 268
-#define token_char 269
-#define token_bool 270
-#define token_as 271
+#define token_as 267
+#define token_int 268
+#define token_float 269
+#define token_char 270
+#define token_bool 271
 #define token_and 272
 #define token_or 273
 #define token_not 274

@@ -17,8 +17,8 @@ int yywrap(void);
   char* boolean;
 }
 %token token_import token_numpy token_matplotlib
-%token token_if token_else token_while token_for token_in token_range
-%token token_int token_float token_char token_bool token_as
+%token token_if token_else token_while token_for token_in token_range token_as
+%token token_int token_float token_char token_bool 
 %token token_and token_or token_not
 %token <integer> token_constEntiere
 %token <flottant> token_constFlottante
@@ -47,15 +47,15 @@ S: PROGRAM {printf("prog syntaxiquement correct\n");YYACCEPT;}
 PROGRAM : LISTE_IMPORT LIST_DECLARATION LIST_INST;
 
 LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
-IMPORT : token_import module_name token_newline
-| token_import module_name token_as token_idf token_newline;
+IMPORT : token_import module_name NEWLINES
+| token_import module_name token_as token_idf NEWLINES;
 
 module_name: token_numpy | token_matplotlib; 
 
 LIST_DECLARATION :  LIST_DECLARATION DECLARATION_TABLEAU| /*vide*/;
-DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_newline
-|token_idf token_affectation token_CrochOuvrante  token_CrochFermante token_newline
-|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_newline;      
+DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante NEWLINES
+|token_idf token_affectation token_CrochOuvrante  token_CrochFermante NEWLINES
+|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES;      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
@@ -77,11 +77,11 @@ BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deu
 
 IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
 
-IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline token_indentation LISTE_INSTRUCTION_BOUCLE;
 
-ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
+ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE {printf("else\n");};
 
-LISTE_INSTRUCTION_BOUCLE: LISTE_INSTRUCTION_BOUCLE token_indentation INSTRUCTION token_newline | INSTRUCTION token_newline; 
+LISTE_INSTRUCTION_BOUCLE: INSTRUCTION token_newline  ; 
 
 EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
 
@@ -128,6 +128,7 @@ OPERATEURCOMPARAISON: token_inferieur| token_inferieurEgal| token_superieur| tok
 CONDITION: EXPRESSIONCOMPARAISON| EXPRESSIONLOGIQUE|EXPRESSIONARITHMETIQUE;
 // Y:EXPRESSIONARITHMETIQUE |EXPRESSION  ;
 
+NEWLINES: token_newline| NEWLINES token_newline;
 %%
 
 int main(){

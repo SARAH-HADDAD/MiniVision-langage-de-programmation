@@ -1,4 +1,5 @@
 import numpy as np
+
 import numpy as np
 # Charger l'image en tant que liste de listes
 ma_liste = []
@@ -8,7 +9,9 @@ img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
 m=(3+3+2*(0+x))
 if ((A-3) and (2<1)) :
     img=34+2
+    x=2+2
 else:
-    i=E
+    x=4/x
 # print(img)
 # len
+
