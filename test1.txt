@@ -1,0 +1,15 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Charger l'image en tant qu'array numpy
+img = np.array([[255, 100, 50],
+                [200, 150, 75],
+                [100, 50, 25]])
+
+# Inverser négativement-positivement l'image
+img = 255 - img
+
+# Afficher l'image
+plt.imshow(img, cmap='gray')
+plt.axis('off')
+plt.show()

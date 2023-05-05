@@ -32,6 +32,36 @@ numpy {
   nb_colonne += yyleng;
   return (token_matplotlib);
 }
+array {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_array reconnu : %s \n", yytext);
+  nb_colonne += yyleng;
+  return (token_array);
+}
+imshow {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_imshow reconnu : %s \n", yytext);
+  nb_colonne += yyleng;
+  return (token_imshow);
+}
+axis {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_axis reconnu : %s \n", yytext);
+  nb_colonne += yyleng;
+  return (token_axis);
+}
+show {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_show reconnu : %s \n", yytext);
+  nb_colonne += yyleng;
+  return (token_show);
+}
+shape {
+  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
+  printf("Mc_shape reconnu : %s \n", yytext);
+  nb_colonne += yyleng;
+  return (token_shape);
+}
 if {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_if reconnu \n");

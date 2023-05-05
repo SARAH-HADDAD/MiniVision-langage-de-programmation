@@ -8,7 +8,6 @@ img = np.array([[255, 100, 50],
 # Parcourir chaque pixel de l'image et inverser négativement-positivement
 for i in range(img.shape[0]):
     for j in range(img.shape[1]):
-        pixel = img[i, j]
-        img[i, j] = 255 - pixel
+        img[i, j] = 255 - img[i, j]
 
 print(img)

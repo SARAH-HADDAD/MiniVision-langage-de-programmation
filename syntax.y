@@ -32,6 +32,7 @@ int yywrap(void);
 %token token_affectation
 %token token_Point
 %token token_indentation token_newline
+%token token_shape token_show token_axis token_array token_imshow
 %start S
 %left token_not
 %left token_and
@@ -66,7 +67,7 @@ LIST_INST:INSTRUCTION LIST_INST | INSTRUCTION NEWLINES LIST_INST | /*vide*/;
 // | ENTREES | Sortie
 INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT;
 
-AFFECTATION : token_idf token_affectation EXPRESSION token_newline| token_idf token_affectation EXPRESSIONARITHMETIQUE token_newline;
+AFFECTATION : token_idf token_affectation EXPRESSION | token_idf token_affectation EXPRESSIONARITHMETIQUE;
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
 |token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
@@ -75,11 +76,11 @@ BOUCLE_FOR2:token_for token_idf token_in token_idf token_Deux_Points token_newli
 
 BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
-IF_ELSE_STATEMENT:IF_CONDITION | IF_CONDITION ELSE_CONDITION ;
+IF_ELSE_STATEMENT:IF_CONDITION ELSE_CONDITION ;
 
 IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE|token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points INSTRUCTION token_newline;
 
-ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE {printf("else\n");};
+ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE|/*vide*/ {printf("else\n");};
 
 LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;
 // | LISTE_INSTRUCTION_BOUCLE token_newline token_indentation INSTRUCTION token_newline;

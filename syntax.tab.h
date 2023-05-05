@@ -81,7 +81,12 @@
      token_affectation = 297,
      token_Point = 298,
      token_indentation = 299,
-     token_newline = 300
+     token_newline = 300,
+     token_shape = 301,
+     token_show = 302,
+     token_axis = 303,
+     token_array = 304,
+     token_imshow = 305
    };
 #endif
 /* Tokens.  */
@@ -128,6 +133,11 @@
 #define token_Point 298
 #define token_indentation 299
 #define token_newline 300
+#define token_shape 301
+#define token_show 302
+#define token_axis 303
+#define token_array 304
+#define token_imshow 305
 
 
 
@@ -142,7 +152,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 1529 of yacc.c.  */
-#line 146 "syntax.tab.h"
+#line 156 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

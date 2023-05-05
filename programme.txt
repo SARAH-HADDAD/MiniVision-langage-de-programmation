@@ -16,6 +16,8 @@ if ((A-3) and (2<1)) :
     img=34+2
     i=3
 if ((A-3) and (2<1)) :img=34+2
+else:
+    x=x+1
 # print(img)
 # len
 
