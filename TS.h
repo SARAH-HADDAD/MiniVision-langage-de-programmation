@@ -264,10 +264,6 @@ void InsertValChaine(char entite[], char vall[])
         {
             strcpy(currElement->valCh, vall);
         }
-
-        else
-        {
             currElement = currElement->next;
-        }
     }
 }

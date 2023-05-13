@@ -17,21 +17,20 @@ int yywrap(void);
 %}
 %union{
   int integer; 
-  char*  charactere;
+  char* charactere;
   float flottant;
-  char* boolean;
-  char* chaine;
+  char* str;
 }
-%token token_import token_numpy token_matplotlib
+%token token_import <str> token_numpy <str> token_matplotlib
 %token token_if token_else token_while token_for token_in token_range token_as
 %token token_int token_float token_char token_bool 
 %token token_and token_or token_not
 %token <integer> token_constEntiere
 %token <flottant> token_constFlottante
 %token <charactere> token_constChar
-%token <boolean> token_constBool
-%token <chaine> token_constString
-%token token_idf
+%token <str> token_constBool
+%token <str> token_constString
+%token <str> token_idf
 %token token_ParOuvrante token_ParFermante token_CrochOuvrante token_CrochFermante
 %token token_virgule token_Deux_Points 
 %token token_plus token_moins token_fois token_divise token_Pourcentage
@@ -56,7 +55,9 @@ PROGRAM : LISTE_IMPORT LIST_DECLARATION LIST_INST;
 
 LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
 IMPORT : token_import module_name NEWLINES
-| token_import module_name token_as token_idf NEWLINES;
+| token_import token_numpy token_as token_idf NEWLINES
+{InsertValChaine($4, $2);}
+| token_import token_matplotlib token_as token_idf NEWLINES;
 
 module_name: token_numpy | token_matplotlib; 
 

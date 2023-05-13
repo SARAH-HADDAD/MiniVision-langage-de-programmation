@@ -28,6 +28,7 @@ numpy {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);     
   printf("Mc_numpy reconnu : %s \n", yytext);
   nb_colonne += yyleng;
+  yylval.str= strdup (yytext);
   return (token_numpy);
 }
 "matplotlib.pyplot" {
@@ -35,6 +36,7 @@ numpy {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_matplotlib.pyplot reconnu : %s \n", yytext);
   nb_colonne += yyleng;
+  yylval.str= strdup (yytext);
   return (token_matplotlib);
 }
 array {
@@ -178,6 +180,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
+    yylval.integer= atoi(myStr);
     return (token_constEntiere); 
 }
 {FLOAT} {
@@ -188,6 +191,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
+    yylval.flottant= atof(myStr);
     return (token_constFlottante); 
 }
 {CHAR} {
@@ -197,6 +201,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante char: %s\n", yytext);
     nb_colonne += yyleng;
+    yylval.str=strdup(myStr);
     return (token_constChar); 
 }
 {BOOL} {
@@ -204,6 +209,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante bool: %s\n", yytext); 
     nb_colonne += yyleng;
+    yylval.str=strdup(yytext);
     return (token_constBool); 
 }
 {STRING} {
@@ -213,6 +219,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante string: %s\n", yytext); 
     nb_colonne += yyleng;
+    yylval.str=strdup(myStr);
     return (token_constString); 
 }
 "." {
@@ -358,6 +365,7 @@ not {
         else{
             printf("Idf reconnue : %s \n",yytext);
             nb_colonne += yyleng;
+            yylval.str= strdup (yytext);
             return (token_idf);
             } }
 {COMMENT} {

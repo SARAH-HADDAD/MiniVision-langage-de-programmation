@@ -149,13 +149,12 @@ typedef union YYSTYPE
 #line 18 "syntax.y"
 {
   int integer; 
-  char*  charactere;
+  char* charactere;
   float flottant;
-  char* boolean;
-  char* chaine;
+  char* str;
 }
 /* Line 1529 of yacc.c.  */
-#line 159 "syntax.tab.h"
+#line 158 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
