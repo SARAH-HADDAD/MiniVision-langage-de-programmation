@@ -564,16 +564,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    54,    56,    56,    57,    58,    60,    62,
-      62,    64,    64,    65,    66,    67,    67,    69,    69,    71,
-      72,    74,    74,    74,    76,    76,    76,    76,    76,    76,
-      76,    78,    80,    82,    83,    85,    86,    88,    90,    92,
-      94,    94,    96,    96,    98,    98,   100,   100,   100,   100,
-     100,   102,   102,   102,   102,   102,   104,   105,   106,   107,
-     111,   112,   113,   114,   115,   116,   117,   118,   119,   120,
-     121,   122,   123,   124,   125,   127,   128,   129,   130,   132,
-     132,   134,   135,   136,   137,   138,   139,   141,   141,   141,
-     141,   141,   141,   142,   142,   142,   145,   145
+       0,    52,    52,    54,    56,    56,    57,    58,    62,    68,
+      68,    70,    70,    71,    72,    73,    73,    75,    75,    77,
+      78,    80,    80,    80,    82,    82,    82,    82,    82,    82,
+      82,    84,    86,    88,    89,    91,    92,    94,    96,    98,
+     100,   100,   102,   102,   104,   104,   106,   106,   106,   106,
+     106,   108,   108,   108,   108,   108,   110,   111,   112,   113,
+     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
+     127,   128,   129,   130,   131,   133,   134,   135,   136,   138,
+     138,   140,   141,   142,   143,   144,   145,   147,   147,   147,
+     147,   147,   147,   148,   148,   148,   151,   151
 };
 #endif
 
@@ -1646,17 +1646,26 @@ yyreduce:
 
   case 7:
 #line 59 "syntax.y"
-    {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));;}
+    {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
+insererTYPE((yyvsp[(4) - (5)].str),"STRING");
+;}
+    break;
+
+  case 8:
+#line 63 "syntax.y"
+    {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
+insererTYPE((yyvsp[(4) - (5)].str),"STRING");
+;}
     break;
 
   case 43:
-#line 96 "syntax.y"
+#line 102 "syntax.y"
     {printf("else\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1660 "syntax.tab.c"
+#line 1669 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1870,7 +1879,7 @@ yyreturn:
 }
 
 
-#line 146 "syntax.y"
+#line 152 "syntax.y"
 
 
 int main(){

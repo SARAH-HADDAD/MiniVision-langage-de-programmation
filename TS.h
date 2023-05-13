@@ -232,10 +232,8 @@ void insererTYPE(char entite[], char type[])
             strcpy(currElement->type, type);
         }
 
-        else
-        {
             currElement = currElement->next;
-        }
+
     }
 }
 char *GetType(char entite[])
@@ -248,10 +246,7 @@ char *GetType(char entite[])
             return currElement->type;
         }
 
-        else
-        {
             currElement = currElement->next;
-        }
     }
     return " ";
 }

@@ -56,8 +56,14 @@ PROGRAM : LISTE_IMPORT LIST_DECLARATION LIST_INST;
 LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
 IMPORT : token_import module_name NEWLINES
 | token_import token_numpy token_as token_idf NEWLINES
-{InsertValChaine($4, $2);}
-| token_import token_matplotlib token_as token_idf NEWLINES;
+{InsertValChaine($4, $2);
+insererTYPE($4,"STRING");
+}
+| token_import token_matplotlib token_as token_idf NEWLINES
+{InsertValChaine($4, $2);
+insererTYPE($4,"STRING");
+}
+;
 
 module_name: token_numpy | token_matplotlib; 
 
