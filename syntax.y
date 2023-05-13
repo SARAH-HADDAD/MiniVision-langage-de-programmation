@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 int nb_ligne=1,nb_colonne=1;
+void initialisation();
+void afficher();
 
 int yylex(void);
 void yyerror (const char *str) {
@@ -133,8 +135,10 @@ NEWLINES: token_newline| NEWLINES token_newline;
 %%
 
 int main(){
+    initialisation();
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
+    afficher();
     return 0;}
 
 

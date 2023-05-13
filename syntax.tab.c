@@ -176,6 +176,8 @@
 #include <stdio.h>
 #include <string.h>
 int nb_ligne=1,nb_colonne=1;
+void initialisation();
+void afficher();
 
 int yylex(void);
 void yyerror (const char *str) {
@@ -204,7 +206,7 @@ int yywrap(void);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 13 "syntax.y"
+#line 15 "syntax.y"
 {
   int integer; 
   char*  charactere;
@@ -212,7 +214,7 @@ typedef union YYSTYPE
   char* boolean;
 }
 /* Line 193 of yacc.c.  */
-#line 216 "syntax.tab.c"
+#line 218 "syntax.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -225,7 +227,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 229 "syntax.tab.c"
+#line 231 "syntax.tab.c"
 
 #ifdef short
 # undef short
@@ -553,16 +555,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    46,    46,    48,    50,    50,    51,    52,    54,    54,
-      56,    56,    57,    58,    59,    61,    61,    63,    64,    66,
-      66,    66,    68,    68,    68,    68,    68,    70,    70,    72,
-      73,    75,    77,    79,    81,    81,    83,    83,    85,    85,
-      87,    87,    87,    87,    87,    89,    89,    89,    89,    89,
-      91,    92,    93,    94,    98,    99,   100,   101,   102,   103,
-     104,   105,   106,   107,   108,   109,   110,   111,   112,   114,
-     115,   116,   117,   119,   119,   121,   122,   123,   124,   125,
-     126,   128,   128,   128,   128,   128,   128,   129,   129,   129,
-     132,   132
+       0,    48,    48,    50,    52,    52,    53,    54,    56,    56,
+      58,    58,    59,    60,    61,    63,    63,    65,    66,    68,
+      68,    68,    70,    70,    70,    70,    70,    72,    72,    74,
+      75,    77,    79,    81,    83,    83,    85,    85,    87,    87,
+      89,    89,    89,    89,    89,    91,    91,    91,    91,    91,
+      93,    94,    95,    96,   100,   101,   102,   103,   104,   105,
+     106,   107,   108,   109,   110,   111,   112,   113,   114,   116,
+     117,   118,   119,   121,   121,   123,   124,   125,   126,   127,
+     128,   130,   130,   130,   130,   130,   130,   131,   131,   131,
+     134,   134
 };
 #endif
 
@@ -1616,18 +1618,18 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 46 "syntax.y"
+#line 48 "syntax.y"
     {printf("prog syntaxiquement correct\n");YYACCEPT;;}
     break;
 
   case 37:
-#line 83 "syntax.y"
+#line 85 "syntax.y"
     {printf("else\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1631 "syntax.tab.c"
+#line 1633 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1841,12 +1843,14 @@ yyreturn:
 }
 
 
-#line 133 "syntax.y"
+#line 135 "syntax.y"
 
 
 int main(){
+    initialisation();
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
+    afficher();
     return 0;}
 
 

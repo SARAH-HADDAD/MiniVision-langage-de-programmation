@@ -542,9 +542,11 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include "syntax.tab.h"
+#include "TS.h"
 extern int nb_colonne, nb_ligne;
 extern YYSTYPE yylval ;
-#line 548 "lex.yy.c"
+int j;
+#line 550 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -729,9 +731,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 16 "lexical.l"
+#line 18 "lexical.l"
 
-#line 735 "lex.yy.c"
+#line 737 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -817,8 +819,9 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 17 "lexical.l"
+#line 19 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);  
   printf("MotCle_import reconnu \n");
   nb_colonne += yyleng;
@@ -827,8 +830,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 23 "lexical.l"
+#line 26 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);     
   printf("Mc_numpy reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -837,8 +841,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 29 "lexical.l"
+#line 33 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_matplotlib.pyplot reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -847,8 +852,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 35 "lexical.l"
+#line 40 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_array reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -857,8 +863,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "lexical.l"
+#line 47 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_imshow reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -867,8 +874,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 47 "lexical.l"
+#line 54 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_axis reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -877,8 +885,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "lexical.l"
+#line 61 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_show reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -887,8 +896,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 59 "lexical.l"
+#line 68 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_shape reconnu : %s \n", yytext);
   nb_colonne += yyleng;
@@ -897,8 +907,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 65 "lexical.l"
+#line 75 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_if reconnu \n");
   nb_colonne += yyleng;
@@ -907,8 +918,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 71 "lexical.l"
+#line 82 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_else reconnu \n");
   nb_colonne += yyleng;
@@ -917,8 +929,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 77 "lexical.l"
+#line 89 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_while reconnu \n");
   nb_colonne += yyleng;
@@ -927,8 +940,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 83 "lexical.l"
+#line 96 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
@@ -937,8 +951,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 89 "lexical.l"
+#line 103 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
@@ -947,8 +962,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 95 "lexical.l"
+#line 110 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
@@ -957,8 +973,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 101 "lexical.l"
+#line 117 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
@@ -967,8 +984,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 107 "lexical.l"
+#line 124 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_float reconnu \n");
   nb_colonne += yyleng;
@@ -977,8 +995,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 113 "lexical.l"
+#line 131 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_char reconnu \n");
   nb_colonne += yyleng;
@@ -987,8 +1006,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 119 "lexical.l"
+#line 138 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_bool reconnu \n");
   nb_colonne += yyleng;
@@ -997,8 +1017,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 125 "lexical.l"
+#line 145 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
@@ -1007,8 +1028,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 131 "lexical.l"
+#line 152 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
@@ -1017,8 +1039,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 137 "lexical.l"
+#line 159 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
@@ -1027,8 +1050,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 143 "lexical.l"
+#line 166 "lexical.l"
 {
+  rechercher (yytext, "mot cle",0,0,1);
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
@@ -1037,8 +1061,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 149 "lexical.l"
+#line 173 "lexical.l"
 {
+    char myStr[100]="";
+    if(yytext[0]=='(')
+    for(j=1;j<yyleng-1;j++){myStr[j-1] =yytext[j];}
+    rechercher (yytext, "cst int","INT",atof(myStr),0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
@@ -1047,8 +1075,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 155 "lexical.l"
-{ 
+#line 183 "lexical.l"
+{
+    char myStr[100]="";
+    if(yytext[0]=='(')
+    for(j=1;j<yyleng-1;j++){myStr[j-1] =yytext[j];}  
+    rechercher (yytext, "cst float","FLOAT",atof(myStr),0); 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
@@ -1058,8 +1090,11 @@ YY_RULE_SETUP
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 161 "lexical.l"
+#line 193 "lexical.l"
 {
+    char myStr[10]="";
+    myStr[0] =yytext[1];  
+    rechercher (yytext, "cst char","CHAR",atof(myStr),0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante char: %s\n", yytext);
     nb_colonne += yyleng;
@@ -1068,8 +1103,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 167 "lexical.l"
+#line 202 "lexical.l"
 {
+    rechercher (yytext, "cst bool","BOOL",atof(yytext),0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante bool: %s\n", yytext); 
     nb_colonne += yyleng;
@@ -1078,8 +1114,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 173 "lexical.l"
+#line 209 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Point reconnu \n"); 
     nb_colonne += yyleng;   
@@ -1088,8 +1125,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 179 "lexical.l"
+#line 216 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParOuvrante reconnu \n"); 
     nb_colonne += yyleng;   
@@ -1098,8 +1136,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 185 "lexical.l"
+#line 223 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_ParFermante reconnu \n"); 
     nb_colonne += yyleng;   
@@ -1108,8 +1147,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 191 "lexical.l"
+#line 230 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochOuvrante reconnu \n"); 
     nb_colonne += yyleng; 
@@ -1118,8 +1158,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 197 "lexical.l"
+#line 237 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_CrochFermante reconnu \n"); 
     nb_colonne += yyleng; 
@@ -1128,8 +1169,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 203 "lexical.l"
+#line 244 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_virgule reconnu \n"); 
     nb_colonne += yyleng;       
@@ -1138,8 +1180,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 209 "lexical.l"
+#line 251 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Sep_Deux_Points reconnu \n"); 
     nb_colonne += yyleng;   
@@ -1148,8 +1191,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 215 "lexical.l"
+#line 258 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_Pourcentage reconnu \n"); 
     nb_colonne += yyleng;   
@@ -1158,8 +1202,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 221 "lexical.l"
+#line 265 "lexical.l"
 { 
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: +\n"); 
     nb_colonne += yyleng; 
@@ -1168,8 +1213,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 227 "lexical.l"
+#line 272 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur arithmetique: -\n"); 
     nb_colonne += yyleng;
@@ -1178,8 +1224,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 233 "lexical.l"
-{ 
+#line 279 "lexical.l"
+{
+    rechercher (yytext, "separateur",0,0,2); 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: *\n"); 
     nb_colonne += yyleng;
@@ -1188,8 +1235,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 239 "lexical.l"
-{ 
+#line 286 "lexical.l"
+{
+    rechercher (yytext, "separateur",0,0,2); 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: /\n"); 
     nb_colonne += yyleng;
@@ -1198,8 +1246,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 245 "lexical.l"
+#line 293 "lexical.l"
 { 
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >=\n"); 
     nb_colonne += yyleng;
@@ -1208,8 +1257,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 251 "lexical.l"
-{ 
+#line 300 "lexical.l"
+{
+    rechercher (yytext, "separateur",0,0,2); 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: >\n"); 
     nb_colonne += yyleng;
@@ -1218,8 +1268,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 257 "lexical.l"
+#line 307 "lexical.l"
 { 
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur de comparaison: <=\n"); 
     nb_colonne += yyleng;
@@ -1228,8 +1279,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 263 "lexical.l"
+#line 314 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: <\n"); 
     nb_colonne += yyleng;
@@ -1238,8 +1290,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 269 "lexical.l"
+#line 321 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: ==\n"); 
     nb_colonne += yyleng;
@@ -1248,8 +1301,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 275 "lexical.l"
+#line 328 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur de comparaison: !=\n"); 
     nb_colonne += yyleng;
@@ -1258,8 +1312,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 281 "lexical.l"
+#line 335 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur d'affectation: =\n"); 
     nb_colonne += yyleng;
@@ -1268,8 +1323,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 287 "lexical.l"
+#line 342 "lexical.l"
 { 
+    rechercher (yytext, "idf","",88888,0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     if(strlen(yytext)>8){
         printf("Erreur: Identificateur trop long\n");
@@ -1284,7 +1340,7 @@ YY_RULE_SETUP
 case 47:
 /* rule 47 can match eol */
 YY_RULE_SETUP
-#line 298 "lexical.l"
+#line 354 "lexical.l"
 {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Commentaire: %s", yytext);
@@ -1294,8 +1350,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 304 "lexical.l"
+#line 360 "lexical.l"
 { 
+  rechercher (yytext, "separateur",0,0,2);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   nb_colonne += yyleng; 	
   printf ("indentation \n");
@@ -1304,14 +1361,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 310 "lexical.l"
+#line 367 "lexical.l"
 {nb_colonne=nb_colonne+ strlen(yytext);}
 	YY_BREAK
 case 50:
 /* rule 50 can match eol */
 YY_RULE_SETUP
-#line 311 "lexical.l"
+#line 368 "lexical.l"
 {
+    rechercher (yytext, "separateur",0,0,2);
     nb_ligne++; nb_colonne=1;
     printf("newline \n");
     return token_newline;
@@ -1319,7 +1377,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 316 "lexical.l"
+#line 374 "lexical.l"
 {
     printf("----------------------------------------------------------------------------------\n");
     printf("erreur lexical dans la ligne : %d colonne :%d  : %s\n",nb_ligne,nb_colonne,yytext);
@@ -1330,10 +1388,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 323 "lexical.l"
+#line 381 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1337 "lex.yy.c"
+#line 1395 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2333,6 +2391,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 323 "lexical.l"
+#line 381 "lexical.l"
 
 
