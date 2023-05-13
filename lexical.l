@@ -14,6 +14,7 @@ INT "("[+-]{chiffre}+")"|{chiffre}+
 FLOAT \([+-]({chiffre}+"."{chiffre}+)\)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
+STRING ["][^"]*["]
 %%
 import {
   rechercher (yytext, "mot cle",0,0,1);
@@ -83,91 +84,91 @@ else {
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_else reconnu \n");
   nb_colonne += yyleng;
-   return (token_else); 
+  return (token_else); 
 }
 while {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_while reconnu \n");
   nb_colonne += yyleng;
-   return (token_while); 
+  return (token_while); 
 }
 for {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_for reconnu \n");
   nb_colonne += yyleng;
-   return (token_for); 
+  return (token_for); 
 }
 in {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_in reconnu \n");
   nb_colonne += yyleng;
-   return (token_in); 
+  return (token_in); 
 }
 range {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
-   return (token_range); 
+  return (token_range); 
 }
 int {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
   printf("MotCle_int reconnu \n");
   nb_colonne += yyleng;
-   return (token_int); 
+  return (token_int); 
 }
 float {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_float reconnu \n");
   nb_colonne += yyleng;
-   return (token_float); 
+  return (token_float); 
 }
 char {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
   printf("MotCle_char reconnu \n");
   nb_colonne += yyleng;
-   return (token_char); 
+  return (token_char); 
 }
 bool {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_bool reconnu \n");
   nb_colonne += yyleng;
-   return (token_bool); 
+  return (token_bool); 
 }
 as {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("MotCle_as reconnu \n");
   nb_colonne += yyleng;
-   return (token_as); 
+  return (token_as); 
 }
 and {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: and\n");
   nb_colonne += yyleng;
-   return (token_and); 
+  return (token_and); 
 }
 or {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
   printf("Operateur logique: or\n");
   nb_colonne += yyleng;
-   return (token_or); 
+  return (token_or); 
 }
 not {
   rechercher (yytext, "mot cle",0,0,1);
   printf("nb_ligne=%d, nb_colonne=%d : ", nb_ligne, nb_colonne);
   printf("Operateur logique: not\n");
   nb_colonne += yyleng;
-   return (token_not); 
+  return (token_not); 
 }
 {INT} {
     char myStr[100]="";
@@ -177,7 +178,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
-     return (token_constEntiere); 
+    return (token_constEntiere); 
 }
 {FLOAT} {
     char myStr[100]="";
@@ -187,7 +188,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
-     return (token_constFlottante); 
+    return (token_constFlottante); 
 }
 {CHAR} {
     char myStr[10]="";
@@ -196,14 +197,23 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante char: %s\n", yytext);
     nb_colonne += yyleng;
-     return (token_constChar); 
+    return (token_constChar); 
 }
 {BOOL} {
     rechercher (yytext, "cst bool","BOOL",atof(yytext),0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Constante bool: %s\n", yytext); 
     nb_colonne += yyleng;
-     return (token_constBool); 
+    return (token_constBool); 
+}
+{STRING} {
+    char myStr[100]="";
+    for(j=1;j<yyleng-1;j++){myStr[j-1] =yytext[j];}  
+    rechercher (yytext, "cst string","STRING",atof(myStr),0);
+    printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
+    printf("Constante string: %s\n", yytext); 
+    nb_colonne += yyleng;
+    return (token_constString); 
 }
 "." {
     rechercher (yytext, "separateur",0,0,2);

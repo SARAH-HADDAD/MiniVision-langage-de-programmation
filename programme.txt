@@ -4,20 +4,10 @@ import matplotlib.pyplot as plt
 # Charger l'image en tant qu'array numpy
 img = np.array([[255, 100, 50],[200, 150, 75],[100, 50, 25]])
 
-ma_liste = [1, 2, 3, 4, 5]
-img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
-x=2
-x=3+0+ma
+# Inverser négativement-positivement l'image
+img = 255 - img
 
-# Parcourir chaque pixel de l'image et inverser négativement-positivement
-
-m=(3+3+2*(0+x))
-if ((A-3) and (2<1)) :
-    img=34+2
-    i=3
-if ((A-3) and (2<1)) :img=34+2
-else:
-    x=x+1
-# print(img)
-# len
+# Afficher l'image
+plt.imshow(img, cmap= "gray")
+plt.show()
 

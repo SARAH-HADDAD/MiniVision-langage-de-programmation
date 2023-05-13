@@ -1,14 +1,13 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
-# Charger l'image en tant qu'array numpy
-img = np.array([[255, 100, 50],
-                [200, 150, 75],
-                [100, 50, 25]])
+# Load the image as a numpy array
+img = np.array([[255, 100, 50], [200, 150, 75], [100, 50, 25]])
 
-# Parcourir chaque pixel de l'image et inverser négativement-positivement
-for i in range(img.shape[0]):
-    for j in range(img.shape[1]):
-        pixel = img[i, j]
-        img[i, j] = 255 - pixel
+# Invert the image (negative to positive)
+img = 255 - img
 
-print(img)
+# Display the image with the 'viridis' colormap
+plt.imshow(img, cmap="viridis")
+plt.show()
+

@@ -60,33 +60,34 @@
      token_constFlottante = 276,
      token_constChar = 277,
      token_constBool = 278,
-     token_idf = 279,
-     token_ParOuvrante = 280,
-     token_ParFermante = 281,
-     token_CrochOuvrante = 282,
-     token_CrochFermante = 283,
-     token_virgule = 284,
-     token_Deux_Points = 285,
-     token_plus = 286,
-     token_moins = 287,
-     token_fois = 288,
-     token_divise = 289,
-     token_Pourcentage = 290,
-     token_superieurEgal = 291,
-     token_superieur = 292,
-     token_inferieurEgal = 293,
-     token_inferieur = 294,
-     token_egal = 295,
-     token_different = 296,
-     token_affectation = 297,
-     token_Point = 298,
-     token_indentation = 299,
-     token_newline = 300,
-     token_shape = 301,
-     token_show = 302,
-     token_axis = 303,
-     token_array = 304,
-     token_imshow = 305
+     token_constString = 279,
+     token_idf = 280,
+     token_ParOuvrante = 281,
+     token_ParFermante = 282,
+     token_CrochOuvrante = 283,
+     token_CrochFermante = 284,
+     token_virgule = 285,
+     token_Deux_Points = 286,
+     token_plus = 287,
+     token_moins = 288,
+     token_fois = 289,
+     token_divise = 290,
+     token_Pourcentage = 291,
+     token_superieurEgal = 292,
+     token_superieur = 293,
+     token_inferieurEgal = 294,
+     token_inferieur = 295,
+     token_egal = 296,
+     token_different = 297,
+     token_affectation = 298,
+     token_Point = 299,
+     token_indentation = 300,
+     token_newline = 301,
+     token_shape = 302,
+     token_show = 303,
+     token_axis = 304,
+     token_array = 305,
+     token_imshow = 306
    };
 #endif
 /* Tokens.  */
@@ -111,33 +112,34 @@
 #define token_constFlottante 276
 #define token_constChar 277
 #define token_constBool 278
-#define token_idf 279
-#define token_ParOuvrante 280
-#define token_ParFermante 281
-#define token_CrochOuvrante 282
-#define token_CrochFermante 283
-#define token_virgule 284
-#define token_Deux_Points 285
-#define token_plus 286
-#define token_moins 287
-#define token_fois 288
-#define token_divise 289
-#define token_Pourcentage 290
-#define token_superieurEgal 291
-#define token_superieur 292
-#define token_inferieurEgal 293
-#define token_inferieur 294
-#define token_egal 295
-#define token_different 296
-#define token_affectation 297
-#define token_Point 298
-#define token_indentation 299
-#define token_newline 300
-#define token_shape 301
-#define token_show 302
-#define token_axis 303
-#define token_array 304
-#define token_imshow 305
+#define token_constString 279
+#define token_idf 280
+#define token_ParOuvrante 281
+#define token_ParFermante 282
+#define token_CrochOuvrante 283
+#define token_CrochFermante 284
+#define token_virgule 285
+#define token_Deux_Points 286
+#define token_plus 287
+#define token_moins 288
+#define token_fois 289
+#define token_divise 290
+#define token_Pourcentage 291
+#define token_superieurEgal 292
+#define token_superieur 293
+#define token_inferieurEgal 294
+#define token_inferieur 295
+#define token_egal 296
+#define token_different 297
+#define token_affectation 298
+#define token_Point 299
+#define token_indentation 300
+#define token_newline 301
+#define token_shape 302
+#define token_show 303
+#define token_axis 304
+#define token_array 305
+#define token_imshow 306
 
 
 
@@ -150,9 +152,10 @@ typedef union YYSTYPE
   char*  charactere;
   float flottant;
   char* boolean;
+  char* chaine;
 }
 /* Line 1529 of yacc.c.  */
-#line 156 "syntax.tab.h"
+#line 159 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

@@ -17,6 +17,7 @@ int yywrap(void);
   char*  charactere;
   float flottant;
   char* boolean;
+  char* chaine;
 }
 %token token_import token_numpy token_matplotlib
 %token token_if token_else token_while token_for token_in token_range token_as
@@ -26,6 +27,7 @@ int yywrap(void);
 %token <flottant> token_constFlottante
 %token <charactere> token_constChar
 %token <boolean> token_constBool
+%token <chaine> token_constString
 %token token_idf
 %token token_ParOuvrante token_ParFermante token_CrochOuvrante token_CrochFermante
 %token token_virgule token_Deux_Points 
@@ -66,8 +68,12 @@ LIST_TABLEAU: token_CrochOuvrante LIST_EXPRESSION token_CrochFermante token_virg
 | token_CrochOuvrante LIST_EXPRESSION token_CrochFermante;
 
 LIST_INST:INSTRUCTION LIST_INST | INSTRUCTION NEWLINES LIST_INST | /*vide*/;
-// | ENTREES | Sortie
-INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT;
+
+INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT | PLTSHOW | PLTIMSHOW;
+
+PLTSHOW:token_idf token_Point token_show token_ParOuvrante token_ParFermante;
+
+PLTIMSHOW:token_idf token_Point token_imshow token_ParOuvrante token_idf token_virgule token_idf token_affectation token_constString token_ParFermante;
 
 AFFECTATION : token_idf token_affectation EXPRESSION | token_idf token_affectation EXPRESSIONARITHMETIQUE;
 
