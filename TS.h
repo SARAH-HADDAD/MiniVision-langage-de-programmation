@@ -170,8 +170,19 @@ printf("_____________________________________\n");
   
 for(i=0;i<40;i++)
     if(tabsep[i].state==1)
-      { 
+      {
+        switch (tabsep[i].name[0]) {
+    case '\n':
+        printf("\t|\t\\n  |%12s | \n",tabsep[i].type );
+        break;
+    case '\t':
+        printf("\t|\t\\t  |%12s | \n",tabsep[i].type );
+        break;
+    default:
         printf("\t|%10s |%12s | \n",tabsep[i].name,tabsep[i].type );
-        
-      }
+        break;
+}
+ 
+    }
+      
 }
