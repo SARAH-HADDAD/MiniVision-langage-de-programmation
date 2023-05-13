@@ -175,7 +175,7 @@ for(i=0;i<40;i++)
     case '\n':
         printf("\t|\t\\n  |%12s | \n",tabsep[i].type );
         break;
-    case '\t':
+    case ' ':
         printf("\t|\t\\t  |%12s | \n",tabsep[i].type );
         break;
     default:

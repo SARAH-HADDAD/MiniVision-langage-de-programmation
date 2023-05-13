@@ -14,7 +14,6 @@ INT "("[+-]{chiffre}+")"|{chiffre}+
 FLOAT \([+-]({chiffre}+"."{chiffre}+)\)|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
-Tab [\t]+
 %%
 import {
   rechercher (yytext, "mot cle",0,0,1);
@@ -357,10 +356,10 @@ not {
     nb_ligne++; nb_colonne=1;
     printf("newline \n");
 }
-{Tab} { 
+"    " { 
   rechercher (yytext, "separateur",0,0,2);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
-  nb_colonne += yyleng; 	
+  nb_colonne += yyleng;	
   printf ("indentation \n");
   return token_indentation;
 }
