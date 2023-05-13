@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 int nb_ligne=1,nb_colonne=1;
-void initialisation();
+void initialization();
 void afficher();
 
 int yylex(void);
@@ -135,7 +135,7 @@ NEWLINES: token_newline| NEWLINES token_newline;
 %%
 
 int main(){
-    initialisation();
+    initialization();
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
     afficher();
