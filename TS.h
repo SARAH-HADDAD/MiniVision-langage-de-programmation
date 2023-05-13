@@ -232,8 +232,7 @@ void insererTYPE(char entite[], char type[])
             strcpy(currElement->type, type);
         }
 
-            currElement = currElement->next;
-
+        currElement = currElement->next;
     }
 }
 char *GetType(char entite[])
@@ -246,7 +245,7 @@ char *GetType(char entite[])
             return currElement->type;
         }
 
-            currElement = currElement->next;
+        currElement = currElement->next;
     }
     return " ";
 }
@@ -259,6 +258,21 @@ void InsertValChaine(char entite[], char vall[])
         {
             strcpy(currElement->valCh, vall);
         }
-            currElement = currElement->next;
+        currElement = currElement->next;
     }
+}
+char *GetValChaine(char entite[])
+{
+    element *currElement = table;
+    while (currElement != NULL)
+    {
+        if (strcmp(currElement->name, entite) == 0)
+        {
+            // printf("name: %s\n", currElement->name);
+            // printf("valCh: %s\n", currElement->valCh);
+            return currElement->valCh;
+        }
+        currElement = currElement->next;
+    }
+    return "void";
 }

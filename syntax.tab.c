@@ -184,6 +184,7 @@ void afficher();
 void insererTYPE();
 char *GetType();
 void InsertValChaine();
+char *GetValChaine();
 int yylex(void);
 void yyerror (const char *str) {
     fprintf (stderr, "error: %s\n", str);
@@ -211,7 +212,7 @@ int yywrap(void);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 18 "syntax.y"
+#line 19 "syntax.y"
 {
   int integer; 
   char* charactere;
@@ -219,7 +220,7 @@ typedef union YYSTYPE
   char* str;
 }
 /* Line 193 of yacc.c.  */
-#line 223 "syntax.tab.c"
+#line 224 "syntax.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -232,7 +233,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 236 "syntax.tab.c"
+#line 237 "syntax.tab.c"
 
 #ifdef short
 # undef short
@@ -564,16 +565,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    52,    52,    54,    56,    56,    57,    58,    62,    68,
-      68,    70,    70,    71,    72,    73,    73,    75,    75,    77,
-      78,    80,    80,    80,    82,    82,    82,    82,    82,    82,
-      82,    84,    86,    88,    89,    91,    92,    94,    96,    98,
-     100,   100,   102,   102,   104,   104,   106,   106,   106,   106,
-     106,   108,   108,   108,   108,   108,   110,   111,   112,   113,
-     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
-     127,   128,   129,   130,   131,   133,   134,   135,   136,   138,
-     138,   140,   141,   142,   143,   144,   145,   147,   147,   147,
-     147,   147,   147,   148,   148,   148,   151,   151
+       0,    53,    53,    55,    57,    57,    58,    59,    63,    69,
+      69,    71,    71,    72,    73,    74,    75,    88,    88,    90,
+      91,    93,    93,    93,    95,    95,    95,    95,    95,    95,
+      95,    97,    99,   101,   102,   104,   105,   107,   109,   111,
+     113,   113,   115,   115,   117,   117,   119,   119,   119,   119,
+     119,   121,   121,   121,   121,   121,   123,   124,   125,   126,
+     130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
+     140,   141,   142,   143,   144,   146,   147,   148,   149,   151,
+     151,   153,   154,   155,   156,   157,   158,   160,   160,   160,
+     160,   160,   160,   161,   161,   161,   164,   164
 };
 #endif
 
@@ -1640,32 +1641,46 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 52 "syntax.y"
+#line 53 "syntax.y"
     {printf("prog syntaxiquement correct\n");YYACCEPT;;}
     break;
 
   case 7:
-#line 59 "syntax.y"
+#line 60 "syntax.y"
     {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
 ;}
     break;
 
   case 8:
-#line 63 "syntax.y"
+#line 64 "syntax.y"
     {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
 ;}
     break;
 
+  case 16:
+#line 76 "syntax.y"
+    {// vérifier si idf est déclaré comme ça import numpy as idf
+if(strcmp(GetValChaine((yyvsp[(3) - (11)].str)),"numpy")!=0){
+printf("la valeur de idf :%s \n",GetValChaine((yyvsp[(1) - (11)].str)));  
+printf("erreur de declaration de tableau\n");
+//exit(0);
+}
+else{
+  printf("declaration tableau correct\n");
+}
+;}
+    break;
+
   case 43:
-#line 102 "syntax.y"
+#line 115 "syntax.y"
     {printf("else\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1669 "syntax.tab.c"
+#line 1684 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1879,7 +1894,7 @@ yyreturn:
 }
 
 
-#line 152 "syntax.y"
+#line 165 "syntax.y"
 
 
 int main(){

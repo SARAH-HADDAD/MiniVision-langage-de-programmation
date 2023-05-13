@@ -9,6 +9,7 @@ void afficher();
 void insererTYPE();
 char *GetType();
 void InsertValChaine();
+char *GetValChaine();
 int yylex(void);
 void yyerror (const char *str) {
     fprintf (stderr, "error: %s\n", str);
@@ -70,7 +71,19 @@ module_name: token_numpy | token_matplotlib;
 LIST_DECLARATION :  LIST_DECLARATION DECLARATION_TABLEAU| /*vide*/;
 DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante NEWLINES
 |token_idf token_affectation token_CrochOuvrante  token_CrochFermante NEWLINES
-|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES| token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES;      
+|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES
+| token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES
+{// vérifier si idf est déclaré comme ça import numpy as idf
+if(strcmp(GetValChaine($3),"numpy")!=0){
+printf("la valeur de idf :%s \n",GetValChaine($1));  
+printf("erreur de declaration de tableau\n");
+//exit(0);
+}
+else{
+  printf("declaration tableau correct\n");
+}
+}
+;      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
