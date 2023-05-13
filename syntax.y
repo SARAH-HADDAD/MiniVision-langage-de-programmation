@@ -43,7 +43,7 @@ int yywrap(void);
 %left token_ParOuvrante token_ParFermante
 %left token_fois token_divise token_Pourcentage
 %left token_plus token_moins
-%left token_constEntiere token_constFlottante token_constChar token_constBool token_idf
+%left token_constEntiere token_constFlottante token_constChar token_constBool token_idf 
 %%
 S: PROGRAM {printf("prog syntaxiquement correct\n");YYACCEPT;}
 
@@ -58,7 +58,7 @@ module_name: token_numpy | token_matplotlib;
 LIST_DECLARATION :  LIST_DECLARATION DECLARATION_TABLEAU| /*vide*/;
 DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante NEWLINES
 |token_idf token_affectation token_CrochOuvrante  token_CrochFermante NEWLINES
-|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES;      
+|token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES| token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES;      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
