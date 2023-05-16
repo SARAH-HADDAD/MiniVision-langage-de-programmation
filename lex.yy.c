@@ -1347,7 +1347,7 @@ case 47:
 YY_RULE_SETUP
 #line 358 "lexical.l"
 { 
-    rechercher (yytext, "idf","",88888,0);
+    rechercher (yytext, "idf"," ",88888,0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     if(strlen(yytext)>8){
         printf("Erreur: Identificateur trop long\n");

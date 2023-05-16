@@ -185,6 +185,7 @@ void insererTYPE();
 char *GetType();
 void InsertValChaine();
 char *GetValChaine();
+int Declaration();
 int yylex(void);
 void yyerror (const char *str) {
     fprintf (stderr, "error: %s\n", str);
@@ -212,7 +213,7 @@ int yywrap(void);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 19 "syntax.y"
+#line 20 "syntax.y"
 {
   int integer; 
   char* charactere;
@@ -220,7 +221,7 @@ typedef union YYSTYPE
   char* str;
 }
 /* Line 193 of yacc.c.  */
-#line 224 "syntax.tab.c"
+#line 225 "syntax.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -233,7 +234,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 237 "syntax.tab.c"
+#line 238 "syntax.tab.c"
 
 #ifdef short
 # undef short
@@ -565,16 +566,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    55,    57,    57,    58,    59,    63,    69,
-      69,    71,    71,    72,    73,    74,    75,    88,    88,    90,
-      91,    93,    93,    93,    95,    95,    95,    95,    95,    95,
-      95,    97,    99,   101,   102,   104,   105,   107,   109,   111,
-     113,   113,   115,   115,   117,   117,   119,   119,   119,   119,
-     119,   121,   121,   121,   121,   121,   123,   124,   125,   126,
-     130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     140,   141,   142,   143,   144,   146,   147,   148,   149,   151,
-     151,   153,   154,   155,   156,   157,   158,   160,   160,   160,
-     160,   160,   160,   161,   161,   161,   164,   164
+       0,    54,    54,    56,    58,    58,    59,    60,    64,    70,
+      70,    72,    72,    73,    74,    75,    76,    86,    86,    88,
+      89,    91,    91,    91,    93,    93,    93,    93,    93,    93,
+      93,    95,   105,   135,   136,   138,   139,   141,   143,   145,
+     147,   147,   149,   149,   151,   151,   153,   153,   153,   153,
+     153,   155,   155,   155,   155,   155,   157,   158,   159,   160,
+     164,   165,   166,   167,   168,   169,   170,   171,   172,   173,
+     174,   175,   176,   177,   178,   180,   181,   182,   183,   185,
+     185,   187,   188,   189,   190,   191,   192,   194,   194,   194,
+     194,   194,   194,   195,   195,   195,   198,   198
 };
 #endif
 
@@ -1641,46 +1642,85 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 53 "syntax.y"
-    {printf("prog syntaxiquement correct\n");YYACCEPT;;}
+#line 54 "syntax.y"
+    {printf("The program is syntactically correct\n");YYACCEPT;;}
     break;
 
   case 7:
-#line 60 "syntax.y"
+#line 61 "syntax.y"
     {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
 ;}
     break;
 
   case 8:
-#line 64 "syntax.y"
+#line 65 "syntax.y"
     {InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
 ;}
     break;
 
   case 16:
-#line 76 "syntax.y"
+#line 77 "syntax.y"
     {// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine((yyvsp[(3) - (11)].str)),"numpy")!=0){
-printf("la valeur de idf :%s \n",GetValChaine((yyvsp[(1) - (11)].str)));  
-printf("erreur de declaration de tableau\n");
-//exit(0);
+//printf("la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
+exit(0);
+}
+;}
+    break;
+
+  case 31:
+#line 96 "syntax.y"
+    {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
+if(strcmp(GetValChaine((yyvsp[(1) - (5)].str)),"matplotlib.pyplot")!=0){
+//printf("la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
+exit(0);
+}
+;}
+    break;
+
+  case 32:
+#line 106 "syntax.y"
+    {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
+if(strcmp(GetValChaine((yyvsp[(1) - (10)].str)),"matplotlib.pyplot")!=0){
+//printf("ERREUR SÉMANTIQUE:la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
+exit(0);
 }
 else{
-  printf("declaration tableau correct\n");
+// vérifier si $5 est déclaré
+printf("la declaration de 5 est %d\n",Declaration((yyvsp[(5) - (10)].str)));
+if(Declaration((yyvsp[(5) - (10)].str))==0){
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
+printf("ERREUR SÉMANTIQUE: THE USAGE OF AN UNDECLARED IDENTIFIER WITHOUT A VALUE\n");
+exit(0);
+}
+
+  //printf("la fonction est correct\n");
+  //printf(" $7 = %s $9 = %s \n",$7, $9);
+  // vérifier si $7 est cmap
+  if(strcmp((yyvsp[(7) - (10)].str),"cmap")!=0){
+    printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
+    exit(0);
+  }
+  InsertValChaine((yyvsp[(7) - (10)].str), (yyvsp[(9) - (10)].str));
+  insererTYPE((yyvsp[(7) - (10)].str),"STRING");
+
 }
 ;}
     break;
 
   case 43:
-#line 115 "syntax.y"
+#line 149 "syntax.y"
     {printf("else\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1684 "syntax.tab.c"
+#line 1724 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1894,7 +1934,7 @@ yyreturn:
 }
 
 
-#line 165 "syntax.y"
+#line 199 "syntax.y"
 
 
 int main(){

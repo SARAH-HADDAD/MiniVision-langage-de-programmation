@@ -10,10 +10,9 @@ void insererTYPE();
 char *GetType();
 void InsertValChaine();
 char *GetValChaine();
+int Declaration();
 int yylex(void);
-void yyerror (const char *str) {
-    fprintf (stderr, "error: %s\n", str);
-}
+void yyerror (const char *str) {fprintf (stderr, "error: %s\n", str);}
 int yywrap(void);
 %}
 %union{
@@ -50,40 +49,38 @@ int yywrap(void);
 %left token_plus token_moins
 %left token_constEntiere token_constFlottante token_constChar token_constBool token_idf 
 %%
-S: PROGRAM {printf("prog syntaxiquement correct\n");YYACCEPT;}
+S: PROGRAM {printf("The program is syntactically correct\n");YYACCEPT;}
 
 PROGRAM : LISTE_IMPORT LIST_DECLARATION LIST_INST;
 
 LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
+
 IMPORT : token_import module_name NEWLINES
-| token_import token_numpy token_as token_idf NEWLINES
-{InsertValChaine($4, $2);
+|token_import token_numpy token_as token_idf NEWLINES
+{
+InsertValChaine($4, $2);
 insererTYPE($4,"STRING");
 }
-| token_import token_matplotlib token_as token_idf NEWLINES
-{InsertValChaine($4, $2);
+|token_import token_matplotlib token_as token_idf NEWLINES
+{
+InsertValChaine($4, $2);
 insererTYPE($4,"STRING");
-}
-;
+};
 
 module_name: token_numpy | token_matplotlib; 
 
 LIST_DECLARATION :  LIST_DECLARATION DECLARATION_TABLEAU| /*vide*/;
+
 DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRESSION token_CrochFermante NEWLINES
 |token_idf token_affectation token_CrochOuvrante  token_CrochFermante NEWLINES
 |token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES
-| token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES
+|token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES
 {// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine($3),"numpy")!=0){
-printf("la valeur de idf :%s \n",GetValChaine($1));  
-printf("erreur de declaration de tableau\n");
-//exit(0);
-}
-else{
-  printf("declaration tableau correct\n");
-}
-}
-;      
+//printf("la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
+exit(0);
+}};      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
@@ -94,9 +91,45 @@ LIST_INST:INSTRUCTION LIST_INST | INSTRUCTION NEWLINES LIST_INST | /*vide*/;
 
 INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT | PLTSHOW | PLTIMSHOW;
 
-PLTSHOW:token_idf token_Point token_show token_ParOuvrante token_ParFermante;
+PLTSHOW:token_idf token_Point token_show token_ParOuvrante token_ParFermante
+{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
+if(strcmp(GetValChaine($1),"matplotlib.pyplot")!=0){
+//printf("la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
+exit(0);
+}
+}
+;  
 
-PLTIMSHOW:token_idf token_Point token_imshow token_ParOuvrante token_idf token_virgule token_idf token_affectation token_constString token_ParFermante;
+PLTIMSHOW:token_idf token_Point token_imshow token_ParOuvrante token_idf token_virgule token_idf token_affectation token_constString token_ParFermante
+{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
+if(strcmp(GetValChaine($1),"matplotlib.pyplot")!=0){
+//printf("ERREUR SÉMANTIQUE:la valeur de idf :%s \n",GetValChaine($1));  
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
+exit(0);
+}
+else{
+// vérifier si $5 est déclaré
+printf("la declaration de 5 est %d\n",Declaration($5));
+if(Declaration($5)==0){
+printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
+printf("ERREUR SÉMANTIQUE: THE USAGE OF AN UNDECLARED IDENTIFIER WITHOUT A VALUE\n");
+exit(0);
+}
+
+  //printf("la fonction est correct\n");
+  //printf(" $7 = %s $9 = %s \n",$7, $9);
+  // vérifier si $7 est cmap
+  if(strcmp($7,"cmap")!=0){
+    printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
+    exit(0);
+  }
+  InsertValChaine($7, $9);
+  insererTYPE($7,"STRING");
+
+}
+}
+;
 
 AFFECTATION : token_idf token_affectation EXPRESSION 
 | token_idf token_affectation EXPRESSIONARITHMETIQUE;

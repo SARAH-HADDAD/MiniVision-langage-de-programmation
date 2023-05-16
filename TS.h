@@ -60,6 +60,7 @@ void inserer(char entite[], char code[], char type[], float val, int i, int y)
             strcpy(table->code, code);
             strcpy(table->type, type);
             table->val = val;
+            table->valCh[0] = '\0';
             table->next = NULL;
         }
         else
@@ -275,4 +276,24 @@ char *GetValChaine(char entite[])
         currElement = currElement->next;
     }
     return "void";
+}
+int Declaration(char entite[])
+{
+    element *currElement = table;
+    while (currElement != NULL)
+    {
+        if (strcmp(currElement->name, entite) == 0)
+        {
+            if (strcmp(currElement->type, " ") != 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        currElement = currElement->next;
+    }
+    return 0;
 }
