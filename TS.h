@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct element
-{
+#define TABLE_SIZE 100
+
+typedef struct element {
     int state;
     char name[20];
     char code[20];
@@ -13,173 +14,249 @@ typedef struct element
     struct element *next;
 } element;
 
-typedef struct separator_element
-{
+typedef struct separator_element {
     int state;
     char name[40];
     char type[25];
     struct separator_element *next;
 } separator_element;
 
-typedef struct keyword_element
-{
+typedef struct keyword_element {
     int state;
     char name[40];
     char type[25];
     struct keyword_element *next;
 } keyword_element;
 
-element *table = NULL;
-separator_element *separator_table = NULL;
-keyword_element *keyword_table = NULL;
+element* table[TABLE_SIZE];
+separator_element* separator_table[TABLE_SIZE];
+keyword_element* keyword_table[TABLE_SIZE];
 
-extern char sav[20];
-char chaine1[2] = "";
+// Hash function
+int hash_function(const char* key) {
+    unsigned long hash = 5381;
+    int c;
+
+    while ((c = *key++) != '\0') {
+        hash = ((hash << 5) + hash) + c; // djb2 hash algorithm
+    }
+
+    return hash % TABLE_SIZE;
+}
 
 // Step 2: Initialization of symbol table
 // 0: the entry is free, 1: the entry is occupied
-void initialization()
-{
-    table = NULL;
-    separator_table = NULL;
-    keyword_table = NULL;
+void initialization() {
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        table[i] = NULL;
+        separator_table[i] = NULL;
+        keyword_table[i] = NULL;
+    }
 }
 
 // Step 3: Insert lexical entities into symbol tables
-void inserer(char entite[], char code[], char type[], float val, int i, int y)
-{
-    switch (y)
-    {
-    case 0: // Insert into the IDF and CONST table
-    {
-        if (table == NULL)
-        {
-            table = (element *)malloc(sizeof(element));
-            table->state = 1;
-            strcpy(table->name, entite);
-            strcpy(table->code, code);
-            strcpy(table->type, type);
-            table->val = val;
-            table->valCh[0] = '\0';
-            table->next = NULL;
-        }
-        else
-        {
-            element *newElement = (element *)malloc(sizeof(element));
-            newElement->state = 1;
-            strcpy(newElement->name, entite);
-            strcpy(newElement->code, code);
-            strcpy(newElement->type, type);
-            newElement->val = val;
-            newElement->next = table;
-            table = newElement;
-        }
-    }
-    break;
+void inserer(char entite[], char code[], char type[], float val, int y) {
+    int hash = hash_function(entite);
 
-    case 1: // Insert into the keyword table
-    {
-        keyword_element *newKeyword = (keyword_element *)malloc(sizeof(keyword_element));
-        newKeyword->state = 1;
-        strcpy(newKeyword->name, entite);
-        strcpy(newKeyword->type, code);
-        newKeyword->next = keyword_table;
-        keyword_table = newKeyword;
-    }
-    break;
+    switch (y) {
+        case 0: // Insert into the IDF and CONST table
+        {
+            if (table[hash] == NULL) {
+                element* newElement = (element *)malloc(sizeof(element));
+                if (newElement == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newElement->state = 1;
+                strcpy(newElement->name, entite);
+                strcpy(newElement->code, code);
+                strcpy(newElement->type, type);
+                newElement->val = val;
+                newElement->valCh[0] = ' ';
+                newElement->next = NULL;
+                table[hash] = newElement;
+                printf("Inserted %s at table[%d]\n", entite, hash);
+            } else {
+                // we have a collision
+                element* currElement = table[hash];
+                while (currElement->next != NULL) {
+                    currElement = currElement->next;
+                }
+                element* newElement = (element *)malloc(sizeof(element));
+                if (newElement == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newElement->state = 1;
+                strcpy(newElement->name, entite);
+                strcpy(newElement->code, code);
+                strcpy(newElement->type, type);
+                newElement->val = val;
+                newElement->valCh[0] = ' ';
+                newElement->next = NULL;
+                currElement->next = newElement;
+                printf("Inserted %s at table[%d] (collision)\n", entite, hash);
+            }
+        }
+        break;
 
-    case 2: // Insert into the separator table
-    {
-        separator_element *newSeparator = (separator_element *)malloc(sizeof(separator_element));
-        newSeparator->state = 1;
-        strcpy(newSeparator->name, entite);
-        strcpy(newSeparator->type, code);
-        newSeparator->next = separator_table;
-        separator_table = newSeparator;
-    }
-    break;
+        case 1: // Insert into the keyword table
+        {
+            if (keyword_table[hash] == NULL) {
+                keyword_element* newKeyword = (keyword_element *)malloc(sizeof(keyword_element));
+                if (newKeyword == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newKeyword->state = 1;
+                strcpy(newKeyword->name, entite);
+                strcpy(newKeyword->type, code);
+                newKeyword->next = NULL;
+                keyword_table[hash] = newKeyword;
+                printf("Inserted %s at keyword_table[%d]\n", entite, hash);
+            } else {
+                keyword_element* currKeyword = keyword_table[hash];
+                while (currKeyword->next != NULL) {
+                    currKeyword = currKeyword->next;
+                }
+                keyword_element* newKeyword = (keyword_element *)malloc(sizeof(keyword_element));
+                if (newKeyword == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newKeyword->state = 1;
+                strcpy(newKeyword->name, entite);
+                strcpy(newKeyword->type, code);
+                newKeyword->next = NULL;
+                currKeyword->next = newKeyword;
+                printf("Inserted %s at keyword_table[%d] (collision)\n", entite, hash);
+            }
+        }
+        break;
+
+        case 2: // Insert into the separator table
+        {
+            if (separator_table[hash] == NULL) {
+                separator_element* newSeparator = (separator_element *)malloc(sizeof(separator_element));
+                if (newSeparator == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newSeparator->state = 1;
+                strcpy(newSeparator->name, entite);
+                strcpy(newSeparator->type, code);
+                newSeparator->next = NULL;
+                separator_table[hash] = newSeparator;
+                printf("Inserted %s at separator_table[%d]\n", entite, hash);
+            } else {
+                separator_element* currSeparator = separator_table[hash];
+                while (currSeparator->next != NULL) {
+                    currSeparator = currSeparator->next;
+                }
+                separator_element* newSeparator = (separator_element *)malloc(sizeof(separator_element));
+                if (newSeparator == NULL) {
+                    printf("Memory allocation failed.\n");
+                    return;
+                }
+                newSeparator->state = 1;
+                strcpy(newSeparator->name, entite);
+                strcpy(newSeparator->type, code);
+                newSeparator->next = NULL;
+                currSeparator->next = newSeparator;
+                printf("Inserted %s at separator_table[%d] (collision)\n", entite, hash);
+            }
+        }
+        break;
     }
 }
+void rechercher(char entite[], char code[], char type[], float val, int y) {
+    int hash = hash_function(entite);
+    int trouve = 0;
 
-/***Step 4: La fonction Rechercher permet de verifier  si l'entité existe dèja dans la table des symboles */
-void rechercher(char entite[], char code[], char type[], float val, int y)
-{
-    switch (y)
-    {
-    case 0: // verifier si la case dans les tables des IDF et CONST est libre
-    {
-        int j = 0;
-        element *currElement = table;
-        while (currElement != NULL && currElement->state == 1 && strcmp(entite, currElement->name) != 0)
+    switch (y) {
+        case 0: // Check if the entry in IDF and CONST tables is free
         {
-            currElement = currElement->next;
-            j++;
+            if (table[hash] == NULL) {
+                inserer(entite, code, type, val, 0);
+            } else {
+                // Check if the entry at the hash index in IDF and CONST tables has the same entity
+                element* currElement = table[hash];
+                while (currElement != NULL) {
+                    if (strcmp(currElement->name, entite) == 0) {
+                        trouve = 1;
+                        break;
+                    }
+                    currElement = currElement->next;
+                }
+                if (trouve == 0) {
+                    inserer(entite, code, type, val, 0);
+                }
+            }
         }
+        break;
 
-        if (currElement == NULL)
+        case 1: // Check if the entry in the keyword table is free
         {
-            inserer(entite, code, type, val, j, 0);
+            if (keyword_table[hash] == NULL) {
+                inserer(entite, code, type, val, 1);
+            } else {
+                // Check if the entry at the hash index in the keyword table has the same entity
+                keyword_element* currKeyword = keyword_table[hash];
+                while (currKeyword != NULL) {
+                    if (strcmp(currKeyword->name, entite) == 0) {
+                        trouve = 1;
+                        break;
+                    }
+                    currKeyword = currKeyword->next;
+                }
+                if (trouve == 0) {
+                    inserer(entite, code, type, val, 1);
+                }
+            }
         }
-    }
-    break;
+        break;
 
-    case 1: // verifier si la case dans les tables des mots clés est libre
-    {
-        int j = 0;
-        keyword_element *currKeyword = keyword_table;
-        while (currKeyword != NULL && currKeyword->state == 1 && strcmp(entite, currKeyword->name) != 0)
+        case 2: // Check if the entry in the separator table is free
         {
-            currKeyword = currKeyword->next;
-            j++;
+            if (separator_table[hash] == NULL) {
+                inserer(entite, code, type, val, 2);
+            } else {
+                // Check if the entry at the hash index in the separator table has the same entity
+                separator_element* currSeparator = separator_table[hash];
+                while (currSeparator != NULL) {
+                    if (strcmp(currSeparator->name, entite) == 0) {
+                        trouve = 1;
+                        break;
+                    }
+                    currSeparator = currSeparator->next;
+                }
+                if (trouve == 0) {
+                    inserer(entite, code, type, val, 2);
+                }
+            }
         }
-        if (currKeyword == NULL)
-        {
-            inserer(entite, code, type, val, j, 1);
-        }
-    }
-    break;
-
-    case 2: // verifier si la case dans les tables des séparateurs est libre
-    {
-        int j = 0;
-        separator_element *currSeparator = separator_table;
-        while (currSeparator != NULL && currSeparator->state == 1 && strcmp(entite, currSeparator->name) != 0)
-        {
-            currSeparator = currSeparator->next;
-            j++;
-        }
-        if (currSeparator == NULL)
-        {
-            inserer(entite, code, type, val, j, 2);
-        }
-    }
-    break;
+        break;
     }
 }
-
-void afficher()
-{
-
+void afficher() {
     printf("\n\n\t/***************\tSymbol Table: IDF\t*************/\n\n");
     printf("____________________________________________________________________\n");
     printf("\t Nom_Entite |  Code_Entite   |  Type_Entite | Val_Entite\n");
     printf("____________________________________________________________________\n");
 
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (currElement->state == 1)
-        {
-            if (strcmp(currElement->type, "FLOAT") != 0 && strcmp(currElement->type, "INTEGER") != 0)
-            {
-                printf(" %18s |%15s | %12s | %s\n", currElement->name, currElement->code, currElement->type, currElement->valCh);
+    // Traverse the IDF table
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        element* currElement = table[i];
+        while (currElement != NULL) {
+            if (currElement->state == 1) {
+                if (strcmp(currElement->type, "FLOAT") != 0 && strcmp(currElement->type, "INTEGER") != 0) {
+                    printf(" %18s |%15s | %12s | %s\n", currElement->name, currElement->code, currElement->type, currElement->valCh);
+                } else {
+                    printf(" %18s |%15s | %12s | %12f\n", currElement->name, currElement->code, currElement->type, currElement->val);
+                }
             }
-            else
-            {
-                printf(" %18s |%15s | %12s | %12f\n", currElement->name, currElement->code, currElement->type, currElement->val);
-            }
+            currElement = currElement->next;
         }
-        currElement = currElement->next;
     }
 
     printf("\n\n\t/***************\tSymbol Table: Keywords\t*************/\n\n");
@@ -187,14 +264,15 @@ void afficher()
     printf("\t\t NomEntite             |  CodeEntite       | \n");
     printf("___________________________________________________________\n");
 
-    keyword_element *currKeyword = keyword_table;
-    while (currKeyword != NULL)
-    {
-        if (currKeyword->state == 1)
-        {
-            printf("%27s            |    %12s   | \n", currKeyword->name, currKeyword->type);
+    // Traverse the keyword table
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        keyword_element* currKeyword = keyword_table[i];
+        while (currKeyword != NULL) {
+            if (currKeyword->state == 1) {
+                printf("%27s            |    %12s   | \n", currKeyword->name, currKeyword->type);
+            }
+            currKeyword = currKeyword->next;
         }
-        currKeyword = currKeyword->next;
     }
 
     printf("\n\n\t/***************\tSymbol Table: Separators\t*************/\n\n");
@@ -202,98 +280,24 @@ void afficher()
     printf("\t| NomEntite |  CodeEntite | \n");
     printf("_____________________________________\n");
 
-    separator_element *currSeparator = separator_table;
-    while (currSeparator != NULL)
-    {
-        if (currSeparator->state == 1)
-        {
-            switch (currSeparator->name[0])
-            {
-            case '\n':
-                printf("\t|\t\\n  |%12s | \n", currSeparator->type);
-                break;
-            case ' ':
-                printf("\t|\t\\t  |%12s | \n", currSeparator->type);
-                break;
-            default:
-                printf("\t|%10s |%12s | \n", currSeparator->name, currSeparator->type);
-                break;
+    // Traverse the separator table
+    for (int i = 0; i < TABLE_SIZE; i++) {
+        separator_element* currSeparator = separator_table[i];
+        while (currSeparator != NULL) {
+            if (currSeparator->state == 1) {
+                switch (currSeparator->name[0]) {
+                    case '\n':
+                        printf("\t|\t\\n  |%12s | \n", currSeparator->type);
+                        break;
+                    case ' ':
+                        printf("\t|\t\\t  |%12s | \n", currSeparator->type);
+                        break;
+                    default:
+                        printf("\t|%10s |%12s | \n", currSeparator->name, currSeparator->type);
+                        break;
+                }
             }
+            currSeparator = currSeparator->next;
         }
-        currSeparator = currSeparator->next;
     }
-}
-void insererTYPE(char entite[], char type[])
-{
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (strcmp(currElement->name, entite) == 0)
-        {
-            strcpy(currElement->type, type);
-        }
-
-        currElement = currElement->next;
-    }
-}
-char *GetType(char entite[])
-{
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (strcmp(currElement->name, entite) == 0)
-        {
-            return currElement->type;
-        }
-
-        currElement = currElement->next;
-    }
-    return " ";
-}
-void InsertValChaine(char entite[], char vall[])
-{
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (strcmp(currElement->name, entite) == 0)
-        {
-            strcpy(currElement->valCh, vall);
-        }
-        currElement = currElement->next;
-    }
-}
-char *GetValChaine(char entite[])
-{
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (strcmp(currElement->name, entite) == 0)
-        {
-            // printf("name: %s\n", currElement->name);
-            // printf("valCh: %s\n", currElement->valCh);
-            return currElement->valCh;
-        }
-        currElement = currElement->next;
-    }
-    return "void";
-}
-int Declaration(char entite[])
-{
-    element *currElement = table;
-    while (currElement != NULL)
-    {
-        if (strcmp(currElement->name, entite) == 0)
-        {
-            if (strcmp(currElement->type, " ") != 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        currElement = currElement->next;
-    }
-    return 0;
 }

@@ -5,8 +5,4 @@ ma_liste = [1, 2, 3, 4, 5]
 img = [[255, 100, 50], [200, 150, 75], [100, 50, 25]]
 # Parcourir chaque pixel de l'image et inverser négativement-positivement
 m=3+3
-while (A and 2<1) :
-    img=34+2
-    while (a>2):
-        a=3
 
