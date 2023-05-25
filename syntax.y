@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "Quad.h"
 
 int nb_ligne=1,nb_colonne=1;
+int QC=0,cpt=1;
+Quad* Qdr=NULL;
 void initialization();
 void afficher();
 void insererTYPE();
@@ -109,6 +112,12 @@ printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
 exit(0);
 }
 else{
+// Variable Usage: The compiler should verify that the variable img is declared
+// to say that the variable is declared or not i have to check if the variable is in the table of symbol have a type wla value
+// lsl to fix later ..
+// like pour les élement ta3 np array lzm nvérifier ila de meme type apres rah ydi hadak le type l np array
+// i have to fix this lzm ndir un type l np array 
+// to fix later..  
 // vérifier si $5 est déclaré
 printf("la declaration de 5 est %d\n",Declaration($5));
 if(Declaration($5)==0){
@@ -131,8 +140,12 @@ exit(0);
 }
 ;
 
-AFFECTATION : token_idf token_affectation EXPRESSION 
-| token_idf token_affectation EXPRESSIONARITHMETIQUE;
+AFFECTATION : token_idf token_affectation E;
+
+E: E token_plus T| E token_moins T| T;
+T: T token_fois F| T token_divise F| T token_Pourcentage F| F;
+F: token_ParOuvrante E token_ParFermante| token_constEntiere| token_constFlottante| token_idf;
+
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
 |token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
