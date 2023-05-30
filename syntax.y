@@ -43,7 +43,7 @@ int yywrap(void);
 %token token_Point
 %token token_indentation token_newline
 %token token_show token_array token_imshow
-%type <str> E
+%type <str> EXPRESSIONARITHMETIQUE
 %type <str> F
 %type <str> T
 %type <str> token_plus
@@ -51,6 +51,8 @@ int yywrap(void);
 %type <str> token_fois
 %type <str> token_divise
 %type <str> token_Pourcentage
+%type <str> EXPRESSIONCOMPARAISON
+%type <str> OPERATEURCOMPARAISON
 %start S
 %left token_not
 %left token_and
@@ -142,17 +144,17 @@ else{
 }
 ;
 
-AFFECTATION : token_idf token_affectation E { T=strdup($1); 
+AFFECTATION : token_idf token_affectation EXPRESSIONARITHMETIQUE { T=strdup($1); 
       	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
       	     		    QC++; } ; 
 
-E: E token_plus T
+EXPRESSIONARITHMETIQUE: EXPRESSIONARITHMETIQUE token_plus T
           {
 						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"+",$1,$3,T,QC); $$ = strdup(T);
 						cpt++; QC++;     
 					}
-| E token_moins T
+| EXPRESSIONARITHMETIQUE token_moins T
 { sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 			     InsertQuad(&Qdr,"-",$1,$3,T,QC);$$ = strdup(T);
 			     cpt++; QC++;}
@@ -171,7 +173,7 @@ T: T token_fois F
 						cpt++; QC++;    }
 | F {$$=strdup($1);};
 // InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
-F: token_ParOuvrante E token_ParFermante {$$=strdup($2);}
+F: token_ParOuvrante EXPRESSIONARITHMETIQUE token_ParFermante {$$=strdup($2);}
 | token_idf { $$=strdup($1); }
 | token_constFlottante { 
   sprintf(Valeur, "%f", $1); 
@@ -209,45 +211,30 @@ EXPRESSION: token_idf
 
 OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
 
-EXPRESSIONARITHMETIQUE:EXPRESSION OPERATEURSARITHMETIQUE EXPRESSIONARITHMETIQUE
-|EXPRESSION OPERATEURSARITHMETIQUE EXPRESSION
-|token_ParOuvrante EXPRESSION OPERATEURSARITHMETIQUE EXPRESSION token_ParFermante
-|token_ParOuvrante EXPRESSION OPERATEURSARITHMETIQUE EXPRESSIONARITHMETIQUE token_ParFermante
-;
-
-EXPRESSIONLOGIQUE: 
-EXPRESSION OPERATEURLOGIQUE EXPRESSION| 
-EXPRESSION OPERATEURLOGIQUE EXPRESSIONCOMPARAISON|
-EXPRESSION OPERATEURLOGIQUE EXPRESSIONARITHMETIQUE|
-EXPRESSIONCOMPARAISON OPERATEURLOGIQUE EXPRESSIONCOMPARAISON|
-EXPRESSIONCOMPARAISON OPERATEURLOGIQUE EXPRESSION|
-EXPRESSIONCOMPARAISON OPERATEURLOGIQUE EXPRESSIONARITHMETIQUE|
-EXPRESSIONARITHMETIQUE  OPERATEURLOGIQUE EXPRESSIONCOMPARAISON|
-EXPRESSIONARITHMETIQUE OPERATEURLOGIQUE EXPRESSION|
-EXPRESSIONARITHMETIQUE OPERATEURLOGIQUE EXPRESSIONARITHMETIQUE|
-EXPRESSIONLOGIQUE OPERATEURLOGIQUE token_ParOuvrante EXPRESSIONLOGIQUE token_ParFermante|
-EXPRESSIONLOGIQUE OPERATEURLOGIQUE EXPRESSION|
-EXPRESSIONLOGIQUE OPERATEURLOGIQUE EXPRESSIONARITHMETIQUE|
-EXPRESSIONLOGIQUE OPERATEURLOGIQUE  EXPRESSIONCOMPARAISON|
-token_ParOuvrante EXPRESSIONLOGIQUE token_ParFermante OPERATEURLOGIQUE EXPRESSIONLOGIQUE|
-token_ParOuvrante EXPRESSIONLOGIQUE token_ParFermante OPERATEURLOGIQUE token_ParOuvrante EXPRESSIONLOGIQUE token_ParFermante
-token_not EXPRESSION|
-token_not EXPRESSIONLOGIQUE |
-token_not token_ParOuvrante EXPRESSIONLOGIQUE token_ParFermante|
-token_not EXPRESSIONCOMPARAISON|
-token_not EXPRESSIONARITHMETIQUE;
 
 OPERATEURLOGIQUE: token_and|token_or;
 
-EXPRESSIONCOMPARAISON: EXPRESSION OPERATEURCOMPARAISON EXPRESSION
-| EXPRESSION OPERATEURCOMPARAISON EXPRESSIONCOMPARAISON
-| EXPRESSIONARITHMETIQUE OPERATEURCOMPARAISON EXPRESSIONCOMPARAISON
-| EXPRESSIONARITHMETIQUE OPERATEURCOMPARAISON EXPRESSION
-| EXPRESSIONARITHMETIQUE OPERATEURCOMPARAISON EXPRESSIONARITHMETIQUE
-| token_ParOuvrante EXPRESSIONCOMPARAISON token_ParFermante
+EXPRESSIONCOMPARAISON: EXPRESSIONARITHMETIQUE OPERATEURCOMPARAISON EXPRESSIONARITHMETIQUE
+{ sprintf(Valeur,"T%d",cpt);T = strdup(Valeur);
+					  InsertQuad(&Qdr,"-",$1,$3,T,QC);
+					  QC++;
+					  InsertQuad(&Qdr,$2," "," ",T,QC);
+            sprintf(Valeur, "%d", QC);  // Convert QC to a string representation
+            $$ = strdup(Valeur);  // Assign the string to yyval.str
+					  QC++;
+					  cpt++;
+					  
+
+					};
 ;
-OPERATEURCOMPARAISON: token_inferieur| token_inferieurEgal| token_superieur| token_superieurEgal| token_egal| token_different;
-CONDITION: EXPRESSIONCOMPARAISON| EXPRESSIONLOGIQUE|EXPRESSIONARITHMETIQUE;
+OPERATEURCOMPARAISON: 
+token_inferieur {$$=strdup("BL"); }
+| token_inferieurEgal {$$=strdup("BLE"); }
+| token_superieur {$$=strdup("BG"); }
+| token_superieurEgal {$$=strdup("BGE"); }
+| token_egal {$$=strdup("BE"); }
+| token_different {$$=strdup("BNE"); };
+CONDITION: EXPRESSIONCOMPARAISON;
 // Y:EXPRESSIONARITHMETIQUE |EXPRESSION  ;
 
 NEWLINES: token_newline| NEWLINES token_newline;
