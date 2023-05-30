@@ -9,11 +9,11 @@ int QC=0,cpt=1;
 //Quad* Qdr=NULL;
 void initialization();
 void afficher();
-//void insererTYPE();
-//char *GetType();
-//void InsertValChaine();
-//char *GetValChaine();
-//int Declaration();
+void insererTYPE();
+char *GetType();
+void InsertValChaine();
+char *GetValChaine();
+int Declaration();
 int yylex(void);
 void yyerror (const char *str) {fprintf (stderr, "error: %s\n", str);}
 int yywrap(void);
@@ -60,7 +60,7 @@ LISTE_IMPORT:  LISTE_IMPORT IMPORT| /*vide*/;
 
 IMPORT : token_import module_name NEWLINES
 |token_import token_numpy token_as token_idf NEWLINES
-/*{
+{
 InsertValChaine($4, $2);
 insererTYPE($4,"STRING");
 }
@@ -68,7 +68,7 @@ insererTYPE($4,"STRING");
 {
 InsertValChaine($4, $2);
 insererTYPE($4,"STRING");
-}*/;
+};
 
 module_name: token_numpy | token_matplotlib; 
 
@@ -78,12 +78,12 @@ DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRE
 |token_idf token_affectation token_CrochOuvrante  token_CrochFermante NEWLINES
 |token_idf token_affectation token_CrochOuvrante LIST_TABLEAU token_CrochFermante NEWLINES
 |token_idf token_affectation token_idf token_Point token_array token_ParOuvrante token_CrochOuvrante LIST_TABLEAU token_CrochFermante token_ParFermante NEWLINES
-/*{// vérifier si idf est déclaré comme ça import numpy as idf
+{// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine($3),"numpy")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
 printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
 exit(0);
-}}*/;      
+}};      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
@@ -95,17 +95,15 @@ LIST_INST:INSTRUCTION LIST_INST | INSTRUCTION NEWLINES LIST_INST | /*vide*/;
 INSTRUCTION : AFFECTATION | BOUCLE_FOR1|BOUCLE_FOR2|BOUCLE_WHILE |IF_ELSE_STATEMENT | PLTSHOW | PLTIMSHOW;
 
 PLTSHOW:token_idf token_Point token_show token_ParOuvrante token_ParFermante
-/*{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
+{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
 if(strcmp(GetValChaine($1),"matplotlib.pyplot")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
 printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
 exit(0);
-}
-}*/
-;  
+}};  
 
 PLTIMSHOW:token_idf token_Point token_imshow token_ParOuvrante token_idf token_virgule token_idf token_affectation token_constString token_ParFermante
-/*{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
+{// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
 if(strcmp(GetValChaine($1),"matplotlib.pyplot")!=0){
 //printf("ERREUR SÉMANTIQUE:la valeur de idf :%s \n",GetValChaine($1));  
 printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
@@ -115,7 +113,9 @@ else{
 // Variable Usage: The compiler should verify that the variable img is declared
 // to say that the variable is declared or not i have to check if the variable is in the table of symbol have a type wla value
 // lsl to fix later ..
+
 // like pour les élement ta3 np array lzm nvérifier ila de meme type apres rah ydi hadak le type l np array
+
 // i have to fix this lzm ndir un type l np array 
 // to fix later..  
 // vérifier si $5 est déclaré
@@ -137,7 +137,7 @@ exit(0);
   insererTYPE($7,"STRING");
 
 }
-}*/
+}
 ;
 
 AFFECTATION : token_idf token_affectation E;

@@ -238,6 +238,7 @@ void rechercher(char entite[], char code[], char type[], float val, int y) {
         break;
     }
 }
+
 void afficher() {
     printf("\n\n\t/***************\tSymbol Table: IDF\t*************/\n\n");
     printf("____________________________________________________________________\n");
@@ -300,4 +301,102 @@ void afficher() {
             currSeparator = currSeparator->next;
         }
     }
+}
+
+void insererTYPE(char entite[], char type[])
+{
+    int hash = hash_function(entite);
+    int trouve = 0;
+    if (table[hash] != NULL) {
+        element* currElement = table[hash];
+        while (currElement != NULL && trouve == 0) {
+            if (strcmp(currElement->name, entite) == 0) {
+                trouve = 1;
+                strcpy(currElement->type, type);
+            }    
+        }
+    }
+    else
+    {
+        printf("Erreur: %s n'existe pas dans la table des symboles\n", entite);
+    }
+}
+
+char *GetType(char entite[])
+{
+    int hash = hash_function(entite);
+    if (table[hash] != NULL) {
+        element* currElement = table[hash];
+        while (currElement != NULL) {
+            if (strcmp(currElement->name, entite) == 0) {
+                return currElement->type;
+            }    
+        }
+    }
+    else
+    {
+        printf("Erreur: %s n'existe pas dans la table des symboles\n", entite);
+    }
+    return NULL;
+}
+
+void InsertValChaine(char entite[], char vall[])
+{
+    int hash = hash_function(entite);
+        int trouve = 0;
+    if (table[hash] != NULL) {
+        element* currElement = table[hash];
+        while (currElement != NULL && trouve == 0) {
+            if (strcmp(currElement->name, entite) == 0) {
+                trouve = 1;
+                strcpy(currElement->valCh, vall);
+            }    
+        }
+    }
+    else
+    {
+        printf("Erreur: %s n'existe pas dans la table des symboles\n", entite);
+    }
+
+}
+
+char *GetValChaine(char entite[]){
+    int hash = hash_function(entite);
+    if (table[hash] != NULL) {
+        element* currElement = table[hash];
+        while (currElement != NULL) {
+            if (strcmp(currElement->name, entite) == 0) {
+                return currElement->valCh;
+            }    
+        }
+    }
+    else
+    {
+        printf("Erreur: %s n'existe pas dans la table des symboles\n", entite);
+    }
+    return NULL;
+}
+
+int Declaration(char entite[]){
+    int hash = hash_function(entite);
+    if (table[hash] != NULL) {
+        element* currElement = table[hash];
+        while (currElement != NULL) {
+            if (strcmp(currElement->name, entite) == 0) {
+                if (strcmp(currElement->type, " ") != 0) 
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }     
+            }    
+        }
+    }
+    else
+    {
+        return 0;
+    }
+    return 0;
 }
