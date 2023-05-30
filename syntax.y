@@ -147,7 +147,7 @@ AFFECTATION : token_idf token_affectation E { T=strdup($1);
       	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
       	     		    QC++; } ; 
 
-E: E token_plus T
+E: E token_plus F
           {
 						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"+",$1,$3,T,QC); $$ = strdup(T);
@@ -174,8 +174,11 @@ T: T token_fois F
 // InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
 F: token_ParOuvrante E token_ParFermante {$$=strdup($2);}
 | token_idf { $$=strdup($1); }
+| token_constFlottante { 
+  sprintf(Valeur, "%f", $1); 
+  T = strdup(Valeur); 
+  $$ = strdup(T);}  
 | token_constEntiere { 
-  printf("la valeur de token_constEntiere :%d \n",$1);
   sprintf(Valeur, "%d", $1); 
   T = strdup(Valeur); 
   $$ = strdup(T);}
