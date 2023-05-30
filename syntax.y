@@ -38,12 +38,20 @@ int yywrap(void);
 %token <str> token_idf
 %token token_ParOuvrante token_ParFermante token_CrochOuvrante token_CrochFermante
 %token token_virgule token_Deux_Points 
-%token <str> token_plus <str> token_moins <str> token_fois <str> token_divise <str> token_Pourcentage
+%token token_plus token_moins token_fois token_divise token_Pourcentage
 %token token_superieurEgal token_superieur token_inferieurEgal token_inferieur token_egal token_different
 %token token_affectation
 %token token_Point
 %token token_indentation token_newline
 %token token_shape token_show token_axis token_array token_imshow
+%type <str> E
+%type <str> F
+%type <str> T
+%type <str> token_plus
+%type <str> token_moins
+%type <str> token_fois
+%type <str> token_divise
+%type <str> token_Pourcentage
 %start S
 %left token_not
 %left token_and
@@ -135,17 +143,37 @@ else{
 }
 ;
 
-AFFECTATION : token_idf token_affectation E;
+AFFECTATION : token_idf token_affectation E { T=strdup($1); 
+      	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
+      	     		    QC++; } ; 
 
-E: token_idf token_plus token_idf
-{
-sprintf(Valeur,"T%d",cpt); 
-T = strdup(Valeur);    
-InsertQuad(&Qdr,"+",$1,$3,T,QC);
-cpt++; QC++;   
-}
+E: E token_plus T
+          {
+						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"+",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;     
+					}
+| E token_moins T
+{ sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+			     InsertQuad(&Qdr,"-",$1,$3,T,QC);$$ = strdup(T);
+			     cpt++; QC++;}
+| T{$$=strdup($1);};
+T: T token_fois F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+			     InsertQuad(&Qdr,"*",$1,$3,T,QC);$$ = strdup(T);
+			     cpt++; QC++;}
+| T token_divise F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"/",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;    }
+| T token_Pourcentage F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"%",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;    }
+| F {$$=strdup($1);};
 // InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
-
+F: token_ParOuvrante E token_ParFermante {$$=strdup($2);}
+| token_idf { $$=strdup($1); };
 
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
