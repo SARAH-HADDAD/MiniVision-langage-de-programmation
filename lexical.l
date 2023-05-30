@@ -11,7 +11,7 @@ chiffre [0-9]
 IDF [a-zA-Z_][a-zA-Z0-9_]*
 COMMENT ^#[^\n]*\n
 INT "("[+-]{chiffre}+")"|{chiffre}+
-FLOAT \([+-]({chiffre}+"."{chiffre}+)\)|({chiffre}+"."{chiffre}+)
+FLOAT "("[+-]({chiffre}+"."{chiffre}+)")"|({chiffre}+"."{chiffre}+)
 CHAR ['][^'][']
 BOOL "true"|"false"
 STRING ["][^"]*["]
@@ -173,25 +173,21 @@ not {
   return (token_not); 
 }
 {INT} {
-    char myStr[100]="";
-    if(yytext[0]=='(')
-    for(j=1;j<yyleng-1;j++){myStr[j-1] =yytext[j];}
-    rechercher (yytext, "cst int","INT",atof(myStr),0);
+    rechercher (yytext, "cst int","INT",atof(yytext),0);
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
-    yylval.integer= atoi(myStr);
+    yylval.integer= atoi(yytext);
+    printf("myStr = %s\n", yytext);
+    printf("yylval.integer = %d\n", yylval.integer);
     return (token_constEntiere); 
 }
 {FLOAT} {
-    char myStr[100]="";
-    if(yytext[0]=='(')
-    for(j=1;j<yyleng-1;j++){myStr[j-1] =yytext[j];}  
-    rechercher (yytext, "cst float","FLOAT",atof(myStr),0); 
+    rechercher (yytext, "cst float","FLOAT",atof(yytext),0); 
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
-    yylval.flottant= atof(myStr);
+    yylval.flottant= atof(yytext);
     return (token_constFlottante); 
 }
 {CHAR} {
@@ -276,6 +272,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_Pourcentage reconnu \n"); 
     nb_colonne += yyleng;   
+    yylval.str= strdup (yytext);
     return (token_Pourcentage);
     }
 "+" { 
@@ -283,6 +280,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: +\n"); 
     nb_colonne += yyleng; 
+    yylval.str= strdup (yytext);
     return (token_plus);
     }
 "-"	{
@@ -290,6 +288,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur arithmetique: -\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_moins);
     }
 "*" {
@@ -297,6 +296,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: *\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_fois);
     }
 "/" {
@@ -304,6 +304,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: /\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_divise);
     }
 ">=" { 

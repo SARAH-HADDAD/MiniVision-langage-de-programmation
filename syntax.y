@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "Quad.h"
 
 int nb_ligne=1,nb_colonne=1;
+int QC=0,cpt=1,First=0 ;
+Quad* Qdr=NULL;
+char *T;
+char Valeur[254] = { } ;
 void initialization();
 void afficher();
 void insererTYPE();
@@ -39,6 +44,14 @@ int yywrap(void);
 %token token_Point
 %token token_indentation token_newline
 %token token_shape token_show token_axis token_array token_imshow
+%type <str> E
+%type <str> F
+%type <str> T
+%type <str> token_plus
+%type <str> token_moins
+%type <str> token_fois
+%type <str> token_divise
+%type <str> token_Pourcentage
 %start S
 %left token_not
 %left token_and
@@ -78,9 +91,10 @@ DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRE
 {// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine($3),"numpy")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
-printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
+printf("ERREUR SÉMANTIQUE: ERROR IN NUMPY ARRAY DECLARATION\n");
 exit(0);
-}};      
+}
+};      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
@@ -97,9 +111,7 @@ if(strcmp(GetValChaine($1),"matplotlib.pyplot")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
 printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
 exit(0);
-}
-}
-;  
+}};  
 
 PLTIMSHOW:token_idf token_Point token_imshow token_ParOuvrante token_idf token_virgule token_idf token_affectation token_constString token_ParFermante
 {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
@@ -109,14 +121,15 @@ printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION WRITING\n");
 exit(0);
 }
 else{
-// vérifier si $5 est déclaré
-printf("la declaration de 5 est %d\n",Declaration($5));
-if(Declaration($5)==0){
-printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
-printf("ERREUR SÉMANTIQUE: THE USAGE OF AN UNDECLARED IDENTIFIER WITHOUT A VALUE\n");
-exit(0);
-}
+// Variable Usage: The compiler should verify that the variable img is declared
+// to say that the variable is declared or not i have to check if the variable is in the table of symbol have a type wla value
+// lsl to fix later ..
 
+// like pour les élement ta3 np array lzm nvérifier ila de meme type apres rah ydi hadak le type l np array
+
+// i have to fix this lzm ndir un type l np array 
+// to fix later..  
+// vérifier si $5 est déclaré
   //printf("la fonction est correct\n");
   //printf(" $7 = %s $9 = %s \n",$7, $9);
   // vérifier si $7 est cmap
@@ -126,13 +139,51 @@ exit(0);
   }
   InsertValChaine($7, $9);
   insererTYPE($7,"STRING");
-
 }
 }
 ;
 
-AFFECTATION : token_idf token_affectation EXPRESSION 
-| token_idf token_affectation EXPRESSIONARITHMETIQUE;
+AFFECTATION : token_idf token_affectation E { T=strdup($1); 
+      	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
+      	     		    QC++; } ; 
+
+E: E token_plus T
+          {
+						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"+",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;     
+					}
+| E token_moins T
+{ sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+			     InsertQuad(&Qdr,"-",$1,$3,T,QC);$$ = strdup(T);
+			     cpt++; QC++;}
+| T{$$=strdup($1);};
+T: T token_fois F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+			     InsertQuad(&Qdr,"*",$1,$3,T,QC);$$ = strdup(T);
+			     cpt++; QC++;}
+| T token_divise F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"/",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;    }
+| T token_Pourcentage F
+{sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
+						InsertQuad(&Qdr,"%",$1,$3,T,QC); $$ = strdup(T);
+						cpt++; QC++;    }
+| F {$$=strdup($1);};
+// InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
+F: token_ParOuvrante E token_ParFermante {$$=strdup($2);}
+| token_idf { $$=strdup($1); }
+| token_constFlottante { 
+  sprintf(Valeur, "%f", $1); 
+  T = strdup(Valeur); 
+  $$ = strdup(T);}  
+| token_constEntiere { 
+  sprintf(Valeur, "%d", $1); 
+  T = strdup(Valeur); 
+  $$ = strdup(T);}
+;
+
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
 |token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
@@ -149,7 +200,13 @@ ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUC
 
 LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;
 // | LISTE_INSTRUCTION_BOUCLE token_newline token_indentation INSTRUCTION token_newline;
-EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
+
+EXPRESSION: token_idf
+|token_constBool 
+|token_constChar 
+|token_constEntiere 
+|token_constFlottante
+;
 
 OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
 
@@ -202,6 +259,7 @@ int main(){
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
     afficher();
+    AffichageQuad(Qdr);
     return 0;}
 
 
