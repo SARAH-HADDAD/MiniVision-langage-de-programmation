@@ -147,7 +147,7 @@ AFFECTATION : token_idf token_affectation E { T=strdup($1);
       	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
       	     		    QC++; } ; 
 
-E: E token_plus F
+E: E token_plus T
           {
 						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"+",$1,$3,T,QC); $$ = strdup(T);
