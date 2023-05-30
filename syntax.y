@@ -156,7 +156,8 @@ if(Declaration($5)==0){
 }
 ;
 
-AFFECTATION : token_idf token_affectation EXPRESSIONARITHMETIQUE { T=strdup($1); 
+AFFECTATION : token_idf token_affectation EXPRESSIONARITHMETIQUE 
+{ T=strdup($1); 
       	       			InsertQuad(&Qdr,"=",$3," ",T,QC);	
       	     		    QC++; } ; 
 
