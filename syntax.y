@@ -28,7 +28,6 @@ int yywrap(void);
 }
 %token token_import <str> token_numpy <str> token_matplotlib
 %token token_if token_else token_while token_for token_in token_range token_as
-%token token_int token_float token_char token_bool 
 %token token_and token_or token_not
 %token <integer> token_constEntiere
 %token <flottant> token_constFlottante
@@ -43,7 +42,7 @@ int yywrap(void);
 %token token_affectation
 %token token_Point
 %token token_indentation token_newline
-%token token_shape token_show token_axis token_array token_imshow
+%token token_show token_array token_imshow
 %type <str> E
 %type <str> F
 %type <str> T

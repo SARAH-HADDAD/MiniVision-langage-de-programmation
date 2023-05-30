@@ -53,26 +53,12 @@ imshow {
   nb_colonne += yyleng;
   return (token_imshow);
 }
-axis {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
-  printf("Mc_axis reconnu : %s \n", yytext);
-  nb_colonne += yyleng;
-  return (token_axis);
-}
 show {
   rechercher (yytext, "mot cle",0,0,1);
   printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
   printf("Mc_show reconnu : %s \n", yytext);
   nb_colonne += yyleng;
   return (token_show);
-}
-shape {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);    
-  printf("Mc_shape reconnu : %s \n", yytext);
-  nb_colonne += yyleng;
-  return (token_shape);
 }
 if {
   rechercher (yytext, "mot cle",0,0,1);
@@ -115,34 +101,6 @@ range {
   printf("MotCle_range reconnu \n");
   nb_colonne += yyleng;
   return (token_range); 
-}
-int {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
-  printf("MotCle_int reconnu \n");
-  nb_colonne += yyleng;
-  return (token_int); 
-}
-float {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
-  printf("MotCle_float reconnu \n");
-  nb_colonne += yyleng;
-  return (token_float); 
-}
-char {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);   
-  printf("MotCle_char reconnu \n");
-  nb_colonne += yyleng;
-  return (token_char); 
-}
-bool {
-  rechercher (yytext, "mot cle",0,0,1);
-  printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
-  printf("MotCle_bool reconnu \n");
-  nb_colonne += yyleng;
-  return (token_bool); 
 }
 as {
   rechercher (yytext, "mot cle",0,0,1);
