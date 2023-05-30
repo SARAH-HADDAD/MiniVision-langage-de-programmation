@@ -146,7 +146,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 29 "syntax.y"
+#line 23 "syntax.y"
 {
   int integer; 
   char* charactere;

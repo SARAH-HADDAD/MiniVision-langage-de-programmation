@@ -276,6 +276,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Sep_Pourcentage reconnu \n"); 
     nb_colonne += yyleng;   
+    yylval.str= strdup (yytext);
     return (token_Pourcentage);
     }
 "+" { 
@@ -283,6 +284,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: +\n"); 
     nb_colonne += yyleng; 
+    yylval.str= strdup (yytext);
     return (token_plus);
     }
 "-"	{
@@ -290,6 +292,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne); 
     printf("Operateur arithmetique: -\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_moins);
     }
 "*" {
@@ -297,6 +300,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: *\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_fois);
     }
 "/" {
@@ -304,6 +308,7 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Operateur arithmetique: /\n"); 
     nb_colonne += yyleng;
+    yylval.str= strdup (yytext);
     return (token_divise);
     }
 ">=" { 

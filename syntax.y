@@ -5,8 +5,10 @@
 #include "Quad.h"
 
 int nb_ligne=1,nb_colonne=1;
-int QC=0,cpt=1;
+int QC=0,cpt=1,First=0 ;
 Quad* Qdr=NULL;
+char *T;
+char Valeur[254] = { } ;
 void initialization();
 void afficher();
 void insererTYPE();
@@ -17,14 +19,6 @@ int Declaration();
 int yylex(void);
 void yyerror (const char *str) {fprintf (stderr, "error: %s\n", str);}
 int yywrap(void);
-
-typedef struct Types {
-    char* type;
-    struct Types* next;
-} Types;
-
-Types* PointeurType = NULL;
-
 %}
 %union{
   int integer; 
@@ -44,7 +38,7 @@ Types* PointeurType = NULL;
 %token <str> token_idf
 %token token_ParOuvrante token_ParFermante token_CrochOuvrante token_CrochFermante
 %token token_virgule token_Deux_Points 
-%token token_plus token_moins token_fois token_divise token_Pourcentage
+%token <str> token_plus <str> token_moins <str> token_fois <str> token_divise <str> token_Pourcentage
 %token token_superieurEgal token_superieur token_inferieurEgal token_inferieur token_egal token_different
 %token token_affectation
 %token token_Point
@@ -137,16 +131,21 @@ else{
   }
   InsertValChaine($7, $9);
   insererTYPE($7,"STRING");
-
 }
 }
 ;
 
 AFFECTATION : token_idf token_affectation E;
 
-E: E token_plus T| E token_moins T| T;
-T: T token_fois F| T token_divise F| T token_Pourcentage F| F;
-F: token_ParOuvrante E token_ParFermante| token_constEntiere| token_constFlottante| token_idf;
+E: token_idf token_plus token_idf
+{
+sprintf(Valeur,"T%d",cpt); 
+T = strdup(Valeur);    
+InsertQuad(&Qdr,"+",$1,$3,T,QC);
+cpt++; QC++;   
+}
+// InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
+
 
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
@@ -223,6 +222,7 @@ int main(){
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
     afficher();
+    AffichageQuad(Qdr);
     return 0;}
 
 

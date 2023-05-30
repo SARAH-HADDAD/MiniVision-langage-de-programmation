@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 img = np.array([[255, 100, 50],[200, 150, 75],[100, 50, 25]])
 
 # Inverser négativement-positivement l'image
-img = 255 - img
-
+img = img + img
+x= y+z
+r=r+e
 # Afficher l'image
 plt.imshow(img, cmap= "gray")
 plt.show()
