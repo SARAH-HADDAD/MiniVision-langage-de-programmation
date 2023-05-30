@@ -173,7 +173,13 @@ T: T token_fois F
 | F {$$=strdup($1);};
 // InsertQuad(Quad** ListQuad, const char* Op, const char* Op1, const char* Op2, const char* T, int QC)
 F: token_ParOuvrante E token_ParFermante {$$=strdup($2);}
-| token_idf { $$=strdup($1); };
+| token_idf { $$=strdup($1); }
+| token_constEntiere { 
+  printf("la valeur de token_constEntiere :%d \n",$1);
+  sprintf(Valeur, "%d", $1); 
+  T = strdup(Valeur); 
+  $$ = strdup(T);}
+;
 
 
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
