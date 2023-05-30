@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-//#include "Quad.h"
+#include "Quad.h"
 
 int nb_ligne=1,nb_colonne=1;
 int QC=0,cpt=1;
-//Quad* Qdr=NULL;
+Quad* Qdr=NULL;
 void initialization();
 void afficher();
 void insererTYPE();
@@ -17,6 +17,14 @@ int Declaration();
 int yylex(void);
 void yyerror (const char *str) {fprintf (stderr, "error: %s\n", str);}
 int yywrap(void);
+
+typedef struct Types {
+    char* type;
+    struct Types* next;
+} Types;
+
+Types* PointeurType = NULL;
+
 %}
 %union{
   int integer; 
@@ -81,9 +89,10 @@ DECLARATION_TABLEAU : token_idf token_affectation token_CrochOuvrante LIST_EXPRE
 {// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine($3),"numpy")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
-printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
+printf("ERREUR SÉMANTIQUE: ERROR IN NUMPY ARRAY DECLARATION\n");
 exit(0);
-}};      
+}
+};      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
 
@@ -119,13 +128,6 @@ else{
 // i have to fix this lzm ndir un type l np array 
 // to fix later..  
 // vérifier si $5 est déclaré
-printf("la declaration de 5 est %d\n",Declaration($5));
-if(Declaration($5)==0){
-printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
-printf("ERREUR SÉMANTIQUE: THE USAGE OF AN UNDECLARED IDENTIFIER WITHOUT A VALUE\n");
-exit(0);
-}
-
   //printf("la fonction est correct\n");
   //printf(" $7 = %s $9 = %s \n",$7, $9);
   // vérifier si $7 est cmap
@@ -162,7 +164,13 @@ ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUC
 
 LISTE_INSTRUCTION_BOUCLE: token_indentation INSTRUCTION token_newline LISTE_INSTRUCTION_BOUCLE| /*vide*/;
 // | LISTE_INSTRUCTION_BOUCLE token_newline token_indentation INSTRUCTION token_newline;
-EXPRESSION: token_idf| token_constBool|token_constChar |token_constEntiere | token_constFlottante;
+
+EXPRESSION: token_idf
+|token_constBool 
+|token_constChar 
+|token_constEntiere 
+|token_constFlottante
+;
 
 OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
 

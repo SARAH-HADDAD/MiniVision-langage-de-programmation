@@ -177,11 +177,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-//#include "Quad.h"
+#include "Quad.h"
 
 int nb_ligne=1,nb_colonne=1;
 int QC=0,cpt=1;
-//Quad* Qdr=NULL;
+Quad* Qdr=NULL;
 void initialization();
 void afficher();
 void insererTYPE();
@@ -192,6 +192,14 @@ int Declaration();
 int yylex(void);
 void yyerror (const char *str) {fprintf (stderr, "error: %s\n", str);}
 int yywrap(void);
+
+typedef struct Types {
+    char* type;
+    struct Types* next;
+} Types;
+
+Types* PointeurType = NULL;
+
 
 
 /* Enabling traces.  */
@@ -214,7 +222,7 @@ int yywrap(void);
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 21 "syntax.y"
+#line 29 "syntax.y"
 {
   int integer; 
   char* charactere;
@@ -222,7 +230,7 @@ typedef union YYSTYPE
   char* str;
 }
 /* Line 193 of yacc.c.  */
-#line 226 "syntax.tab.c"
+#line 234 "syntax.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -235,7 +243,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 239 "syntax.tab.c"
+#line 247 "syntax.tab.c"
 
 #ifdef short
 # undef short
@@ -571,17 +579,17 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    55,    55,    57,    59,    59,    61,    62,    67,    73,
-      73,    75,    75,    77,    78,    79,    80,    88,    88,    90,
-      91,    93,    93,    93,    95,    95,    95,    95,    95,    95,
-      95,    97,   105,   143,   145,   145,   145,   146,   146,   146,
-     146,   147,   147,   147,   147,   150,   151,   153,   155,   157,
-     159,   159,   161,   161,   163,   163,   165,   165,   165,   165,
-     165,   167,   167,   167,   167,   167,   169,   170,   171,   172,
-     176,   177,   178,   179,   180,   181,   182,   183,   184,   185,
-     186,   187,   188,   189,   190,   192,   193,   194,   195,   197,
-     197,   199,   200,   201,   202,   203,   204,   206,   206,   206,
-     206,   206,   206,   207,   207,   207,   210,   210
+       0,    63,    63,    65,    67,    67,    69,    70,    75,    81,
+      81,    83,    83,    85,    86,    87,    88,    97,    97,    99,
+     100,   102,   102,   102,   104,   104,   104,   104,   104,   104,
+     104,   106,   114,   145,   147,   147,   147,   148,   148,   148,
+     148,   149,   149,   149,   149,   152,   153,   155,   157,   159,
+     161,   161,   163,   163,   165,   165,   168,   169,   170,   171,
+     172,   175,   175,   175,   175,   175,   177,   178,   179,   180,
+     184,   185,   186,   187,   188,   189,   190,   191,   192,   193,
+     194,   195,   196,   197,   198,   200,   201,   202,   203,   205,
+     205,   207,   208,   209,   210,   211,   212,   214,   214,   214,
+     214,   214,   214,   215,   215,   215,   218,   218
 };
 #endif
 
@@ -1660,12 +1668,12 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 55 "syntax.y"
+#line 63 "syntax.y"
     {printf("The program is syntactically correct\n");YYACCEPT;;}
     break;
 
   case 7:
-#line 63 "syntax.y"
+#line 71 "syntax.y"
     {
 InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
@@ -1673,7 +1681,7 @@ insererTYPE((yyvsp[(4) - (5)].str),"STRING");
     break;
 
   case 8:
-#line 68 "syntax.y"
+#line 76 "syntax.y"
     {
 InsertValChaine((yyvsp[(4) - (5)].str), (yyvsp[(2) - (5)].str));
 insererTYPE((yyvsp[(4) - (5)].str),"STRING");
@@ -1681,17 +1689,18 @@ insererTYPE((yyvsp[(4) - (5)].str),"STRING");
     break;
 
   case 16:
-#line 81 "syntax.y"
+#line 89 "syntax.y"
     {// vérifier si idf est déclaré comme ça import numpy as idf
 if(strcmp(GetValChaine((yyvsp[(3) - (11)].str)),"numpy")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
-printf("ERREUR SÉMANTIQUE: ERROR IN ARRAY DECLARATION\n");
+printf("ERREUR SÉMANTIQUE: ERROR IN NUMPY ARRAY DECLARATION\n");
 exit(0);
-};}
+}
+;}
     break;
 
   case 31:
-#line 98 "syntax.y"
+#line 107 "syntax.y"
     {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
 if(strcmp(GetValChaine((yyvsp[(1) - (5)].str)),"matplotlib.pyplot")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
@@ -1701,7 +1710,7 @@ exit(0);
     break;
 
   case 32:
-#line 106 "syntax.y"
+#line 115 "syntax.y"
     {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
 if(strcmp(GetValChaine((yyvsp[(1) - (10)].str)),"matplotlib.pyplot")!=0){
 //printf("ERREUR SÉMANTIQUE:la valeur de idf :%s \n",GetValChaine($1));  
@@ -1718,13 +1727,6 @@ else{
 // i have to fix this lzm ndir un type l np array 
 // to fix later..  
 // vérifier si $5 est déclaré
-printf("la declaration de 5 est %d\n",Declaration((yyvsp[(5) - (10)].str)));
-if(Declaration((yyvsp[(5) - (10)].str))==0){
-printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
-printf("ERREUR SÉMANTIQUE: THE USAGE OF AN UNDECLARED IDENTIFIER WITHOUT A VALUE\n");
-exit(0);
-}
-
   //printf("la fonction est correct\n");
   //printf(" $7 = %s $9 = %s \n",$7, $9);
   // vérifier si $7 est cmap
@@ -1740,13 +1742,13 @@ exit(0);
     break;
 
   case 53:
-#line 161 "syntax.y"
+#line 163 "syntax.y"
     {printf("else\n");;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1750 "syntax.tab.c"
+#line 1752 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1960,7 +1962,7 @@ yyreturn:
 }
 
 
-#line 211 "syntax.y"
+#line 219 "syntax.y"
 
 
 int main(){
