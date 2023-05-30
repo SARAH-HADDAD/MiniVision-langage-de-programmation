@@ -177,8 +177,13 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante entiere: %s\n", yytext); 
     nb_colonne += yyleng;
+    // Remove parentheses from yytext
+    size_t textLength = strlen(yytext);
+    if (textLength >= 2 && yytext[0] == '(' && yytext[textLength - 1] == ')') {
+    yytext[textLength - 1] = '\0'; // Remove closing parenthesis
+    yytext++; // Move pointer to remove opening parenthesis
+    }
     yylval.integer= atoi(yytext);
-    printf("myStr = %s\n", yytext);
     printf("yylval.integer = %d\n", yylval.integer);
     return (token_constEntiere); 
 }
@@ -187,6 +192,12 @@ not {
     printf("ligne=%d, colonne=%d : ", nb_ligne, nb_colonne);
     printf("Constante flottante: %s\n", yytext); 
     nb_colonne += yyleng;
+    // Remove parentheses from yytext
+    size_t textLength = strlen(yytext);
+    if (textLength >= 2 && yytext[0] == '(' && yytext[textLength - 1] == ')') {
+    yytext[textLength - 1] = '\0'; // Remove closing parenthesis
+    yytext++; // Move pointer to remove opening parenthesis
+    }
     yylval.flottant= atof(yytext);
     return (token_constFlottante); 
 }
