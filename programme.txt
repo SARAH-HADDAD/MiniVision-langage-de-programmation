@@ -10,6 +10,7 @@ img = 255 - img
 # Display the image with the 'viridis' colormap
 plt.imshow(img, cmap="viridis")
 plt.show()
+# test 
 
 
 
