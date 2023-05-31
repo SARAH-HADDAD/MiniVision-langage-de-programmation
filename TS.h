@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TABLE_SIZE 100
+#define TABLE_SIZE_ONE 100
+#define TABLE_SIZE_TWO 50
+#
 
 typedef struct element {
     int state;
@@ -28,12 +30,12 @@ typedef struct keyword_element {
     struct keyword_element *next;
 } keyword_element;
 
-element* table[TABLE_SIZE];
-separator_element* separator_table[TABLE_SIZE];
-keyword_element* keyword_table[TABLE_SIZE];
+element* table[TABLE_SIZE_ONE];
+separator_element* separator_table[TABLE_SIZE_TWO];
+keyword_element* keyword_table[TABLE_SIZE_TWO];
 
 // Hash function
-int hash_function(const char* key) {
+int hash1_function(const char* key) {
     unsigned long hash = 5381;
     int c;
 
@@ -41,14 +43,28 @@ int hash_function(const char* key) {
         hash = ((hash << 5) + hash) + c; // djb2 hash algorithm
     }
 
-    return hash % TABLE_SIZE;
+    return hash % TABLE_SIZE_ONE;
+}
+int hash2_function(char *chaine)
+{
+    int i = 0, nombreHache = 0;
+
+    for (i = 0 ; chaine[i] != '\0' ; i++)
+    {
+        nombreHache += chaine[i];
+    }
+    nombreHache %= TABLE_SIZE_TWO;
+
+    return nombreHache;
 }
 
 // Step 2: Initialization of symbol table
 // 0: the entry is free, 1: the entry is occupied
 void initialization() {
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < TABLE_SIZE_ONE; i++) {
         table[i] = NULL;
+    }
+    for (int i = 0; i < TABLE_SIZE_TWO; i++) {
         separator_table[i] = NULL;
         keyword_table[i] = NULL;
     }
@@ -56,11 +72,13 @@ void initialization() {
 
 // Step 3: Insert lexical entities into symbol tables
 void inserer(char entite[], char code[], char type[], float val, int y) {
-    int hash = hash_function(entite);
+    int hash;
 
     switch (y) {
         case 0: // Insert into the IDF and CONST table
         {
+            hash = hash1_function(entite);
+
             if (table[hash] == NULL) {
                 element* newElement = (element *)malloc(sizeof(element));
                 if (newElement == NULL) {
@@ -102,6 +120,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
 
         case 1: // Insert into the keyword table
         {
+            hash = hash2_function(entite);
             if (keyword_table[hash] == NULL) {
                 keyword_element* newKeyword = (keyword_element *)malloc(sizeof(keyword_element));
                 if (newKeyword == NULL) {
@@ -136,6 +155,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
 
         case 2: // Insert into the separator table
         {
+            hash = hash2_function(entite);
             if (separator_table[hash] == NULL) {
                 separator_element* newSeparator = (separator_element *)malloc(sizeof(separator_element));
                 if (newSeparator == NULL) {
@@ -170,12 +190,13 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
     }
 }
 void rechercher(char entite[], char code[], char type[], float val, int y) {
-    int hash = hash_function(entite);
+    int hash;
     int trouve = 0;
 
     switch (y) {
         case 0: // Check if the entry in IDF and CONST tables is free
         {
+            hash = hash1_function(entite);
             if (table[hash] == NULL) {
                 inserer(entite, code, type, val, 0);
             } else {
@@ -197,6 +218,7 @@ void rechercher(char entite[], char code[], char type[], float val, int y) {
 
         case 1: // Check if the entry in the keyword table is free
         {
+            hash = hash2_function(entite);
             if (keyword_table[hash] == NULL) {
                 inserer(entite, code, type, val, 1);
             } else {
@@ -218,6 +240,7 @@ void rechercher(char entite[], char code[], char type[], float val, int y) {
 
         case 2: // Check if the entry in the separator table is free
         {
+            hash = hash2_function(entite);
             if (separator_table[hash] == NULL) {
                 inserer(entite, code, type, val, 2);
             } else {
@@ -246,7 +269,7 @@ void afficher() {
     printf("____________________________________________________________________\n");
 
     // Traverse the IDF table
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < TABLE_SIZE_ONE; i++) {
         element* currElement = table[i];
         while (currElement != NULL) {
             if (currElement->state == 1) {
@@ -266,7 +289,7 @@ void afficher() {
     printf("___________________________________________________________\n");
 
     // Traverse the keyword table
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < TABLE_SIZE_TWO; i++) {
         keyword_element* currKeyword = keyword_table[i];
         while (currKeyword != NULL) {
             if (currKeyword->state == 1) {
@@ -282,7 +305,7 @@ void afficher() {
     printf("_____________________________________\n");
 
     // Traverse the separator table
-    for (int i = 0; i < TABLE_SIZE; i++) {
+    for (int i = 0; i < TABLE_SIZE_TWO; i++) {
         separator_element* currSeparator = separator_table[i];
         while (currSeparator != NULL) {
             if (currSeparator->state == 1) {
@@ -305,7 +328,7 @@ void afficher() {
 
 void insererTYPE(char entite[], char type[])
 {
-    int hash = hash_function(entite);
+    int hash = hash1_function(entite);
     int trouve = 0;
     if (table[hash] != NULL) {
         element* currElement = table[hash];
@@ -324,7 +347,7 @@ void insererTYPE(char entite[], char type[])
 
 char *GetType(char entite[])
 {
-    int hash = hash_function(entite);
+    int hash = hash1_function(entite);
     if (table[hash] != NULL) {
         element* currElement = table[hash];
         while (currElement != NULL) {
@@ -342,7 +365,7 @@ char *GetType(char entite[])
 
 void InsertValChaine(char entite[], char vall[])
 {
-    int hash = hash_function(entite);
+    int hash = hash1_function(entite);
         int trouve = 0;
     if (table[hash] != NULL) {
         element* currElement = table[hash];
@@ -361,7 +384,7 @@ void InsertValChaine(char entite[], char vall[])
 }
 
 char *GetValChaine(char entite[]){
-    int hash = hash_function(entite);
+    int hash = hash1_function(entite);
     if (table[hash] != NULL) {
         element* currElement = table[hash];
         while (currElement != NULL) {
@@ -378,7 +401,7 @@ char *GetValChaine(char entite[]){
 }
 
 int Declaration(char entite[]){
-    int hash = hash_function(entite);
+    int hash = hash1_function(entite);
     if (table[hash] != NULL) {
         element* currElement = table[hash];
         while (currElement != NULL) {
