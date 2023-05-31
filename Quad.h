@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 typedef struct Quad
 {
@@ -146,6 +147,71 @@ void optimiser(Quad **ListQuad)
 			}
 		}
 
+		p = p->Suivant;
+	}
+
+	*ListQuad = tete;
+}
+void SimplificationAlgebrique(Quad **ListQuad)
+{
+	Quad *tete = *ListQuad;
+	Quad *p = tete;
+
+	while (p != NULL)
+	{
+		// Simplification algébrique 1: Multiplication
+		if (strcmp(p->Operateur, "*") == 0)
+		{
+			// Vérifier si l'une des opérandes est une constante
+			if (isdigit(p->opd1[0]))
+			{
+				int constante = atoi(p->opd1);
+				if(constante==0)
+				{
+					// Remplacer la multiplication par une addition
+					sprintf(p->Operateur, "%s", "+");
+					sprintf(p->opd1, "%s", "0");
+					sprintf(p->opd2, "%s", "0");
+				}
+				else if(constante==1)
+				{
+					// Remplacer la multiplication par une addition
+					sprintf(p->Operateur, "%s", "+");
+					sprintf(p->opd1, "%s", "0"); 
+				}
+				else if (constante==2)
+				{
+				// Remplacer la multiplication par une addition
+				sprintf(p->Operateur, "%s", "+");
+				sprintf(p->opd1, "%s", p->opd2); 
+				}
+				
+
+			}
+			else if (isdigit(p->opd2[0]))
+			{
+				int constante = atoi(p->opd2);
+				if(constante==0)
+				{
+					// Remplacer la multiplication par une addition
+					sprintf(p->Operateur, "%s", "+");
+					sprintf(p->opd1, "%s", "0");
+					sprintf(p->opd2, "%s", "0");
+				}
+				else if(constante==1)
+				{
+					// Remplacer la multiplication par une addition
+					sprintf(p->Operateur, "%s", "+");
+					sprintf(p->opd2, "%s", "0"); 
+				}
+				else if (constante==2)
+				{
+				// Remplacer la multiplication par une addition
+				sprintf(p->Operateur, "%s", "+");
+				sprintf(p->opd2, "%s", p->opd1); 
+				}
+			}
+		}
 		p = p->Suivant;
 	}
 

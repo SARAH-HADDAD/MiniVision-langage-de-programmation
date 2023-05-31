@@ -253,6 +253,7 @@ int main(){
     afficher();
     printf("\n***** Les Quadruples avant optimisation ***\n");
     AffichageQuad(Qdr);
+    SimplificationAlgebrique(&Qdr);
     optimiser(&Qdr);
     printf("\n***** Les Quadruples après optimisation ***\n");
     AffichageQuad(Qdr);
