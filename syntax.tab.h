@@ -134,15 +134,19 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 23 "syntax.y"
+#line 24 "syntax.y"
 {
   int integer; 
   char* charactere;
   float flottant;
   char* str;
+  struct 	{
+    int Prog_Ind;
+    int Pred_Ind;	
+	} IF_Save;
 }
 /* Line 1529 of yacc.c.  */
-#line 146 "syntax.tab.h"
+#line 150 "syntax.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

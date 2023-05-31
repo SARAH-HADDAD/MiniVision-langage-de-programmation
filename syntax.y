@@ -6,6 +6,7 @@
 
 int nb_ligne=1,nb_colonne=1;
 int QC=0,cpt=1,First=0 ;
+int Prog_Ind=0,Pred_Ind=0;
 Quad* Qdr=NULL;
 char *T;
 char Valeur[254] = { } ;
@@ -25,6 +26,10 @@ int yywrap(void);
   char* charactere;
   float flottant;
   char* str;
+  struct 	{
+    int Prog_Ind;
+    int Pred_Ind;	
+	} IF_Save;
 }
 %token token_import <str> token_numpy <str> token_matplotlib
 %token token_if token_else token_while token_for token_in token_range token_as
@@ -53,6 +58,7 @@ int yywrap(void);
 %type <str> token_Pourcentage
 %type <str> EXPRESSIONCOMPARAISON
 %type <str> OPERATEURCOMPARAISON
+%type <IF_Save> token_if
 %start S
 %left token_not
 %left token_and
@@ -185,7 +191,6 @@ F: token_ParOuvrante EXPRESSIONARITHMETIQUE token_ParFermante {$$=strdup($2);}
   $$ = strdup(T);}
 ;
 
-
 BOUCLE_FOR1:token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_virgule EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
 |token_for token_idf token_in token_range token_ParOuvrante EXPRESSION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
@@ -193,9 +198,10 @@ BOUCLE_FOR2:token_for token_idf token_in token_idf token_Deux_Points token_newli
 
 BOUCLE_WHILE:token_while token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE;
 
-IF_ELSE_STATEMENT:IF_CONDITION ELSE_CONDITION ;
+IF_ELSE_STATEMENT:IF_CONDITION  ELSE_CONDITION ;
 
-IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE|token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points INSTRUCTION token_newline;
+IF_CONDITION:token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE
+|token_if token_ParOuvrante CONDITION token_ParFermante token_Deux_Points INSTRUCTION token_newline;
 
 ELSE_CONDITION:token_else token_Deux_Points token_newline LISTE_INSTRUCTION_BOUCLE|/*vide*/ {printf("else\n");};
 
@@ -209,8 +215,8 @@ EXPRESSION: token_idf
 |token_constFlottante
 ;
 
-OPERATEURSARITHMETIQUE: token_divise|token_fois|token_moins|token_plus|token_Pourcentage ;
-
+EXPRESSIONLOGIQUE: EXPRESSIONARITHMETIQUE OPERATEURLOGIQUE EXPRESSIONARITHMETIQUE 
+| token_not EXPRESSIONLOGIQUE;
 
 OPERATEURLOGIQUE: token_and|token_or;
 
@@ -225,8 +231,8 @@ EXPRESSIONCOMPARAISON: EXPRESSIONARITHMETIQUE OPERATEURCOMPARAISON EXPRESSIONARI
 					  cpt++;
 					  
 
-					};
-;
+					};;
+
 OPERATEURCOMPARAISON: 
 token_inferieur {$$=strdup("BL"); }
 | token_inferieurEgal {$$=strdup("BLE"); }
@@ -234,8 +240,8 @@ token_inferieur {$$=strdup("BL"); }
 | token_superieurEgal {$$=strdup("BGE"); }
 | token_egal {$$=strdup("BE"); }
 | token_different {$$=strdup("BNE"); };
-CONDITION: EXPRESSIONCOMPARAISON;
-// Y:EXPRESSIONARITHMETIQUE |EXPRESSION  ;
+
+CONDITION: EXPRESSIONCOMPARAISON | EXPRESSIONLOGIQUE;
 
 NEWLINES: token_newline| NEWLINES token_newline;
 %%
