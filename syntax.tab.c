@@ -2006,6 +2006,10 @@ int main(){
     yyparse(); // analyseur lexical
     yywrap(); // analyseur syntaxique
     afficher();
+    printf("\n***** Les Quadruples avant optimisation ***\n");
+    AffichageQuad(Qdr);
+    optimiser(&Qdr);
+    printf("\n***** Les Quadruples après optimisation ***\n");
     AffichageQuad(Qdr);
     return 0;}
 
