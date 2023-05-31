@@ -101,6 +101,9 @@ if(strcmp(GetValChaine($3),"numpy")!=0){
 printf("ERREUR SÉMANTIQUE: ERROR IN NUMPY ARRAY DECLARATION\n");
 exit(0);
 }
+else {
+  insererTYPE($1,"INT");
+}
 };      
 
 LIST_EXPRESSION: EXPRESSION | EXPRESSION token_virgule LIST_EXPRESSION ;
@@ -137,8 +140,11 @@ else{
 // i have to fix this lzm ndir un type l np array 
 // to fix later..  
 // vérifier si $5 est déclaré
-  //printf("la fonction est correct\n");
-  //printf(" $7 = %s $9 = %s \n",$7, $9);
+
+if(Declaration($5)==0){
+  printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS: USAGE OF NO DECLARED VARIABLE\n");
+  exit(0);
+}
   // vérifier si $7 est cmap
   if(strcmp($7,"cmap")!=0){
     printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");

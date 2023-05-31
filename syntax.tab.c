@@ -551,13 +551,13 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    72,    72,    74,    76,    76,    78,    79,    84,    90,
-      90,    92,    92,    94,    95,    96,    97,   106,   106,   108,
-     109,   111,   111,   111,   113,   113,   113,   113,   113,   113,
-     113,   115,   123,   153,   157,   163,   167,   168,   172,   176,
-     180,   182,   183,   184,   188,   194,   195,   197,   199,   201,
-     203,   204,   206,   206,   208,   208,   211,   212,   213,   214,
-     215,   218,   219,   221,   221,   223,   237,   238,   239,   240,
-     241,   242,   244,   244,   246,   246
+      90,    92,    92,    94,    95,    96,    97,   109,   109,   111,
+     112,   114,   114,   114,   116,   116,   116,   116,   116,   116,
+     116,   118,   126,   159,   163,   169,   173,   174,   178,   182,
+     186,   188,   189,   190,   194,   200,   201,   203,   205,   207,
+     209,   210,   212,   212,   214,   214,   217,   218,   219,   220,
+     221,   224,   225,   227,   227,   229,   243,   244,   245,   246,
+     247,   248,   250,   250,   252,   252
 };
 #endif
 
@@ -1608,11 +1608,14 @@ if(strcmp(GetValChaine((yyvsp[(3) - (11)].str)),"numpy")!=0){
 printf("ERREUR SÉMANTIQUE: ERROR IN NUMPY ARRAY DECLARATION\n");
 exit(0);
 }
+else {
+  insererTYPE((yyvsp[(1) - (11)].str),"INT");
+}
 ;}
     break;
 
   case 31:
-#line 116 "syntax.y"
+#line 119 "syntax.y"
     {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as idf
 if(strcmp(GetValChaine((yyvsp[(1) - (5)].str)),"matplotlib.pyplot")!=0){
 //printf("la valeur de idf :%s \n",GetValChaine($1));  
@@ -1622,7 +1625,7 @@ exit(0);
     break;
 
   case 32:
-#line 124 "syntax.y"
+#line 127 "syntax.y"
     {// vérifier si idf est déclaré comme ça import matplotlib.pyplot as $1
 if(strcmp(GetValChaine((yyvsp[(1) - (10)].str)),"matplotlib.pyplot")!=0){
 //printf("ERREUR SÉMANTIQUE:la valeur de idf :%s \n",GetValChaine($1));  
@@ -1639,8 +1642,11 @@ else{
 // i have to fix this lzm ndir un type l np array 
 // to fix later..  
 // vérifier si $5 est déclaré
-  //printf("la fonction est correct\n");
-  //printf(" $7 = %s $9 = %s \n",$7, $9);
+
+if(Declaration((yyvsp[(5) - (10)].str))==0){
+  printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS: USAGE OF NO DECLARED VARIABLE\n");
+  exit(0);
+}
   // vérifier si $7 est cmap
   if(strcmp((yyvsp[(7) - (10)].str),"cmap")!=0){
     printf("ERREUR SÉMANTIQUE: ERROR IN FUNCTION PARAMETERS\n");
@@ -1653,14 +1659,14 @@ else{
     break;
 
   case 33:
-#line 153 "syntax.y"
+#line 159 "syntax.y"
     { T=strdup((yyvsp[(1) - (3)].str)); 
       	       			InsertQuad(&Qdr,"=",(yyvsp[(3) - (3)].str)," ",T,QC);	
       	     		    QC++; ;}
     break;
 
   case 34:
-#line 158 "syntax.y"
+#line 164 "syntax.y"
     {
 						sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"+",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC); (yyval.str) = strdup(T);
@@ -1669,55 +1675,55 @@ else{
     break;
 
   case 35:
-#line 164 "syntax.y"
+#line 170 "syntax.y"
     { sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 			     InsertQuad(&Qdr,"-",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC);(yyval.str) = strdup(T);
 			     cpt++; QC++;;}
     break;
 
   case 36:
-#line 167 "syntax.y"
+#line 173 "syntax.y"
     {(yyval.str)=strdup((yyvsp[(1) - (1)].str));;}
     break;
 
   case 37:
-#line 169 "syntax.y"
+#line 175 "syntax.y"
     {sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 			     InsertQuad(&Qdr,"*",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC);(yyval.str) = strdup(T);
 			     cpt++; QC++;;}
     break;
 
   case 38:
-#line 173 "syntax.y"
+#line 179 "syntax.y"
     {sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"/",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC); (yyval.str) = strdup(T);
 						cpt++; QC++;    ;}
     break;
 
   case 39:
-#line 177 "syntax.y"
+#line 183 "syntax.y"
     {sprintf(Valeur,"T%d",cpt); T = strdup(Valeur); 
 						InsertQuad(&Qdr,"%",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC); (yyval.str) = strdup(T);
 						cpt++; QC++;    ;}
     break;
 
   case 40:
-#line 180 "syntax.y"
+#line 186 "syntax.y"
     {(yyval.str)=strdup((yyvsp[(1) - (1)].str));;}
     break;
 
   case 41:
-#line 182 "syntax.y"
+#line 188 "syntax.y"
     {(yyval.str)=strdup((yyvsp[(2) - (3)].str));;}
     break;
 
   case 42:
-#line 183 "syntax.y"
+#line 189 "syntax.y"
     { (yyval.str)=strdup((yyvsp[(1) - (1)].str)); ;}
     break;
 
   case 43:
-#line 184 "syntax.y"
+#line 190 "syntax.y"
     { 
   sprintf(Valeur, "%f", (yyvsp[(1) - (1)].flottant)); 
   T = strdup(Valeur); 
@@ -1725,7 +1731,7 @@ else{
     break;
 
   case 44:
-#line 188 "syntax.y"
+#line 194 "syntax.y"
     { 
   sprintf(Valeur, "%d", (yyvsp[(1) - (1)].integer)); 
   T = strdup(Valeur); 
@@ -1733,12 +1739,12 @@ else{
     break;
 
   case 53:
-#line 206 "syntax.y"
+#line 212 "syntax.y"
     {printf("else\n");;}
     break;
 
   case 65:
-#line 224 "syntax.y"
+#line 230 "syntax.y"
     { sprintf(Valeur,"T%d",cpt);T = strdup(Valeur);
 					  InsertQuad(&Qdr,"-",(yyvsp[(1) - (3)].str),(yyvsp[(3) - (3)].str),T,QC);
 					  QC++;
@@ -1753,38 +1759,38 @@ else{
     break;
 
   case 66:
-#line 237 "syntax.y"
+#line 243 "syntax.y"
     {(yyval.str)=strdup("BL"); ;}
     break;
 
   case 67:
-#line 238 "syntax.y"
+#line 244 "syntax.y"
     {(yyval.str)=strdup("BLE"); ;}
     break;
 
   case 68:
-#line 239 "syntax.y"
+#line 245 "syntax.y"
     {(yyval.str)=strdup("BG"); ;}
     break;
 
   case 69:
-#line 240 "syntax.y"
+#line 246 "syntax.y"
     {(yyval.str)=strdup("BGE"); ;}
     break;
 
   case 70:
-#line 241 "syntax.y"
+#line 247 "syntax.y"
     {(yyval.str)=strdup("BE"); ;}
     break;
 
   case 71:
-#line 242 "syntax.y"
+#line 248 "syntax.y"
     {(yyval.str)=strdup("BNE"); ;}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1788 "syntax.tab.c"
+#line 1794 "syntax.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1998,7 +2004,7 @@ yyreturn:
 }
 
 
-#line 247 "syntax.y"
+#line 253 "syntax.y"
 
 
 int main(){

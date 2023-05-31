@@ -93,7 +93,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 newElement->valCh[0] = ' ';
                 newElement->next = NULL;
                 table[hash] = newElement;
-                printf("Inserted %s at table[%d]\n", entite, hash);
+                //printf("Inserted %s at table[%d]\n", entite, hash);
             } else {
                 // we have a collision
                 element* currElement = table[hash];
@@ -113,7 +113,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 newElement->valCh[0] = ' ';
                 newElement->next = NULL;
                 currElement->next = newElement;
-                printf("Inserted %s at table[%d] (collision)\n", entite, hash);
+                //printf("Inserted %s at table[%d] (collision)\n", entite, hash);
             }
         }
         break;
@@ -132,7 +132,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 strcpy(newKeyword->type, code);
                 newKeyword->next = NULL;
                 keyword_table[hash] = newKeyword;
-                printf("Inserted %s at keyword_table[%d]\n", entite, hash);
+                //printf("Inserted %s at keyword_table[%d]\n", entite, hash);
             } else {
                 keyword_element* currKeyword = keyword_table[hash];
                 while (currKeyword->next != NULL) {
@@ -148,7 +148,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 strcpy(newKeyword->type, code);
                 newKeyword->next = NULL;
                 currKeyword->next = newKeyword;
-                printf("Inserted %s at keyword_table[%d] (collision)\n", entite, hash);
+                //printf("Inserted %s at keyword_table[%d] (collision)\n", entite, hash);
             }
         }
         break;
@@ -167,7 +167,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 strcpy(newSeparator->type, code);
                 newSeparator->next = NULL;
                 separator_table[hash] = newSeparator;
-                printf("Inserted %s at separator_table[%d]\n", entite, hash);
+                //printf("Inserted %s at separator_table[%d]\n", entite, hash);
             } else {
                 separator_element* currSeparator = separator_table[hash];
                 while (currSeparator->next != NULL) {
@@ -183,7 +183,7 @@ void inserer(char entite[], char code[], char type[], float val, int y) {
                 strcpy(newSeparator->type, code);
                 newSeparator->next = NULL;
                 currSeparator->next = newSeparator;
-                printf("Inserted %s at separator_table[%d] (collision)\n", entite, hash);
+                //printf("Inserted %s at separator_table[%d] (collision)\n", entite, hash);
             }
         }
         break;
